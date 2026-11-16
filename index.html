@@ -792,7 +792,7 @@ const state = Object.assign({
 }, saved);
 // 악기를 이미 고른 사람은 소개 화면을 건너뛰고 레슨으로 바로 간다. 가입 확인 메일에서 돌아오면 게시판을 연다.
 if (state.inst) state.page = 'app';
-if (/access_token|type=signup/.test(location.hash)) { state.page = 'app'; state.tab = 'board'; }
+const welcome = /access_token|type=signup/.test(location.hash);
 const PRACTICE = ['chords', 'rhythm', 'scales', 'quiz'];
 const save = () => store && store.setItem('guitar-class', JSON.stringify({inst:state.inst, done:state.done, bpm:state.bpm, songDone:state.songDone, streak:state.streak, best:state.best, ccBest:state.ccBest}));
 const dayKey = back => new Date(Date.now() - back*864e5).toLocaleDateString('sv');
@@ -1125,13 +1125,14 @@ const LOGO = `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#pick"/></s
 function viewLanding() {
   const nPat = PATTERNS.guitar.length + PATTERNS.bass.length, back = state.inst;
   return `<div class="land">
-  <header class="lnav"><span class="logo">${LOGO}기타 교실</span><div><button class="btn" data-act="community">게시판</button><button class="btn primary" data-act="${back ? 'resume' : 'start'}">${back ? '이어서 배우기' : '시작하기'}</button></div></header>
+  <header class="lnav"><span class="logo">${LOGO}기타 교실</span><div><button class="btn" data-act="community">게시판</button>${cm.me ? `<button class="btn" data-act="community">${esc(cm.me.nickname)}님</button>` : `<button class="btn primary" data-act="join">로그인 · 가입</button>`}</div></header>
   ${site.notice ? `<p class="notice">${esc(site.notice)}</p>` : ''}
+  ${welcome && cm.me ? `<p class="notice">${esc(cm.me.nickname)}님, 가입이 끝났습니다. ${back ? '이어서 배워 보세요.' : '아래에서 악기를 고르면 바로 시작합니다.'}</p>` : ''}
   <section class="hero">${art('a-stage', '0 0 800 400')}
     <div class="hero-text"><p class="eyebrow">통기타 · 일렉기타 · 베이스</p>
       <h1>첫 코드부터 무대까지, 눌러 보고 들으며 배우는 기타</h1>
-      <p class="lead">지판에 누를 자리가 보이고, 누르면 바로 소리가 납니다. 가입 없이 악기만 고르면 바로 시작합니다.</p>
-      <div class="btns">${back ? `<button class="btn primary" data-act="resume">${INST[back].n} 이어서 하기</button><button class="btn" data-act="start">다른 악기 고르기</button>` : `<button class="btn primary" data-act="start">악기 고르고 시작하기</button><button class="btn" data-act="community">게시판 둘러보기</button>`}</div>
+      <p class="lead">지판에 누를 자리가 보이고, 누르면 바로 소리가 납니다. 무료로 가입하면 게시판에서 연습 인증과 질문을 나눕니다.</p>
+      <div class="btns">${back ? `<button class="btn primary" data-act="resume">${INST[back].n} 이어서 하기</button>` : cm.me ? `<button class="btn primary" data-act="start">악기 고르고 시작하기</button>` : `<button class="btn primary" data-act="join">가입하고 시작하기</button>`}${cm.me ? (back ? `<button class="btn" data-act="start">다른 악기 고르기</button>` : `<button class="btn" data-act="community">게시판 둘러보기</button>`) : (back ? `<button class="btn" data-act="join">로그인 · 가입</button>` : `<button class="btn" data-act="start">가입 없이 시작하기</button>`)}</div>
       <div class="stats"><div><b>${L_GUITAR.length + L_BASS.length}</b><span>레슨</span></div><div><b>${Object.keys(CH).length}</b><span>코드</span></div><div><b>${nPat}</b><span>리듬 패턴</span></div><div><b>${SONGS.length}</b><span>연습곡</span></div></div>
     </div></section>
   <section class="sec first" id="pick"><h2>어떤 악기로 시작할까요?</h2><p>나중에 언제든 바꿀 수 있고, 진도는 악기별로 따로 저장됩니다.</p>
@@ -1220,7 +1221,12 @@ async function initCloud() {
 }
 async function loadMe() {
   cm.me = cm.user ? (await sb.from('profiles').select('*').eq('id', cm.user.id).single()).data : null;
-  boardRender();
+  if (state.page === 'landing' || !state.inst && state.tab !== 'board') {
+    const y = scrollY; render(); scrollTo(0, y);
+    // 가입 확인 메일에서 막 돌아온 사람은 악기 선택으로 안내한다 (한 번만)
+    if (welcome && cm.me && !cm.greeted && !state.inst) { cm.greeted = true; ACT.start(); }
+    else if (cm.pick && cm.me) { cm.pick = false; ACT.start(); }
+  } else boardRender();
 }
 async function loadPosts(more) {
   const from = more ? cm.posts.length : 0;
@@ -1245,7 +1251,7 @@ function viewBoard() {
   const acct = `<div class="row acct">${me ? `<span><b>${esc(me.nickname)}</b>${admin ? ' <span class="tag">운영자</span>' : ''}${me.banned ? ' <span class="tag">글쓰기 제한</span>' : ''}</span><span class="chips">${admin ? chip('bview', 'admin', '운영자 관리', cm.view === 'admin') : ''}${chip('blogout', '', '로그아웃')}</span>`
     : `<span class="dim">글과 댓글은 로그인 후 쓸 수 있습니다.</span>${chip('bview', 'auth', '로그인 · 가입')}`}</div>`;
   const backBtn = `<button class="backbar" data-act="bview" data-v="list">‹ 글 목록으로</button>`;
-  if (cm.view === 'auth') return `${head}${backBtn}<section class="card"><h2>${cm.signup ? '회원 가입' : '로그인'}</h2>${msg}
+  if (cm.view === 'auth') return `${cm.go ? `<button class="backbar" data-act="home">‹ 첫 화면으로</button>` : backBtn}<section class="card"><h2>${cm.signup ? '회원 가입' : '로그인'}</h2>${msg}
     <input class="field" id="aemail" type="email" placeholder="이메일" autocomplete="email">
     <input class="field" id="apass" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="${cm.signup ? 'new-password' : 'current-password'}">
     ${cm.signup ? `<input class="field" id="anick" maxlength="16" placeholder="닉네임 (2~16자)">` : ''}
@@ -1565,13 +1571,23 @@ const ACT = {
   resume() { state.page = 'app'; render(); top0(); },
   home() { state.page = 'landing'; render(); top0(); },
   community() { state.page = 'app'; ACT.tab('board'); },
+  join() { cm.go = true; cm.signup = true; cm.msg = ''; cm.view = 'auth'; state.page = 'app'; state.tab = 'board'; state.lesson = state.song = state.back = null; render(); top0(); },
+  // 첫 화면에서 가입·로그인하러 온 사람은 끝나면 악기 선택이나 레슨으로 보낸다
+  afterAuth() {
+    if (!cm.go) { cm.view = 'list'; return loadPosts(); }
+    cm.go = false; cm.view = 'list';
+    if (state.inst) { state.tab = 'learn'; render(); return top0(); }
+    state.tab = 'learn'; state.page = 'landing'; cm.pick = true; render(); top0();
+    // 프로필을 불러온 뒤 loadMe 가 악기 선택으로 내려 준다. 늦어도 1.5초 뒤에는 내려간다.
+    setTimeout(() => { if (cm.pick) { cm.pick = false; if (state.page === 'landing') ACT.start(); } }, 1500);
+  },
   inst(v) { if (!state.inst && state.tab === 'board') state.tab = 'learn'; state.page = 'app'; state.inst = v; state.lesson = state.back = null; state.quiz.q = null; micLock = null; if (state.song) songPreset(); voicing(); save(); render(); top0(); },
   tab(v) {
     // 악기를 아직 고르지 않았으면 악기 선택으로 보낸다. 고르고 나면 누른 메뉴가 열린다.
     if (!state.inst && v !== 'board') { state.tab = v; state.page = 'landing'; render(); return ACT.start(); }
     state.tab = v; state.lesson = state.song = state.back = null; resetLoop(); if (v === 'board' && sb) { cm.view = 'list'; cm.msg = ''; loadPosts(); } render(); top0();
   },
-  bview(v) { cm.req++; cm.view = v; cm.msg = ''; if (v === 'list') loadPosts(); if (v === 'admin') loadMembers(); render(); top0(); },
+  bview(v) { cm.req++; cm.view = v; cm.msg = ''; cm.go = false; if (v === 'list') loadPosts(); if (v === 'admin') loadMembers(); render(); top0(); },
   bcat(v) { cm.cat = v; cm.msg = ''; loadPosts(); },
   bmore() { loadPosts(true); },
   bmode() { cm.signup = !cm.signup; render(); },
@@ -1620,7 +1636,7 @@ const ACT = {
   async blogin() {
     const {error} = await sb.auth.signInWithPassword({email:$('#aemail').value.trim(), password:$('#apass').value});
     if (error) return say(errText(error));
-    cm.view = 'list'; loadPosts();
+    ACT.afterAuth();
   },
   async bsignup() {
     const nickname = $('#anick').value.trim(), password = $('#apass').value;
@@ -1628,8 +1644,8 @@ const ACT = {
     if (password.length < 6) return say('비밀번호는 6자 이상이어야 합니다.');
     const {data, error} = await sb.auth.signUp({email:$('#aemail').value.trim(), password, options:{data:{nickname}}});
     if (error) return say(errText(error));
-    if (!data.session) return say('가입 확인 메일을 보냈습니다. 메일의 링크를 누른 뒤 로그인해 주세요.');
-    cm.view = 'list'; loadPosts();
+    if (!data.session) return say('가입 확인 메일을 보냈습니다. 메일의 링크를 누르면 가입이 끝나고 이 사이트로 돌아옵니다.');
+    ACT.afterAuth();
   },
   async blogout() { await sb.auth.signOut(); cm.me = cm.user = null; cm.view = 'list'; render(); },
   async ssave(v) {
