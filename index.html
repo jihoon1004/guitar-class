@@ -1,0 +1,1718 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>기타 교실 — 생기초부터 마스터까지</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{
+  --bg:#14110f; --surface:#1f1b18; --surface-2:#2b2521; --line:#40372f;
+  --ink:#f6f0e8; --ink-dim:#b9ad9f;
+  --accent:#ff8a4c; --accent-ink:#1c1108; --green:#6ddc98;
+  --wood:#3a281d; --inlay:#5a4333; --fret:#a9a296; --nut:#efe6d2; --string:#dcc98f;
+  --hit:rgba(255,255,255,.09); --shadow:rgba(0,0,0,.45);
+  --radius:14px;
+  --bad:#ff8f85; --accent-a:#ff8a4c; --accent-e:#7cc0ff; --accent-b:#8fe0a8; --sun:#ffd166;
+  --art-top:#dba862; --art-edge:#8a5a2b; --art-neck:#3d2a1e; --art-metal:#d6d0c4;
+  --art-e:#4f9ee6; --art-e2:#285f9c; --art-b:#cf5046; --art-b2:#7d2a25; --art-guard:#f6f0e8;
+}
+body[data-inst=electric]{--accent:var(--accent-e)}
+body[data-inst=bass]{--accent:var(--accent-b)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Pretendard,'Noto Sans KR',-apple-system,sans-serif;line-height:1.55;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+h1,h2,h3,p{margin:0}
+h1{font-size:28px;line-height:1.25;letter-spacing:-.02em}
+h2{font-size:21px;letter-spacing:-.01em}
+h3{font-size:14px;color:var(--ink-dim);font-weight:600;margin:22px 0 10px}
+.dim{color:var(--ink-dim);font-size:14px}
+
+.top{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line)}
+.seg{display:flex;flex:1;background:var(--surface);border-radius:12px;padding:3px}
+.seg button{flex:1;min-height:40px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink-dim)}
+.seg button.on{background:var(--accent);color:var(--accent-ink)}
+.pill{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-dim)}
+.pill.on{border-color:var(--accent);color:var(--accent)}
+
+main{max-width:760px;margin:0 auto;padding:16px 16px 100px}
+.nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+.nav button{flex:1;min-width:0;max-width:150px;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10.5px;font-weight:600;color:var(--ink-dim)}
+.nav button.on{color:var(--accent)}
+.nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:0 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px}
+.chip small{font-size:11px;font-weight:500;color:var(--ink-dim)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.chip.on small{color:var(--accent-ink)}
+.chip.sm{min-width:44px;justify-content:center;padding:0 10px}
+.btn{min-height:46px;padding:0 18px;border-radius:12px;background:var(--surface-2);font-weight:600;font-size:15px}
+.btn.primary{background:var(--accent);color:var(--accent-ink)}
+.btn:disabled{opacity:.4;cursor:default}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.backbar{display:block;width:100%;text-align:left;min-height:44px;padding:0 14px;margin-bottom:12px;border-radius:12px;border:1px dashed var(--accent);color:var(--accent);font-size:14px;font-weight:600}
+
+
+.bar{height:8px;border-radius:4px;background:var(--surface-2);overflow:hidden;margin:12px 0}
+.bar i{display:block;height:100%;width:100%;background:var(--accent);transform-origin:left;transform:scaleX(var(--p))}
+.lv{margin-top:26px}
+.lv-head{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.lv-head b{font-size:12px;font-weight:700;color:var(--accent-ink);background:var(--accent);border-radius:6px;padding:2px 8px}
+.lv-head strong{font-size:18px}
+.lv-head span{margin-left:auto;font-size:13px;color:var(--ink-dim)}
+.lesson{display:flex;align-items:center;gap:12px;width:100%;text-align:left;min-height:56px;padding:10px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line);margin-bottom:8px}
+.lesson i{flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-style:normal;font-size:13px;font-weight:700;color:var(--ink-dim)}
+.lesson.done i{background:var(--green);border-color:var(--green);color:var(--accent-ink)}
+.lesson span{font-weight:600}
+.body p{margin-top:12px}
+.tips{margin:16px 0 0;padding:14px 14px 14px 32px;background:var(--surface-2);border-radius:12px;font-size:14.5px}
+.tips li+li{margin-top:6px}
+
+.board-wrap{overflow-x:auto;margin-top:12px;border-radius:10px}
+.board-wrap.narrow{max-width:540px}
+.board{display:block;width:100%;height:auto;user-select:none}
+.board .wood{fill:var(--wood)}
+.board .inlay{fill:var(--inlay)}
+.board .fret{stroke:var(--fret);stroke-width:2}
+.board .nut{stroke:var(--nut);stroke-width:6}
+.board .str{stroke:var(--string)}
+.board .str.vib{animation:vib .3s}
+@keyframes vib{25%{transform:translateY(1.6px)}50%{transform:translateY(-1.6px)}75%{transform:translateY(1px)}}
+.board text{font-size:11px;font-weight:700;text-anchor:middle;dominant-baseline:central;fill:var(--ink-dim)}
+.board .sn{font-size:9px;font-weight:500}
+.board .hit{fill:transparent;cursor:pointer}
+.board .hit:hover{fill:var(--hit)}
+.dot{pointer-events:none;transform-box:fill-box;transform-origin:center;transition:transform .1s}
+.dot circle{fill:var(--ink)}
+.dot text{fill:var(--accent-ink)}
+.dot.root circle{fill:var(--accent)}
+.dot.open circle{fill:none;stroke:var(--ink);stroke-width:2}
+.dot.ghost circle{fill:var(--surface-2);stroke:var(--line)}
+.dot.ghost text{fill:var(--ink)}
+.dot.on{transform:scale(1.35)}
+.dot.on circle{fill:var(--green)}
+.barre{fill:var(--ink);opacity:.5}
+.legend{font-size:12.5px;color:var(--ink-dim);margin-top:10px}
+
+.slots{display:grid;gap:3px;margin-top:14px}
+.slot{display:flex;flex-direction:column;align-items:center;padding:8px 0 6px;border-radius:8px;background:var(--surface-2);min-width:0}
+.slot b{font-size:20px;line-height:1.2}
+.slot i{font-style:normal;font-size:11px;color:var(--ink-dim);min-height:17px}
+.slot.beat i{color:var(--ink);font-weight:700}
+.slot.ghost b{opacity:.22}
+.slot.on{background:var(--accent);color:var(--accent-ink)}
+.slot.on i{color:var(--accent-ink)}
+.slot.on.ghost b{opacity:.45}
+.ctrl{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}
+.ctrl .step{width:44px;height:44px;border-radius:12px;background:var(--surface-2);font-size:20px;font-weight:700}
+.ctrl output{min-width:74px;text-align:center;font-weight:700;font-variant-numeric:tabular-nums}
+.ctrl input{flex:1;min-width:120px;height:44px;accent-color:var(--accent)}
+.pc{min-width:48px;min-height:36px;padding:0 10px;border-radius:9px;background:var(--surface-2);font-size:14px;font-weight:700;display:inline-grid;place-items:center}
+.pc.on{background:var(--accent);color:var(--accent-ink)}
+.pc.sel{box-shadow:0 0 0 2px var(--accent)}
+.tab.pickable{cursor:pointer}
+.tab .selbg{fill:var(--hit);stroke:var(--accent);stroke-width:1.5}
+.tune{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.tune button{min-height:60px;border-radius:12px;background:var(--surface-2);text-align:left;padding:8px 14px}
+.tune b{font-size:18px}
+.tune span{display:block;font-size:12px;color:var(--ink-dim)}
+.banner{display:grid;grid-template-columns:1fr 132px;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:14px}
+.banner div{padding:12px 0 12px 16px}
+.banner b{display:block;font-size:17px}
+.banner span{font-size:13px;color:var(--ink-dim)}
+.pend{transform-origin:120px 100px;transform:rotate(-20deg);transition:transform .4s ease-in-out}
+.pend.r{transform:rotate(20deg)}
+.rank{display:flex;align-items:center;gap:12px;margin-top:6px}
+.rank>svg{flex:none;width:46px;height:46px}
+.rank b{display:block;font-size:17px}
+.rank text,.medal text{font-size:11px;font-weight:800;text-anchor:middle;dominant-baseline:central;fill:var(--accent-ink)}
+.streak{margin-left:auto;display:inline-flex;align-items:center;gap:4px;font-size:14px;font-weight:700;color:var(--sun);white-space:nowrap}
+.streak svg{width:18px;height:18px;fill:var(--sun)}
+.today{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.today button{text-align:left;padding:14px;border-radius:var(--radius);background:var(--surface);border:1px solid var(--line)}
+.today em{display:block;font-style:normal;font-size:12px;font-weight:700;color:var(--accent)}
+.today b{display:block;margin-top:2px}
+.medals{display:grid;grid-template-columns:repeat(4,1fr);gap:12px 6px;margin-top:14px}
+.medal{text-align:center;font-size:11.5px;color:var(--ink)}
+.medal svg{display:block;width:44px;height:44px;margin:0 auto 4px}
+.medal.off{opacity:.3}
+.score{display:flex;gap:18px;margin-top:8px;font-size:14px;color:var(--ink-dim)}
+.score b{font-size:18px;color:var(--ink)}
+.quiz-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:14px}
+.quiz-opts .chip{justify-content:center;min-height:52px;font-size:16px}
+.chip.ok{background:var(--green);border-color:var(--green);color:var(--accent-ink)}
+.chip.no{background:var(--bad);border-color:var(--bad);color:var(--accent-ink)}
+.confetti{position:fixed;left:50%;top:42%;z-index:9;pointer-events:none}
+.confetti i{position:absolute;width:9px;height:14px;border-radius:2px;animation:pop 1.1s ease-out forwards}
+@keyframes pop{to{transform:translate(var(--x),var(--y)) rotate(var(--r));opacity:0}}
+.field.half{width:calc(50% - 5px)}
+.cc-live{display:flex;align-items:baseline;justify-content:space-between;margin-top:12px;color:var(--ink-dim)}
+.cc-live>b{font-size:56px;line-height:1;color:var(--ink)}
+.cc-live span b{color:var(--accent);font-size:18px}
+.cc-tap{width:100%;min-height:96px;font-size:20px}
+.ccgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.ccbox{padding:8px;border-radius:12px;border:2px solid var(--line)}
+.ccbox.on{border-color:var(--accent)}
+.ccbox .board-wrap{margin-top:4px}
+.gauge{display:block;width:100%;max-width:340px;margin:8px auto 0}
+.gauge line{stroke:var(--ink-dim);stroke-width:2;stroke-linecap:round}
+.gauge line.mid{stroke:var(--green);stroke-width:4}
+.gauge text{font-size:11px;fill:var(--ink-dim);text-anchor:middle}
+.gauge circle{fill:var(--accent)}
+.gauge #needle{stroke:var(--accent);stroke-width:4;transform-origin:120px 118px;transition:transform .12s}
+.gauge.ok #needle{stroke:var(--green)}
+.gauge.ok circle{fill:var(--green)}
+.tn{text-align:center;margin-bottom:12px}
+.tn b{display:block;font-size:26px}
+.tn span{font-size:13px;color:var(--ink-dim)}
+.tn p{margin-top:6px;font-weight:600}
+.chip.hit{border-color:var(--green);box-shadow:0 0 0 2px var(--green)}
+.notice{padding:10px 14px;border-radius:12px;background:var(--surface-2);border-left:4px solid var(--sun);margin-bottom:14px;font-size:14px}
+.field{display:block;width:100%;min-height:46px;padding:10px 12px;margin-top:10px;border-radius:12px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font:inherit}
+textarea.field{min-height:150px;resize:vertical}
+textarea.field.short{min-height:84px}
+.acct{margin-bottom:14px}
+.post-body{margin-top:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+.cmt{padding:12px 0;border-top:1px solid var(--line)}
+.cmt p{margin-top:4px;white-space:pre-wrap;overflow-wrap:anywhere}
+.cmt small{color:var(--ink-dim);margin-left:8px}
+.link{color:var(--ink-dim);font-size:13px;text-decoration:underline;min-height:44px;padding:0 6px}
+.art{display:block;width:100%;height:auto}
+.logo{display:flex;align-items:center;gap:8px;font-size:18px;font-weight:800}
+.logo svg{width:26px;height:26px;fill:var(--accent)}
+.home{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:var(--surface)}
+.home svg{width:24px;height:24px;fill:var(--accent)}
+.land{max-width:1040px;margin:0 auto;padding:0 16px 56px}
+.lnav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+.hero{display:grid;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.hero-text{padding:24px 20px 28px}
+.hero-text .eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px}
+.hero-text .lead{color:var(--ink-dim);margin-top:12px}
+.stats{display:grid;grid-template-columns:repeat(4,auto);gap:16px;justify-content:start;margin-top:24px}
+.stats b{display:block;font-size:22px;line-height:1.2}
+.stats span{font-size:12px;color:var(--ink-dim)}
+.sec{margin-top:52px}
+.sec>p{color:var(--ink-dim);margin-top:6px}
+.feat,.road,.picks{display:grid;gap:12px;margin-top:18px}
+.feat div{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.feat svg{width:28px;height:28px;fill:none;stroke:var(--accent);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.feat b{display:block;margin:10px 0 4px;font-size:17px}
+.feat span,.road span{font-size:14px;color:var(--ink-dim)}
+.road div{padding:14px 16px;border-radius:12px;background:var(--surface);border-left:4px solid var(--accent)}
+.road em{font-style:normal;font-size:12px;font-weight:700;color:var(--accent)}
+.road b{display:block;font-size:17px}
+.pick{display:block;width:100%;text-align:left;border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.pick .art{background:var(--surface-2);padding:22px 18px;max-height:170px}
+.pick div{padding:16px 18px 18px;border-top:3px solid var(--c)}
+.pick b{display:block;font-size:20px}
+.pick span{display:block;color:var(--ink-dim);font-size:14px;margin-top:4px}
+.pick em{display:block;font-style:normal;font-size:12px;font-weight:700;color:var(--c);margin-top:10px;letter-spacing:.08em}
+.foot{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-dim)}
+.tiles{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(132px,1fr);gap:10px;margin-top:18px;overflow-x:auto;padding:3px}
+.tile{display:block;text-align:left;border-radius:12px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
+.tile.on{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent)}
+.tile div{padding:8px 12px 10px}
+.tile b{display:block;font-size:15px}
+.tile span{font-size:12px;color:var(--ink-dim)}
+.deco-card{position:relative;overflow:hidden}
+.deco-card>*{position:relative}
+.deco-card>.deco{position:absolute;right:-90px;top:-34px;width:320px;opacity:.26;transform:rotate(-14deg);pointer-events:none}
+.lesson small{display:block;font-size:12.5px;font-weight:500;color:var(--ink-dim)}
+.lesson.more{border-style:dashed;color:var(--accent)}
+.lesson.more i{border-color:var(--accent);color:var(--accent)}
+.song-hero{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.song-hero .art{border-radius:10px}
+.tag{display:inline-flex;align-items:center;min-height:28px;padding:0 10px;border-radius:8px;background:var(--surface-2);font-size:12.5px;font-weight:600}
+.tabs{display:grid;grid-template-columns:repeat(2,1fr);row-gap:10px;margin-top:16px}
+.tab{display:block;width:100%;height:auto}
+.tab line{stroke:var(--line);stroke-width:1}
+.tab text{font-size:10.5px;font-weight:700;text-anchor:middle;dominant-baseline:central;fill:var(--ink)}
+.tab .cl{text-anchor:start;fill:var(--accent);font-size:10px}
+.nt rect{fill:var(--surface)}
+.nt.on rect{fill:var(--accent)}
+.nt.on text{fill:var(--accent-ink)}
+@media(min-width:700px){
+  .feat{grid-template-columns:repeat(2,1fr)}
+  .road{grid-template-columns:repeat(5,1fr)}
+  .road div{border-left:0;border-top:4px solid var(--accent)}
+  .tabs{grid-template-columns:repeat(4,1fr)}
+  .hero-text{padding:36px 32px}
+}
+@media(min-width:960px){
+  .hero{grid-template-columns:1fr 1.1fr;align-items:center}
+  .hero .art{order:2}
+  .feat{grid-template-columns:repeat(4,1fr)}
+  .picks{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:700px){
+  h1{font-size:36px}
+  .tune{grid-template-columns:repeat(3,1fr)}
+  .slot b{font-size:24px}
+}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="pick" viewBox="0 0 24 24"><path d="M12 22C9 17.5 3.5 12.5 3.5 8.5C3.5 4.5 7 2 12 2C17 2 20.5 4.5 20.5 8.5C20.5 12.5 15 17.5 12 22Z"/></symbol>
+  <symbol id="note" viewBox="0 0 20 30"><ellipse cx="7" cy="24" rx="6" ry="4.500"/><rect x="11.500" y="3" width="2" height="21"/><path d="M13 3c6 2 7 7 5 12-1-4-3-6-5-6Z"/></symbol>
+  <symbol id="star" viewBox="0 0 20 20"><path d="M10 0l2.500 7.500L20 10l-7.500 2.500L10 20l-2.500-7.500L0 10l7.500-2.500Z"/></symbol>
+
+  <symbol id="flame" viewBox="0 0 24 24"><path d="M12 2C13 6 18 8 18 14C18 18 15 21 12 21C9 21 6 18 6 14C6 11 8 10 8 7C10 8 11 9 11 11C12 9 12 6 12 2Z"/></symbol>
+  <symbol id="b-chords" viewBox="0 0 240 120">
+    <rect width="240" height="120" fill="var(--surface-2)"/>
+    <rect x="18" y="26" width="204" height="72" rx="4" fill="var(--wood)"/>
+    <rect x="18" y="26" width="6" height="72" fill="var(--nut)"/>
+    <g stroke="var(--fret)" stroke-width="2"><path d="M74 26v72M124 26v72M174 26v72"/></g>
+    <g stroke="var(--string)" stroke-width="1.200"><path d="M24 33H222M24 45H222M24 57H222M24 69H222M24 81H222M24 93H222"/></g>
+    <circle cx="49" cy="45" r="9" fill="var(--ink)"/><circle cx="99" cy="69" r="9" fill="var(--accent-a)"/><circle cx="149" cy="81" r="9" fill="var(--accent-e)"/><circle cx="199" cy="33" r="9" fill="var(--accent-b)"/>
+    <use href="#star" x="206" y="4" width="14" height="14" fill="var(--sun)"/>
+  </symbol>
+  <symbol id="b-scales" viewBox="0 0 240 120">
+    <rect width="240" height="120" fill="var(--surface-2)"/>
+    <rect x="0" y="34" width="240" height="60" fill="var(--wood)"/>
+    <g stroke="var(--fret)" stroke-width="2"><path d="M40 34v60M90 34v60M140 34v60M190 34v60"/></g>
+    <g stroke="var(--string)" stroke-width="1.200"><path d="M0 42H240M0 54H240M0 66H240M0 78H240M0 88H240"/></g>
+    <path d="M18 88L65 78L115 66L165 54L215 42" fill="none" stroke="var(--sun)" stroke-width="2" stroke-dasharray="4 5"/>
+    <circle cx="18" cy="88" r="9" fill="var(--accent-a)"/><circle cx="65" cy="78" r="8" fill="var(--ink)"/><circle cx="115" cy="66" r="8" fill="var(--ink)"/><circle cx="165" cy="54" r="8" fill="var(--ink)"/><circle cx="215" cy="42" r="9" fill="var(--accent-a)"/>
+    <use href="#star" x="204" y="8" width="16" height="16" fill="var(--sun)"/><use href="#note" x="30" y="2" width="16" height="24" fill="var(--accent-e)"/>
+  </symbol>
+  <symbol id="b-tuner" viewBox="0 0 240 120">
+    <rect width="240" height="120" fill="var(--surface-2)"/>
+    <rect x="0" y="48" width="70" height="26" fill="var(--art-neck)"/><rect x="68" y="46" width="5" height="30" fill="var(--art-guard)"/>
+    <path d="M73 44L138 34C150 34 154 46 154 61C154 76 150 88 138 88L73 78Z" fill="var(--art-top)" stroke="var(--art-edge)" stroke-width="3" stroke-linejoin="round"/>
+    <g fill="var(--art-metal)"><circle cx="90" cy="27" r="7"/><circle cx="112" cy="23" r="7"/><circle cx="134" cy="21" r="7"/><circle cx="90" cy="95" r="7"/><circle cx="112" cy="99" r="7"/><circle cx="134" cy="101" r="7"/></g>
+    <g stroke="var(--art-metal)" stroke-width="1"><path d="M0 52H100M0 56.500H122M0 61H144M0 65.500H122M0 70H100"/></g>
+    <path d="M172 92C172 62 190 44 206 44C222 44 236 62 236 92" fill="none" stroke="var(--line)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M198 46C202 44 210 44 214 46" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M204 92L210 50" stroke="var(--accent-a)" stroke-width="3" stroke-linecap="round"/><circle cx="204" cy="92" r="6" fill="var(--accent-a)"/>
+  </symbol>
+  <symbol id="b-quiz" viewBox="0 0 240 120">
+    <rect width="240" height="120" fill="var(--surface-2)"/>
+    <circle cx="120" cy="60" r="40" fill="var(--accent-e)"/>
+    <path d="M106 50C106 38 114 32 122 32C131 32 138 38 138 46C138 56 124 56 124 68" fill="none" stroke="var(--bg)" stroke-width="9" stroke-linecap="round"/><circle cx="124" cy="84" r="6" fill="var(--bg)"/>
+    <use href="#star" x="34" y="20" width="24" height="24" fill="var(--sun)"/><use href="#star" x="186" y="70" width="18" height="18" fill="var(--sun)"/><use href="#star" x="58" y="82" width="12" height="12" fill="var(--accent-b)"/>
+    <use href="#pick" x="184" y="14" width="30" height="30" fill="var(--accent-a)"/>
+  </symbol>
+  <symbol id="b-board" viewBox="0 0 240 120">
+    <rect width="240" height="120" fill="var(--surface-2)"/>
+    <path d="M40 24H150C158 24 164 30 164 38V66C164 74 158 80 150 80H82L60 98V80H40C32 80 26 74 26 66V38C26 30 32 24 40 24Z" fill="var(--accent-e)"/>
+    <g fill="var(--bg)"><rect x="44" y="40" width="96" height="7" rx="3.500"/><rect x="44" y="56" width="64" height="7" rx="3.500"/></g>
+    <path d="M128 58H204C210 58 214 62 214 68V88C214 94 210 98 204 98H196V112L178 98H128C122 98 118 94 118 88V68C118 62 122 58 128 58Z" fill="var(--accent-a)"/>
+    <use href="#note" x="156" y="64" width="18" height="27" fill="var(--bg)"/>
+    <use href="#star" x="190" y="18" width="18" height="18" fill="var(--sun)"/>
+  </symbol>
+  <symbol id="a-rock" viewBox="0 0 320 160">
+    <rect width="320" height="160" fill="var(--bg)"/>
+    <polygon points="0,0 130,0 50,160 0,160" fill="var(--art-b)" opacity=".2"/>
+    <rect x="214" y="22" width="88" height="26" rx="4" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <g fill="var(--accent-a)"><circle cx="228" cy="35" r="4"/><circle cx="242" cy="35" r="4"/><circle cx="256" cy="35" r="4"/></g>
+    <rect x="210" y="52" width="96" height="100" rx="5" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
+    <g fill="var(--bg)"><circle cx="235" cy="78" r="18"/><circle cx="281" cy="78" r="18"/><circle cx="235" cy="124" r="18"/><circle cx="281" cy="124" r="18"/></g>
+    <g fill="var(--line)"><circle cx="235" cy="78" r="6"/><circle cx="281" cy="78" r="6"/><circle cx="235" cy="124" r="6"/><circle cx="281" cy="124" r="6"/></g>
+    <polygon points="176,10 146,78 168,78 152,146 200,62 176,62 194,10" fill="var(--sun)"/>
+    <use href="#g-electric" width="400" height="140" transform="translate(2,170) rotate(-32) scale(.5)"/>
+  </symbol>
+  <symbol id="a-inst" viewBox="0 0 320 160">
+    <rect width="320" height="160" fill="var(--surface-2)"/>
+    <rect x="196" y="40" width="104" height="72" rx="18" fill="var(--art-b)"/>
+    <polygon points="236,58 236,94 268,76" fill="var(--art-guard)"/>
+    <use href="#note" x="170" y="10" width="18" height="27" fill="var(--sun)"/><use href="#star" x="284" y="122" width="16" height="16" fill="var(--sun)"/>
+    <use href="#g-acoustic" width="400" height="140" transform="translate(14,170) rotate(-30) scale(.54)"/>
+  </symbol>
+
+  <symbol id="g-acoustic" viewBox="0 0 400 140">
+    <path d="M20 70C20 26 58 6 96 8C120 10 122 34 140 36C150 37 156 26 170 26C190 26 200 44 200 70C200 96 190 114 170 114C156 114 150 103 140 104C122 106 120 130 96 132C58 134 20 114 20 70Z" fill="var(--art-top)" stroke="var(--art-edge)" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M166 85c8 2 14 8 16 16-10 2-22-2-28-10 4-3 8-5 12-6Z" fill="var(--art-neck)" opacity=".8"/>
+    <circle cx="150" cy="70" r="23" fill="none" stroke="var(--art-edge)" stroke-width="3"/>
+    <circle cx="150" cy="70" r="17" fill="var(--bg)"/>
+    <rect x="56" y="50" width="12" height="40" rx="3" fill="var(--art-neck)"/>
+    <rect x="61" y="56" width="2.500" height="28" fill="var(--art-guard)"/>
+    <rect x="194" y="60" width="152" height="20" fill="var(--art-neck)"/>
+    <g stroke="var(--art-metal)" stroke-width="1.500"><path d="M213 60v20M233 60v20M252 60v20M270 60v20M287 60v20M303 60v20M318 60v20M332 60v20"/></g>
+    <rect x="344" y="59" width="4" height="22" fill="var(--art-guard)"/>
+    <path d="M348 58l38-6c7 0 9 7 9 18s-2 18-9 18l-38-6Z" fill="var(--art-edge)"/>
+    <g fill="var(--art-metal)"><circle cx="358" cy="50" r="4"/><circle cx="371" cy="48" r="4"/><circle cx="384" cy="47" r="4"/><circle cx="358" cy="90" r="4"/><circle cx="371" cy="92" r="4"/><circle cx="384" cy="93" r="4"/></g>
+    <g stroke="var(--art-metal)" stroke-width=".8"><path d="M62 63H386M62 65.800H386M62 68.600H386M62 71.400H386M62 74.200H386M62 77H386"/></g>
+  </symbol>
+
+  <symbol id="g-electric" viewBox="0 0 400 140">
+    <path d="M20 70C18 35 50 18 90 22c30 3 45 16 70 12 20-4 35-20 50-16-5 14-20 30-22 40v26c4 12 17 24 20 38-18 6-36-10-53-14-25-4-40 10-70 12C45 122 22 105 20 70Z" fill="var(--art-e)" stroke="var(--art-e2)" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M72 46c30-7 68-3 98 2l10 10v24c-10 14-32 22-62 24-28 0-48-13-54-30-2-12 2-23 8-30Z" fill="var(--art-guard)"/>
+    <g fill="var(--bg)"><rect x="92" y="52" width="8" height="36" rx="3"/><rect x="123" y="52" width="8" height="36" rx="3"/><rect x="154" y="52" width="8" height="36" rx="3"/></g>
+    <rect x="50" y="54" width="13" height="32" rx="2" fill="var(--art-metal)"/>
+    <g fill="var(--art-e2)"><circle cx="84" cy="99" r="5"/><circle cx="103" cy="103" r="5"/></g>
+    <rect x="184" y="61" width="162" height="18" fill="var(--art-top)"/>
+    <g stroke="var(--art-neck)" stroke-width="1.500"><path d="M204 61v18M224 61v18M243 61v18M261 61v18M278 61v18M294 61v18M309 61v18M323 61v18M336 61v18"/></g>
+    <path d="M346 59c14-7 34-11 47-6 7 4 5 15-2 19-10 6-30 9-45 9Z" fill="var(--art-top)" stroke="var(--art-edge)" stroke-width="1.500"/>
+    <g fill="var(--art-metal)"><circle cx="356" cy="52" r="3.500"/><circle cx="364" cy="49" r="3.500"/><circle cx="372" cy="47" r="3.500"/><circle cx="380" cy="46" r="3.500"/><circle cx="388" cy="46" r="3.500"/><circle cx="395" cy="48" r="3.500"/></g>
+    <g stroke="var(--art-metal)" stroke-width=".8"><path d="M58 63.500H390M58 66H388M58 68.500H386M58 71H384M58 73.500H382M58 76H380"/></g>
+  </symbol>
+
+  <symbol id="g-bass" viewBox="0 0 440 140">
+    <path d="M18 72C16 38 46 22 84 26c28 2 44 12 68 6 22-6 40-22 58-20-6 16-24 34-26 46v24c2 12 12 22 12 36-16 4-28-8-44-12-24-4-38 8-66 10C44 118 20 104 18 72Z" fill="var(--art-b)" stroke="var(--art-b2)" stroke-width="5" stroke-linejoin="round"/>
+    <path d="M88 50c24-5 52-2 80 4l6 8v18c-12 12-30 18-54 18-20-2-34-12-38-24-2-10 0-18 6-24Z" fill="var(--art-neck)"/>
+    <g fill="var(--art-metal)"><rect x="102" y="56" width="10" height="30" rx="3"/><rect x="136" y="56" width="10" height="30" rx="3"/><rect x="46" y="56" width="14" height="30" rx="2"/></g>
+    <g fill="var(--art-guard)"><circle cx="78" cy="98" r="5"/><circle cx="96" cy="103" r="5"/></g>
+    <rect x="182" y="62" width="202" height="16" fill="var(--art-neck)"/>
+    <g stroke="var(--art-metal)" stroke-width="1.500"><path d="M206 62v16M229 62v16M251 62v16M272 62v16M292 62v16M311 62v16M329 62v16M346 62v16M362 62v16M375 62v16"/></g>
+    <rect x="382" y="61" width="4" height="18" fill="var(--art-guard)"/>
+    <path d="M386 60c14-7 30-9 44-4 6 4 4 15-2 19-10 5-26 7-42 7Z" fill="var(--art-b2)"/>
+    <g fill="var(--art-metal)"><circle cx="396" cy="51" r="5"/><circle cx="408" cy="48" r="5"/><circle cx="420" cy="47" r="5"/><circle cx="431" cy="49" r="5"/></g>
+    <g stroke="var(--art-metal)" stroke-width="1.200"><path d="M54 64H428M54 68H424M54 72H420M54 76H416"/></g>
+  </symbol>
+
+  <symbol id="a-stage" viewBox="0 0 800 400">
+    <rect width="800" height="400" fill="var(--bg)"/>
+    <polygon points="150,30 20,362 290,362" fill="var(--accent-a)" opacity=".2"/>
+    <polygon points="400,30 250,372 550,372" fill="var(--sun)" opacity=".15"/>
+    <polygon points="650,30 510,362 780,362" fill="var(--accent-e)" opacity=".2"/>
+    <polygon points="280,30 230,362 400,362" fill="var(--accent-b)" opacity=".09"/>
+    <polygon points="520,30 400,362 570,362" fill="var(--accent-a)" opacity=".09"/>
+    <rect y="16" width="800" height="10" fill="var(--surface-2)"/>
+    <g fill="var(--line)"><rect x="138" y="22" width="24" height="14" rx="3"/><rect x="268" y="22" width="24" height="14" rx="3"/><rect x="388" y="22" width="24" height="14" rx="3"/><rect x="508" y="22" width="24" height="14" rx="3"/><rect x="638" y="22" width="24" height="14" rx="3"/></g>
+    <ellipse cx="400" cy="358" rx="392" ry="32" fill="var(--surface-2)"/>
+    <ellipse cx="155" cy="358" rx="120" ry="13" fill="var(--accent-a)" opacity=".22"/>
+    <ellipse cx="400" cy="364" rx="140" ry="13" fill="var(--sun)" opacity=".18"/>
+    <ellipse cx="645" cy="358" rx="120" ry="13" fill="var(--accent-e)" opacity=".22"/>
+    <rect x="646" y="238" width="112" height="118" rx="8" fill="var(--surface)" stroke="var(--line)" stroke-width="3"/>
+    <rect x="658" y="264" width="88" height="80" rx="4" fill="var(--bg)"/>
+    <circle cx="702" cy="304" r="28" fill="var(--surface-2)"/><circle cx="702" cy="304" r="9" fill="var(--line)"/>
+    <g fill="var(--accent-a)"><circle cx="668" cy="251" r="4"/><circle cx="684" cy="251" r="4"/><circle cx="700" cy="251" r="4"/></g>
+    <rect x="44" y="272" width="84" height="86" rx="7" fill="var(--surface)" stroke="var(--line)" stroke-width="3"/>
+    <circle cx="86" cy="320" r="24" fill="var(--bg)"/><circle cx="86" cy="320" r="8" fill="var(--line)"/>
+    <g stroke="var(--art-metal)" stroke-width="4" stroke-linecap="round"><path d="M298 358V176M274 358h48M298 176l-22-14"/></g>
+    <rect x="258" y="150" width="26" height="14" rx="7" fill="var(--art-metal)" transform="rotate(32 271 157)"/>
+    <use href="#g-electric" width="400" height="140" transform="translate(148,362) rotate(-80) scale(.7)"/>
+    <use href="#g-acoustic" width="400" height="140" transform="translate(352,368) rotate(-86) scale(.76)"/>
+    <use href="#g-bass" width="440" height="140" transform="translate(528,364) rotate(-97) scale(.68)"/>
+    <g fill="var(--bg)"><rect y="388" width="800" height="12"/><circle cx="40" cy="398" r="26"/><circle cx="108" cy="402" r="22"/><circle cx="172" cy="396" r="25"/><circle cx="240" cy="404" r="23"/><circle cx="312" cy="398" r="26"/><circle cx="380" cy="404" r="22"/><circle cx="446" cy="397" r="25"/><circle cx="516" cy="404" r="23"/><circle cx="584" cy="398" r="26"/><circle cx="652" cy="403" r="22"/><circle cx="718" cy="397" r="25"/><circle cx="780" cy="403" r="24"/></g>
+    <g stroke="var(--bg)" stroke-width="11" stroke-linecap="round"><path d="M196 392l-10-46M336 392l14-50M470 392l-8-44M608 392l12-48"/></g>
+  </symbol>
+
+  <symbol id="a-kids" viewBox="0 0 320 160">
+    <rect width="320" height="160" fill="var(--surface-2)"/>
+    <circle cx="262" cy="46" r="26" fill="var(--sun)"/><circle cx="274" cy="38" r="24" fill="var(--surface-2)"/>
+    <g fill="var(--sun)"><use href="#star" x="34" y="18" width="18" height="18"/><use href="#star" x="112" y="12" width="12" height="12"/><use href="#star" x="176" y="34" width="16" height="16"/><use href="#star" x="78" y="56" width="10" height="10"/><use href="#star" x="214" y="92" width="12" height="12"/></g>
+    <use href="#note" x="286" y="96" width="18" height="27" fill="var(--accent-b)"/>
+    <use href="#g-acoustic" width="400" height="140" transform="translate(28,168) rotate(-28) scale(.56)"/>
+  </symbol>
+  <symbol id="a-classic" viewBox="0 0 320 160">
+    <rect width="320" height="160" fill="var(--surface-2)"/>
+    <g stroke="var(--ink-dim)" stroke-width="1.200" opacity=".55"><path d="M0 28H320M0 38H320M0 48H320M0 58H320M0 68H320"/></g>
+    <g fill="var(--ink)"><use href="#note" x="150" y="26" width="20" height="30"/><use href="#note" x="190" y="16" width="20" height="30"/><use href="#note" x="230" y="31" width="20" height="30"/><use href="#note" x="270" y="21" width="20" height="30"/></g>
+    <use href="#g-acoustic" width="400" height="140" transform="translate(20,172) rotate(-22) scale(.58)"/>
+  </symbol>
+  <symbol id="a-legend" viewBox="0 0 320 160">
+    <rect width="320" height="160" fill="var(--bg)"/>
+    <polygon points="70,0 0,150 150,150" fill="var(--accent-a)" opacity=".22"/>
+    <polygon points="170,0 100,150 250,150" fill="var(--sun)" opacity=".16"/>
+    <polygon points="270,0 190,150 320,150" fill="var(--accent-e)" opacity=".22"/>
+    <ellipse cx="160" cy="150" rx="170" ry="16" fill="var(--surface-2)"/>
+    <rect x="232" y="88" width="58" height="62" rx="5" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/><circle cx="261" cy="122" r="16" fill="var(--bg)"/>
+    <g stroke="var(--art-metal)" stroke-width="3" stroke-linecap="round"><path d="M70 150V62M58 150h24"/></g><rect x="60" y="50" width="20" height="11" rx="5.500" fill="var(--art-metal)"/>
+    <use href="#g-electric" width="400" height="140" transform="translate(112,154) rotate(-76) scale(.38)"/>
+  </symbol>
+  <symbol id="a-pop" viewBox="0 0 320 160">
+    <rect width="320" height="160" fill="var(--surface-2)"/>
+    <circle cx="246" cy="80" r="64" fill="var(--bg)"/>
+    <g fill="none" stroke="var(--line)" stroke-width="1.500"><circle cx="246" cy="80" r="54"/><circle cx="246" cy="80" r="44"/><circle cx="246" cy="80" r="34"/></g>
+    <circle cx="246" cy="80" r="22" fill="var(--accent-e)"/><circle cx="246" cy="80" r="3.500" fill="var(--bg)"/>
+    <use href="#note" x="150" y="18" width="18" height="27" fill="var(--accent-a)"/>
+    <use href="#g-electric" width="400" height="140" transform="translate(8,166) rotate(-26) scale(.56)"/>
+  </symbol>
+  <symbol id="a-kpop" viewBox="0 0 320 160">
+    <rect width="320" height="160" fill="var(--bg)"/>
+    <circle cx="60" cy="36" r="18" fill="var(--sun)" opacity=".9"/>
+    <g fill="var(--surface-2)"><rect x="120" y="70" width="34" height="90"/><rect x="158" y="44" width="40" height="116"/><rect x="202" y="82" width="30" height="78"/><rect x="236" y="56" width="44" height="104"/><rect x="284" y="92" width="36" height="68"/></g>
+    <g fill="var(--sun)" opacity=".8"><rect x="166" y="54" width="6" height="8"/><rect x="182" y="70" width="6" height="8"/><rect x="128" y="82" width="6" height="8"/><rect x="246" y="68" width="6" height="8"/><rect x="262" y="88" width="6" height="8"/><rect x="210" y="94" width="6" height="8"/><rect x="294" y="104" width="6" height="8"/><rect x="166" y="96" width="6" height="8"/></g>
+    <rect y="150" width="320" height="10" fill="var(--surface)"/>
+    <use href="#g-acoustic" width="400" height="140" transform="translate(18,170) rotate(-34) scale(.52)"/>
+  </symbol>
+</svg>
+<script>
+// 게시판 연결 정보. Supabase 의 Project URL 과 anon(공개) 키를 넣는다. 설정 방법은 guitar_class_supabase.sql 참고.
+const CLOUD = {url:'https://tkazbgatdxvdhjswbxgk.supabase.co', key:'sb_publishable_I0eI5_0bZXFI4Qnm8BIB1w_3hthAoQO'};
+const $ = s => document.querySelector(s);
+const NAMES = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const DEG = ['R','♭2','2','♭3','3','4','♭5','5','♭6','6','♭7','7'];
+const FINGERS = '1 검지 · 2 중지 · 3 약지 · 4 소지';
+const INST = {
+  acoustic: {n:'통기타', d:'코드 반주와 핑거스타일의 기본기. 처음이라면 여기서 시작하세요.', tag:'6줄 · E A D G B E', c:'var(--accent-a)', art:'g-acoustic', vb:'0 0 400 140', t:[40,45,50,55,59,64]},
+  electric: {n:'일렉기타', d:'파워 코드, 리프, 솔로. 드라이브 톤으로 록 사운드까지.', tag:'6줄 · E A D G B E', c:'var(--accent-e)', art:'g-electric', vb:'0 0 400 140', t:[40,45,50,55,59,64]},
+  bass: {n:'베이스', d:'밴드의 뼈대. 루트와 리듬으로 곡 전체를 받쳐 줍니다.', tag:'4줄 · E A D G', c:'var(--accent-b)', art:'g-bass', vb:'0 0 440 140', t:[28,33,38,43]},
+};
+const LEVELS = [
+  ['생기초','악기와 친해지기'],['초급','기본기 다지기'],['중급','리듬과 폼 확장'],['고급','스케일과 표현력'],['마스터','화성·모드·나만의 연주'],
+];
+
+const CH = {};
+[
+  ['Em','022000','023000','오픈 코드',1],['Am','x02210','002310','오픈 코드',1],
+  ['C','x32010','032010','오픈 코드',2],['G','320003','210003','오픈 코드',2],['D','xx0232','000132','오픈 코드',2],
+  ['E','022100','023100','오픈 코드',2],['A','x02220','001230','오픈 코드',2],['Dm','xx0231','000231','오픈 코드',2],
+  ['F (약식)','xx3211','003211','오픈 코드',2],
+  ['A7','x02020','002030','세븐스',2],['D7','xx0212','000213','세븐스',2],['E7','020100','020100','세븐스',2],
+  ['G7','320001','320001','세븐스',2],['C7','x32310','032410','세븐스',2],['B7','x21202','021304','세븐스',2],
+  ['Em7','020000','020000','세븐스',2],['Am7','x02010','002010','세븐스',2],['Dm7','xx0211','000211','세븐스',2],
+  ['Cmaj7','x32000','032000','세븐스',4],['Fmaj7','xx3210','003210','세븐스',2],['Gmaj7','320002','320001','세븐스',4],
+  ['Dmaj7','xx0222','000111','세븐스',4],['Amaj7','x02120','002130','세븐스',4],
+  ['Asus4','x02230','001230','서스·애드',4],['Asus2','x02200','001200','서스·애드',4],['Dsus4','xx0233','000134','서스·애드',4],
+  ['Dsus2','xx0230','000130','서스·애드',4],['Esus4','022200','023400','서스·애드',4],['Cadd9','x32030','021030','서스·애드',4],
+  ['G/B','x20003','010003','서스·애드',4],['D/F#','2x0232','100243','서스·애드',4],
+  ['F','133211','134211','바레 코드',3],['Bm','x24432','013421','바레 코드',3],['B♭','x13331','012341','바레 코드',3],
+  ['F#m','244222','134111','바레 코드',3],['Gm','355333','134111','바레 코드',3],['Cm','x35543','013421','바레 코드',3],
+  ['C#m','x46654','013421','바레 코드',3],['F#','244322','134211','바레 코드',3],['B','x24442','013331','바레 코드',3],['Bm7','x24232','013121','바레 코드',3],['F#m7','242222','131111','바레 코드',3],
+  ['E5','022xxx','012000','파워 코드',3],['A5','x022xx','001200','파워 코드',3],['F5','133xxx','134000','파워 코드',3],
+  ['G5','355xxx','134000','파워 코드',3],['B5','x244xx','013400','파워 코드',3],['C5','x355xx','013400','파워 코드',3],['D5','x577xx','013400','파워 코드',3],
+  ['F#5','244xxx','134000','파워 코드',3],['A♭5','466xxx','134000','파워 코드',3],['B♭5','x133xx','013400','파워 코드',3],['D♭5','x466xx','013400','파워 코드',3],
+  ['Cmaj7(Ⅲ)','x35453','013241','재즈·텐션',5],['Dm7(Ⅴ)','x57565','013121','재즈·텐션',5],['G7(Ⅲ)','353433','131211','재즈·텐션',5],
+  ['G13','3x345x','102340','재즈·텐션',5],['C9','x3233x','021330','재즈·텐션',5],['D9','x5455x','021330','재즈·텐션',5],['E7#9','x7678x','021340','재즈·텐션',5],
+  ['Bm7♭5','x2323x','013240','재즈·텐션',5],['F#m7♭5','2x2210','203410','재즈·텐션',5],['Bdim7','x2313x','023140','재즈·텐션',5],['Caug','x3211x','032110','재즈·텐션',5],
+].forEach(([n,fr,fg,cat,lv]) => CH[n] = {n, fr:[...fr].map(c => c==='x' ? -1 : +c), fg:[...fg].map(Number), cat, lv});
+
+const PATTERNS = {
+  guitar: [
+    ['down4','4비트 다운',1,4,'D-D-D-D-','한 박에 한 번, 아래로만. 흐린 화살표는 소리 없이 손만 올라오는 구간입니다.'],
+    ['down8','8비트 다운',2,4,'DDDDDDDD','반 박마다 다운. 록 반주의 기본이고 손목 스냅이 핵심입니다.'],
+    ['du8','8비트 다운업',2,4,'DUDUDUDU','손은 시계추처럼 일정하게. 업은 가는 줄 서너 개만 가볍게 스칩니다.'],
+    ['folk','국민 스트로크',2,4,'D-DU-UDU','3박 앞에서 헛스윙이 포인트. 손을 멈추지 말고 줄만 비켜 가세요.'],
+    ['ballad','발라드 스트로크',2,4,'D-D-DUDU','앞 두 박은 여유 있게, 뒤 두 박에서 다운업으로 흐름을 만듭니다.'],
+    ['waltz','왈츠 3/4',2,3,'D-DUDU','쿵-짝짝. 첫 박은 굵은 줄 위주로, 나머지는 가볍게.'],
+    ['chuck','뮤트 커팅',3,4,'DUxUDUxU','✕에서는 오른손 손날로 줄을 덮으며 내리칩니다. 2·4박에 스네어 느낌.'],
+    ['shuffle','셔플',3,4,'D-UD-UD-UD-U','한 박을 셋으로 쪼개 가운데를 비웁니다. 블루스의 출렁이는 리듬.'],
+    ['arp8','아르페지오 8비트',3,4,'R3231323','엄지가 근음을 치고 검지·중지·약지가 3·2·1번줄을 맡습니다.','arp'],
+    ['arp6','아르페지오 6/8',3,2,'R32123','올라갔다 내려오는 여섯 음. 느린 발라드에 잘 어울립니다.','arp'],
+    ['s16','16비트 스트로크',4,4,'D-DU-UDUD-DU-UDU','국민 스트로크를 두 배로 쪼갠 형태. 손은 16분음표로 계속 움직입니다.'],
+    ['funk','펑크 커팅 16비트',4,4,'D-xUxUD-xUDUxUxU','왼손 힘을 뺐다 줬다 하며 음과 뮤트를 섞습니다. 느린 템포부터.'],
+    ['travis','트래비스 피킹',4,4,'R-A2R3A2','엄지는 박마다 베이스를 번갈아 치고 손가락이 엇박을 채웁니다.','arp'],
+  ],
+  bass: [
+    ['whole','온음표 루트',1,4,'R-------','마디 첫 박에 근음 하나. 다음 코드로 넘어갈 때까지 음을 끝까지 끌어 주세요.','bass'],
+    ['root4','4비트 루트',1,4,'R-R-R-R-','한 박에 한 번. 검지·중지를 번갈아 쓰는 투핑거 연습에 좋습니다.','bass'],
+    ['root8','8비트 루트',2,4,'RRRRRRRR','록의 엔진. 여덟 음의 크기와 길이를 똑같이 맞추는 게 전부입니다.','bass'],
+    ['r5','루트–5도',2,4,'R-5-R-5-','근음에서 한 줄 위, 두 프렛 옆이 5도. 컨트리·포크에서 자주 씁니다.','bass'],
+    ['oct','옥타브',2,4,'R8R8R8R8','두 줄 위, 두 프렛 옆이 옥타브. 디스코·펑크의 단골 패턴입니다.','bass'],
+    ['rock','록 리프',3,4,'R-RR-R5R','쉼표 자리에서 왼손을 살짝 떼 음을 끊어야 리듬이 살아납니다.','bass'],
+    ['boogie','셔플 부기',3,4,'R-R3-35-56-6','근음·3도·5도·6도를 두 번씩. 12마디 블루스에 그대로 얹으면 됩니다.','bass'],
+    ['ghost','데드노트 그루브',3,4,'R-xR-x5x','✕는 왼손으로 줄을 덮은 채 치는 타악기 소리입니다.','bass'],
+    ['walk','워킹 베이스',4,4,'R-3-5-a-','근음·3도·5도, 마지막 박은 다음 코드 근음의 반음 아래로 접근합니다.','bass'],
+    ['funk16','16비트 펑크',4,4,'R--Rx-8-x-R-x-78','쉼표가 음표만큼 중요합니다. 60BPM에서 정확히 맞춘 뒤 올리세요.','bass'],
+    ['walk7','워킹 (7음 포함)',5,4,'R-5-7-a-','7음을 거쳐 다음 코드로. 재즈 ii–V–I 진행에서 연습해 보세요.','bass'],
+  ],
+};
+const PROGS = [
+  ['em-am','Em – Am 왕복',1,['Em','Em','Am','Am']],
+  ['g-d-em-c','G – D – Em – C',2,['G','D','Em','C']],
+  ['g-em-c-d','G – Em – C – D',2,['G','Em','C','D']],
+  ['c-g-am-fmaj7','C – G – Am – Fmaj7',2,['C','G','Am','Fmaj7']],
+  ['c-g-am-f','C – G – Am – F',3,['C','G','Am','F']],
+  ['am-f-c-g','Am – F – C – G',3,['Am','F','C','G']],
+  ['d-a-bm-g','D – A – Bm – G',3,['D','A','Bm','G']],
+  ['power','파워 코드 E5 – G5 – A5 – C5',3,['E5','G5','A5','C5']],
+  ['canon','캐논 진행',3,['C','G','Am','Em','F','C','F','G']],
+  ['blues-a','12마디 블루스 (A)',3,['A7','A7','A7','A7','D7','D7','A7','A7','E7','D7','A7','E7']],
+  ['andal','Am – G – F – E',4,['Am','G','F','E']],
+  ['251','ii–V–I · Dm7 – G7 – Cmaj7',5,['Dm7','G7','Cmaj7','Cmaj7']],
+];
+const SCALES = [
+  ['major','메이저',2,[0,2,4,5,7,9,11],'도레미파솔라시. 모든 이론의 기준이 되는 스케일입니다.'],
+  ['mpent','마이너 펜타토닉',3,[0,3,5,7,10],'록·블루스 솔로의 출발점. 다섯 음만으로 어디서든 통합니다.'],
+  ['Mpent','메이저 펜타토닉',3,[0,2,4,7,9],'밝고 시원한 느낌. 컨트리와 팝 멜로디에 자주 쓰입니다.'],
+  ['minor','내추럴 마이너',3,[0,2,3,5,7,8,10],'마이너 펜타토닉에 2도와 ♭6도를 더한, 슬픈 곡의 기본 재료.'],
+  ['blues','블루스',4,[0,3,5,6,7,10],'마이너 펜타토닉에 ♭5 한 음을 더하면 블루지한 긴장감이 생깁니다.'],
+  ['dorian','도리안',5,[0,2,3,5,7,9,10],'마이너인데 6도가 밝습니다. 펑크·산타나풍 솔로의 색.'],
+  ['mixo','믹솔리디안',5,[0,2,4,5,7,9,10],'메이저에서 7도만 내린 형태. 도미넌트 7 코드 위에서 씁니다.'],
+  ['phryg','프리지안',5,[0,1,3,5,7,8,10],'♭2가 만드는 스페인·메탈풍의 어두운 색채.'],
+  ['lydian','리디안',5,[0,2,4,6,7,9,11],'♯4가 주는 몽환적이고 떠 있는 느낌.',{6:'♯4'}],
+  ['hminor','하모닉 마이너',5,[0,2,3,5,7,8,11],'7도를 올려 클래식·네오클래시컬한 긴장을 만듭니다.'],
+  ['mminor','멜로딕 마이너',5,[0,2,3,5,7,9,11],'재즈 즉흥의 핵심 재료. 마이너인데 6·7도가 메이저입니다.'],
+];
+const TONES = [
+  ['maj','메이저',2,[0,4,7],'근음·3도·5도. 코드가 메이저일 때 안전한 세 음입니다.'],
+  ['min','마이너',2,[0,3,7],'3도만 반음 내려갑니다. 손 모양 차이를 눈으로 익히세요.'],
+  ['7','도미넌트 7',4,[0,4,7,10],'블루스·펑크에서 ♭7이 그루브의 맛을 냅니다.'],
+  ['m7','마이너 7',4,[0,3,7,10],'마이너 코드 위 워킹 라인의 기본 재료.'],
+  ['maj7','메이저 7',4,[0,4,7,11],'재즈·시티팝의 부드러운 색.'],
+  ['m7b5','m7♭5',5,[0,3,6,10],'마이너 ii–V–I의 ii 자리에 나오는 코드톤.'],
+];
+
+const ROAD = ['자세 · 튜닝 · 첫 코드', '오픈 코드 · 기본 스트로크', '바레 · 파워 코드 · 펜타토닉', '16비트 · 스케일 · 표현 테크닉', '모드 · 재즈 보이싱 · 텐션'];
+const CATS = {
+  kids: ['동요', 'a-kids'], classic: ['클래식', 'a-classic'], inst: ['연주곡', 'a-inst'], legend: ['명곡', 'a-legend'], pop: ['팝송', 'a-pop'], rock: ['락', 'a-rock'], kpop: ['한국 가요', 'a-kpop'],
+};
+const RANKS = [[0,'입문자'], [50,'코드 수집가'], [150,'버스커'], [300,'세션 연주자'], [500,'밴드 리더'], [800,'기타 히어로']];
+const FACTS = [
+  '12프렛은 줄 길이의 정확히 절반 지점입니다. 그래서 개방현보다 딱 한 옥타브 높은 음이 납니다.',
+  '카포를 한 프렛 올릴 때마다 키가 반음씩 올라갑니다. 2프렛 카포에 G 코드를 잡으면 실제 소리는 A입니다.',
+  '기타 표준 튜닝에서 3번줄과 2번줄 사이만 장3도이고, 나머지 줄 사이는 모두 완전4도입니다.',
+  '튜너의 기준음 A4는 440Hz입니다. 기타 5번줄 개방현 A는 그보다 두 옥타브 낮은 110Hz입니다.',
+  '베이스의 네 줄은 기타의 굵은 네 줄과 음 이름이 같고 한 옥타브 낮습니다.',
+  '하루 15분씩 매일 치는 편이 주말에 두 시간 몰아 치는 것보다 손에 빨리 붙습니다.',
+  '손끝 굳은살은 보통 2~4주면 자리를 잡습니다. 그때부터 코드 소리가 눈에 띄게 깨끗해집니다.',
+  '프렛 한 칸은 반음입니다. 같은 줄에서 열두 칸을 올라가면 같은 이름의 음으로 돌아옵니다.',
+];
+// m: 멜로디(소문자=4옥타브, ' 한 옥타브 위, 쉼표 한 옥타브 아래, 숫자=박 수, - 쉼표, | 마디). ch: 마디별 반주 코드. pr: 코드 반주곡의 마디별 진행.
+const SONGS = [
+  {id:'twinkle', c:'kids', lv:1, t:'작은 별', by:'프랑스 민요', bpm:90,
+    m:'c c g g | a a g2 | f f e e | d d c2 | g g f f | e e d2 | g g f f | e e d2 | c c g g | a a g2 | f f e e | d d c2',
+    ch:'C F*,C F*,C G,C C,F* C,G C,F* C,G C F*,C F*,C G,C', tip:'여섯 음으로 끝나는 첫 멜로디입니다. 한 음씩 또박또박, 다음 음을 누를 손가락을 미리 준비하세요.'},
+  {id:'plane', c:'kids', lv:1, t:'비행기', by:'미국 민요', bpm:96,
+    m:'e d c d | e e e2 | d d d2 | e e e2 | e d c d | e e e2 | d d e d | c4',
+    ch:'C C G C C C G C', tip:'도·레·미 세 음만 씁니다. 줄을 바꿔 가며 치는 감각을 익히기에 좋습니다.'},
+  {id:'butterfly', c:'kids', lv:1, t:'나비야', by:'독일 민요', bpm:96,
+    m:'g e e2 | f d d2 | c d e f | g g g2 | g e e2 | f d d2 | c e g g | e e e2 | d d d d | d e f2 | e e e e | e f g2 | g e e2 | f d d2 | c e g g | c4',
+    ch:'C G C C C G C C G G C C C G C C', tip:'같은 음이 반복되는 곳에서 박자가 빨라지기 쉽습니다. 메트로놈을 켜고 치세요.'},
+  {id:'jingle', c:'kids', lv:1, t:'징글벨', by:'J. 피어폰트', bpm:110,
+    m:'e e e2 | e e e2 | e g c d | e4 | f f f f | f e e e | e d d e | d2 g2 | e e e2 | e e e2 | e g c d | e4 | f f f f | f e e e | g g f d | c4',
+    ch:'C C C C F* C G G C C C C F* C G C', tip:'후렴 부분입니다. 같은 음을 연달아 칠 때 피크를 다운·업으로 번갈아 쓰면 편합니다.'},
+  {id:'birthday', c:'kids', lv:2, t:'생일 축하합니다', by:'힐 자매', bpm:90, beats:3,
+    m:"-2 d.75 d.25 | e d g | f#2 d.75 d.25 | e d a | g2 d.75 d.25 | d' b g | f# e c'.75 c'.25 | b g a | g3",
+    ch:'- G D D G G C G G', tip:'3박자 곡이고 못갖춘마디로 시작합니다. 첫 두 음은 마디 끝에서 튀어나오듯 짧게.'},
+  {id:'ode', c:'classic', lv:1, t:'환희의 송가', by:'베토벤', bpm:100,
+    m:'e e f g | g f e d | c c d e | e1.5 d.5 d2 | e e f g | g f e d | c c d e | d1.5 c.5 c2 | d d e c | d e.5 f.5 e c | d e.5 f.5 e d | c d g,2 | e e f g | g f e d | c c d e | d1.5 c.5 c2',
+    ch:'C G C C,G C G C G,C G G G C,G C G C G,C', tip:'이웃한 음으로만 움직여서 손이 편합니다. 점음표 자리의 길고 짧은 리듬을 정확히 살려 보세요.'},
+  {id:'minuet', c:'classic', lv:2, t:'미뉴에트 G장조', by:'페촐트 (바흐 음악 수첩)', bpm:100, beats:3,
+    m:'d g,.5 a,.5 b,.5 c.5 | d g, g, | e c.5 d.5 e.5 f#.5 | g g, g, | c d.5 c.5 b,.5 a,.5 | b, c.5 b,.5 a,.5 g,.5 | f#, g,.5 a,.5 b,.5 g,.5 | a,3 | d g,.5 a,.5 b,.5 c.5 | d g, g, | e c.5 d.5 e.5 f#.5 | g g, g, | c d.5 c.5 b,.5 a,.5 | b, c.5 b,.5 a,.5 g,.5 | a, b,.5 a,.5 g,.5 f#,.5 | g,3',
+    tip:'8분음표가 섞인 3박자 춤곡입니다. 다운·업을 번갈아 치는 얼터네이트 피킹으로 연습하세요.'},
+  {id:'canon', c:'classic', lv:2, t:'캐논', by:'파헬벨', bpm:70, key:'쉬운 C키 (원곡 D)', pr:['C','G','Am','Em','F','C','F','G'], pat:'arp8', bp:'r5',
+    tip:'여덟 마디가 끝없이 반복됩니다. 수많은 가요가 이 진행을 빌려 썼으니 손에 익혀 두면 두고두고 씁니다.'},
+  {id:'elise', c:'classic', lv:3, t:'엘리제를 위하여', by:'베토벤', bpm:92, beats:3,
+    m:'-2 e.5 d#.5 | e.5 d#.5 e.5 b,.5 d.5 c.5 | a,1 -.5 c,.5 e,.5 a,.5 | b,1 -.5 e,.5 g#,.5 b,.5 | c1 -.5 e,.5 e.5 d#.5 | e.5 d#.5 e.5 b,.5 d.5 c.5 | a,1 -.5 c,.5 e,.5 a,.5 | b,1 -.5 e,.5 c.5 b,.5 | a,3',
+    tip:'도입부 주제입니다. 1번 개방현과 2번줄 4프렛을 오가는 첫 다섯 음을 고르게 내는 것이 관건입니다.'},
+  {id:'romance', c:'classic', lv:3, t:'로망스', by:'작자 미상 (스페인)', bpm:96, beats:3,
+    m:"b b b | b a g | g f# e | e g b | e' e' e' | e' d' c' | c' b a | a b c' | b c' b | d#' c' b | b a g | g f# e | f# f# f# | f# g f# | e e e | e3",
+    ch:'Em Em Em Em Em Am Am Am B7 B7 Em Em B7 B7 Em Em', tip:'멜로디 전체를 1번줄 하나에서 칩니다. 원곡은 이 멜로디 사이에 2·3번 개방현을 넣어 셋잇단 아르페지오로 연주합니다.'},
+  {id:'grace', c:'legend', lv:2, t:'어메이징 그레이스', by:'전통 찬송가', bpm:84, beats:3,
+    m:"-2 d | g2 b.5 g.5 | b2 a | g2 e | d2 d | g2 b.5 g.5 | b2 a | d'3 | d'2 b | d'1.5 b.5 d'.5 b.5 | g2 d | e1.5 g.5 g.5 e.5 | d2 d | g2 b.5 g.5 | b2 a | g3",
+    ch:'- G G C G G G D D G G C G G D G', tip:'다섯 음(펜타토닉)만으로 된 멜로디입니다. 긴 음을 끝까지 눌러 울림을 유지하세요.'},
+  {id:'standbyme', c:'legend', lv:2, t:'Stand By Me', by:'Ben E. King', bpm:116, key:'원곡 A · 카포 2', pr:['G','G','Em','Em','C','D','G','G'], pat:'folk', bp:'r5',
+    tip:'G – Em – C – D, 이른바 50년대 진행입니다. 코드가 두 마디씩 머물러서 체인지 연습에 여유가 있습니다.'},
+  {id:'knockin', c:'legend', lv:2, t:"Knockin' on Heaven's Door", by:'Bob Dylan', bpm:70, key:'원곡 G', pr:['G','D','Am','Am','G','D','C','C'], pat:'ballad', bp:'root4',
+    tip:'네 마디씩 끝만 Am과 C로 바뀝니다. 느린 곡일수록 오른손이 일정해야 합니다.'},
+  {id:'countryroads', c:'legend', lv:2, t:'Take Me Home, Country Roads', by:'John Denver', bpm:82, key:'원곡 A · 카포 2', pr:['G','G','Em','Em','D','D','C','G'], pat:'folk', bp:'r5',
+    tip:'벌스 진행입니다. 국민 스트로크가 가장 잘 어울리는 곡 중 하나입니다.'},
+  {id:'letitbe', c:'legend', lv:3, t:'Let It Be', by:'The Beatles', bpm:72, key:'원곡 C', pr:['C','G','Am','F','C','G','F','C'], pat:'ballad', bp:'root8',
+    tip:'F 바레 코드가 들어가는 첫 곡으로 좋습니다. 힘들면 약식 F로 바꿔 잡아도 됩니다.'},
+  {id:'hotelcal', c:'rock', lv:4, t:'Hotel California', by:'Eagles', bpm:74, key:'원곡 Bm', pr:['Bm','F#','A','E','G','D','Em','F#'], pat:'s16', bp:'rock',
+    tip:'여덟 마디마다 코드가 전부 다릅니다. 바레 코드 Bm·F# 사이 이동을 따로 떼어 연습하세요.'},
+  {id:'autumn', c:'legend', lv:5, t:'Autumn Leaves', by:'재즈 스탠더드', bpm:110, key:'Em (G 메이저)', pr:['Am7','D7','Gmaj7','Cmaj7','F#m7♭5','B7','Em','Em'], pat:'ballad', bp:'walk7',
+    tip:'메이저 ii–V–I과 마이너 ii–V–i이 한 곡에 다 들어 있습니다. 재즈 입문곡으로 가장 많이 쓰입니다.'},
+  {id:'imyours', c:'pop', lv:2, t:"I'm Yours", by:'Jason Mraz', bpm:76, key:'원곡 B · 카포 4', pr:['G','D','Em','C'], pat:'chuck', bp:'ghost',
+    tip:'2박·4박의 뮤트 커팅이 이 곡의 그루브입니다. 왼손은 그대로 두고 오른손 손날로만 끊으세요.'},
+  {id:'riptide', c:'pop', lv:2, t:'Riptide', by:'Vance Joy', bpm:100, key:'원곡 D♭ · 카포 1', pr:['Am','G','C','C'], pat:'folk', bp:'r5',
+    tip:'코드 세 개로 끝까지 갑니다. 빠른 템포에서 손목 힘을 빼는 연습이 됩니다.'},
+  {id:'zombie', c:'pop', lv:2, t:'Zombie', by:'The Cranberries', bpm:84, key:'원곡 Em', pr:['Em','C','G','D'], pat:'du8', bp:'root8',
+    tip:'벌스는 작게, 후렴은 세게. 같은 코드로 강약을 조절하는 연습곡입니다.'},
+  {id:'vivalavida', c:'pop', lv:2, t:'Viva La Vida', by:'Coldplay', bpm:138, key:'원곡 A♭ · 카포 1', pr:['C','D','G','Em'], pat:'down4', bp:'root8',
+    tip:'원곡은 현악기가 엇박으로 밀고 갑니다. 먼저 4비트 다운으로 코드 자리를 익힌 뒤 리듬을 쪼개 보세요.'},
+  {id:'perfect', c:'pop', lv:2, t:'Perfect', by:'Ed Sheeran', bpm:63, key:'원곡 A♭ · 카포 1', pr:['G','Em','C','D'], pat:'arp6', bp:'root4',
+    tip:'6/8박자 발라드입니다. 여섯 음 아르페지오를 흐르듯 이어 주세요.'},
+  {id:'creep', c:'rock', lv:3, t:'Creep', by:'Radiohead', bpm:92, key:'원곡 G', pr:['G','B','C','Cm'], pat:'arp8', bp:'root8',
+    tip:'B와 Cm 두 바레 코드가 관문입니다. C에서 Cm로 갈 때 3도 한 음이 내려가는 소리를 들어 보세요.'},
+  {id:'thinking', c:'pop', lv:3, t:'Thinking Out Loud', by:'Ed Sheeran', bpm:79, key:'원곡 D', pr:['D','D/F#','G','A'], pat:'chuck', bp:'ghost',
+    tip:'베이스 음이 D – F# – G – A로 올라가는 진행입니다. D/F#의 6번줄 2프렛은 엄지나 검지로 잡습니다.'},
+  {id:'cherry', c:'kpop', lv:2, t:'벚꽃 엔딩', by:'버스커 버스커', bpm:76, key:'쉬운 G키', pr:['Am7','D7','G','Em'], pat:'folk', bp:'r5',
+    tip:'Am7 – D7 – G로 흘러가는 진행이 곡 전체에 깔립니다. 세븐스 코드의 느슨한 울림이 봄 분위기를 만듭니다.'},
+  {id:'dontworry', c:'kpop', lv:2, t:'걱정말아요 그대', by:'전인권', bpm:68, key:'쉬운 G키 (원곡 A는 카포 2)', pr:['G','D','Em','D'], pat:'ballad', bp:'root4',
+    tip:'벌스 진행입니다. 느린 템포에서 코드가 바뀌는 첫 박을 또렷하게 쳐 주세요.'},
+  {id:'yeosu', c:'kpop', lv:3, t:'여수 밤바다', by:'버스커 버스커', bpm:72, key:'원곡 E · 카포 4', pr:['C','Em','F','G'], pat:'arp8', bp:'root4',
+    tip:'도입부 진행입니다. 아르페지오로 조용히 시작해 후렴에서 스트로크로 넓혀 보세요.'},
+  {id:'youandme', c:'kpop', lv:4, t:'너에게 난, 나에게 넌', by:'자전거 탄 풍경', bpm:92, key:'원곡 G', pr:['G','D','Em','Bm','C','G','Am','D7'], pat:'s16', bp:'r5',
+    tip:'캐논과 같은 뼈대의 순환 코드입니다. 처음부터 끝까지 흐르는 16비트 스트로크를 일정하게 유지하는 것이 핵심입니다.'},
+  {id:'london', c:'kids', lv:1, t:'런던 다리', by:'영국 민요', bpm:100,
+    m:'g1.5 a.5 g f | e f g2 | d e f2 | e f g2 | g1.5 a.5 g f | e f g2 | d2 g2 | e2 c2',
+    ch:'C C G C C C G C', tip:'첫 마디의 점음표 리듬이 포인트입니다. "따~안 따 따 따"를 입으로 먼저 불러 보세요.'},
+  {id:'farm', c:'kids', lv:1, t:'맥도널드 아저씨 농장', by:'미국 민요', bpm:104,
+    m:'g g g d | e e d2 | b b a a | g3 d | g g g d | e e d2 | b b a a | g4',
+    ch:'G C,G G,D G G C,G G,D G', tip:'3번 개방현 솔에서 시작해 줄을 넘나듭니다. 반주 코드 G·C·D도 같이 익히기 좋습니다.'},
+  {id:'jesu', c:'classic', lv:3, t:'예수, 인간 소망의 기쁨', by:'바흐', bpm:190, beats:9, grp:3, sig:'9/8',
+    m:'- g, a, b, d c c e d | d g f# g d b, g, a, b, | c d e d c b, a, b, g, | f#, g, a, d, f#, a, c b, a, | b,9',
+    tip:'세 음씩 묶여 물 흐르듯 이어지는 선율입니다. 메트로놈 한 번에 세 음이 들어갑니다. 템포를 120까지 낮춰 시작하세요.'},
+  {id:'canonvar', c:'inst', lv:3, t:'캐논 변주곡', by:'파헬벨', bpm:66,
+    m:'f#2 e2 | d2 c#2 | b,2 a,2 | b,2 c#2 | d2 c#2 | b,2 a,2 | g,2 f#,2 | g,2 e,2 | d,.5 f#,.5 a,.5 g,.5 f#,.5 d,.5 f#,.5 e,.5 | d,.5 b,,.5 d,.5 a,.5 g,.5 b,.5 a,.5 g,.5 | f#,.5 d,.5 e,.5 c#.5 d.5 f#.5 a.5 a,.5 | b,.5 g,.5 a,.5 f#,.5 d,.5 d.5 d.75 c#.25',
+    ch:'D,A Bm,F#m G,D G,A D,A Bm,F#m G,D G,A D,A Bm,F#m G,D G,A', tip:'긴 음의 주제 두 번, 이어서 8분음표 변주입니다. 유튜브의 수많은 캐논 편곡이 이 세 줄을 뼈대로 삼습니다. 변주 부분은 50까지 낮춰 연습하세요.'},
+  {id:'greensleeves', c:'inst', lv:2, t:'그린슬리브스', by:'영국 민요', bpm:100, beats:3,
+    m:'-2 a, | c2 d | e1.5 f.5 e | d2 b, | g,1.5 a,.5 b, | c2 a, | a,1.5 g#,.5 a, | b,2 g#, | e,2 a, | c2 d | e1.5 f.5 e | d2 b, | g,1.5 a,.5 b, | c1.5 b,.5 a, | g#,1.5 f#,.5 g#, | a,3 | a,3 | g3 | g1.5 f#.5 e | d2 b, | g,1.5 a,.5 b, | c2 a, | a,1.5 g#,.5 a, | b,2 g#, | e,3 | g3 | g1.5 f#.5 e | d2 b, | g,1.5 a,.5 b, | c1.5 b,.5 a, | g#,1.5 f#,.5 g#, | a,3 | a,3',
+    ch:'- Am C G Em Am Am E E Am C G Em Am E Am Am C C G Em Am Am E E C C G Em Am E Am Am', tip:'클래식 기타 독주로 사랑받는 선율입니다. 점음표가 만드는 흔들리는 3박자 리듬을 살려 주세요.'},
+  {id:'canonrock', c:'inst', lv:3, t:'Canon Rock', by:'JerryC (원곡 파헬벨)', bpm:100, key:'원곡 D', pr:['D5','A5','B5','F#5','G5','D5','G5','A5'], pat:'down8', bp:'root8',
+    tip:'유튜브 기타 영상의 전설이 된 편곡입니다. 여기서는 리듬 기타가 깔아 주는 파워 코드 진행을 연습합니다. 드라이브를 켜고 팜 뮤트로 쳐 보세요.'},
+  {id:'riverflows', c:'inst', lv:2, t:'River Flows in You', by:'이루마', bpm:66, key:'원곡 A · 카포 2', pr:['Em','C','G','D'], pat:'arp8', bp:'root4',
+    tip:'피아노곡이지만 핑거스타일 기타 커버로도 유명합니다. 네 코드 아르페지오를 끊기지 않게 이어 주세요.'},
+  {id:'dustwind', c:'inst', lv:4, t:'Dust in the Wind', by:'Kansas', bpm:94, key:'원곡 C', pr:['C,G/B','Am','G,Dm7','Am'], pat:'travis', bp:'r5',
+    tip:'트래비스 피킹 교과서로 통하는 곡입니다. 엄지가 박마다 베이스를 치는 동작이 흔들리지 않아야 합니다.'},
+  {id:'wonderful', c:'legend', lv:2, t:'Wonderful Tonight', by:'Eric Clapton', bpm:96, key:'원곡 G', pr:['G','D','C','D'], pat:'ballad', bp:'root4',
+    tip:'G – D – C – D 네 코드가 느긋하게 돕니다. 스트로크를 작게, 소리를 줄이는 연습에 좋습니다.'},
+  {id:'hallelujah', c:'legend', lv:3, t:'Hallelujah', by:'Leonard Cohen', bpm:56, key:'원곡 C', pr:['C','Am','C','Am','F','G','C','G'], pat:'arp6', bp:'root4',
+    tip:'6/8박자 아르페지오 곡입니다. 한 마디에 여섯 음, 첫 음과 넷째 음에 살짝 힘을 줍니다.'},
+  {id:'heyjude', c:'legend', lv:3, t:'Hey Jude', by:'The Beatles', bpm:74, key:'원곡 F', pr:['F','C','C7','F','B♭','F','C','F'], pat:'ballad', bp:'root4',
+    tip:'F와 B♭ 두 바레 코드가 번갈아 나옵니다. 바레 코드 지구력을 기르는 곡입니다.'},
+  {id:'flyme', c:'legend', lv:5, t:'Fly Me to the Moon', by:'재즈 스탠더드', bpm:120, key:'Am (C 메이저)', pr:['Am7','Dm7','G7','Cmaj7','Fmaj7','Bm7♭5','E7','Am7'], pat:'ballad', bp:'walk7',
+    tip:'4도씩 내려가는 순환 진행입니다. 코드마다 가장 가까운 자리로 손을 옮기는 연습을 하세요.'},
+  {id:'someone', c:'pop', lv:2, t:'Someone Like You', by:'Adele', bpm:68, key:'원곡 A · 카포 2', pr:['G','D','Em','C'], pat:'arp8', bp:'root4',
+    tip:'피아노 반주를 기타 아르페지오로 옮긴 형태입니다. 근음을 또렷하게 내 주세요.'},
+  {id:'staywithme', c:'pop', lv:2, t:'Stay With Me', by:'Sam Smith', bpm:84, key:'원곡 C', pr:['Am','F','C','C'], pat:'ballad', bp:'root4',
+    tip:'코드 세 개로 끝까지 가는 곡입니다. F는 약식이나 Fmaj7으로 바꿔 잡아도 됩니다.'},
+  {id:'shallow', c:'pop', lv:3, t:'Shallow', by:'Lady Gaga · Bradley Cooper', bpm:96, key:'원곡 G', pr:['Em,D','G','C,G','D'], pat:'folk', bp:'r5',
+    tip:'한 마디 안에서 코드가 두 번 바뀌는 곳이 있습니다. 두 박마다 바꾸는 체인지를 먼저 따로 연습하세요.'},
+  {id:'teenspirit', c:'rock', lv:3, t:'Smells Like Teen Spirit', by:'Nirvana', bpm:116, key:'원곡 Fm', pr:['F5','B♭5','A♭5','D♭5'], pat:'funk', bp:'root8',
+    tip:'파워 코드 네 개와 뮤트 커팅이 전부입니다. 코드를 옮기는 사이의 ✕ 소리가 이 곡의 맛입니다.'},
+  {id:'sweetchild', c:'rock', lv:2, t:"Sweet Child O' Mine", by:"Guns N' Roses", bpm:122, key:'원곡은 반음 내림 튜닝', pr:['D','D','C','C','G','G','D','D'], pat:'du8', bp:'root8',
+    tip:'벌스 진행입니다. 오픈 코드 세 개로 록 반주의 힘을 내려면 다운 스트로크를 크게 쓰세요.'},
+  {id:'boulevard', c:'rock', lv:2, t:'Boulevard of Broken Dreams', by:'Green Day', bpm:84, key:'원곡 Fm · 카포 1', pr:['Em','G','D','A'], pat:'down8', bp:'root8',
+    tip:'8비트 다운으로 묵직하게 밀고 갑니다. 일렉기타라면 드라이브를 켜 보세요.'},
+  {id:'dontlookback', c:'rock', lv:3, t:"Don't Look Back in Anger", by:'Oasis', bpm:82, key:'원곡 C', pr:['C','G','Am','E','F','G','C','Am,G'], pat:'folk', bp:'r5',
+    tip:'캐논 진행을 비튼 여덟 마디입니다. 넷째 마디 E 코드가 주는 긴장감을 들어 보세요.'},
+  {id:'wishyou', c:'rock', lv:2, t:'Wish You Were Here', by:'Pink Floyd', bpm:60, key:'원곡 G', pr:['C','D','Am','G','D','C','Am','G'], pat:'folk', bp:'r5',
+    tip:'벌스 진행입니다. 느린 템포에서 스트로크의 강약을 살리는 연습곡입니다.'},
+  {id:'nothingelse', c:'rock', lv:3, t:'Nothing Else Matters', by:'Metallica', bpm:46, key:'원곡 Em', pr:['Em','D,C','Em','D,C','Em','D,C','G,B7','Em'], pat:'arp6', bp:'root4',
+    tip:'6/8박자 록 발라드의 벌스 진행입니다. 아르페지오로 시작해 후렴에서 스트로크로 키워 보세요.'},
+  {id:'risingsun', c:'rock', lv:2, t:'House of the Rising Sun', by:'미국 민요 (The Animals)', bpm:78, key:'원곡 Am', pr:['Am','C','D','F','Am','C','E','E','Am','C','D','F','Am','E','Am','E'], pat:'arp6', bp:'root4',
+    tip:'아르페지오 입문곡으로 가장 유명합니다. 한 마디에 여섯 음을 올라갔다 내려오며 고르게 칩니다.'},
+  {id:'timeofyourlife', c:'rock', lv:2, t:'Good Riddance (Time of Your Life)', by:'Green Day', bpm:95, key:'원곡 G', pr:['G','G','Cadd9','D'], pat:'arp8', bp:'r5',
+    tip:'피크로 치는 아르페지오의 대표곡입니다. G와 Cadd9은 약지를 2번줄 3프렛에 둔 채로 바꾸면 편합니다.'},
+  {id:'dynamite', c:'kpop', lv:2, t:'Dynamite', by:'BTS', bpm:114, key:'원곡 C#m · 카포 4', pr:['Am','Dm','G','C'], pat:'chuck', bp:'oct',
+    tip:'디스코 리듬의 네 코드 순환입니다. 뮤트 커팅으로 짧게 끊어 쳐야 원곡의 탄력이 납니다.'},
+  {id:'wiing', c:'kpop', lv:4, t:'위잉위잉', by:'혁오', bpm:88, key:'원곡 키', pr:['Gm','C9','Am7','D9'], pat:'s16', bp:'ghost',
+    tip:'네 코드가 곡 내내 반복됩니다. 9 코드의 나른한 울림과 가벼운 16비트가 어울립니다.'},
+];
+
+const gc = (l, ...list) => ({l, tab:'chords', set:{cat:'레슨', list, chord:list[0]}});
+const gcat = (l, cat) => ({l, tab:'chords', set:{cat}});
+const gr = (l, pat, prog, bpm) => ({l, tab:'rhythm', set:{pat, prog, bpm}});
+const gs = (l, scale, root) => ({l, tab:'scales', set:{scale, root}});
+const gb = (l, tset, root) => ({l, tab:'chords', set:{tset, root}});
+const gt = l => ({l, tab:'tuner', set:{}});
+
+const L_GUITAR = [
+  {lv:1, t:'기타 부위와 바른 자세', d:['헤드, 넥, 바디. 이 세 덩어리만 기억하면 됩니다. 넥에 박힌 쇠막대가 프렛이고, 프렛 사이 칸을 눌러 음 높이를 바꿉니다.','의자에 앉아 바디를 오른쪽 허벅지에 올리고 넥은 살짝 위로 들어 주세요. 왼손 엄지는 넥 뒤 가운데에 가볍게 댑니다.'], tips:['어깨와 손목에 힘이 들어가면 10분도 못 칩니다. 힘 빼는 게 첫 번째 기술입니다.','왼손 손톱은 짧게. 길면 줄이 끝까지 눌리지 않습니다.'], go:[gt('지판 구경하기')]},
+  {lv:1, t:'줄 번호와 개방현', d:['가장 굵은 줄이 6번줄, 가장 가는 줄이 1번줄입니다. 아무것도 누르지 않고 치는 소리를 개방현이라 하고, 6번줄부터 E·A·D·G·B·E입니다.','이 프로그램의 지판은 타브 악보와 같은 방향입니다. 가는 1번줄이 위, 굵은 6번줄이 아래에 있습니다.'], tips:['줄을 하나씩 눌러 소리와 이름을 같이 외우세요.','한 칸(프렛)은 반음, 두 칸은 온음입니다.'], go:[gt('개방현 소리 듣기')]},
+  {lv:1, t:'튜닝: 연습 전 30초', d:['줄이 조금만 틀어져도 제대로 눌러도 틀린 소리가 납니다. 기준음을 듣고 줄감개를 조금씩 돌려 같은 높이로 맞추세요.','처음엔 클립 튜너나 튜너 앱을 같이 쓰고, 여기 기준음으로 귀를 확인하는 습관을 들이면 좋습니다.'], tips:['낮은 음에서 올라가며 맞추면 튜닝이 덜 풀립니다.','새 줄은 금방 늘어나니 연습 중간에도 한 번 더 확인하세요.'], go:[gt('기준음 듣기')]},
+  {lv:1, t:'코드표 읽는 법', d:['지판 위 동그라미가 누를 자리, 안의 숫자가 손가락 번호입니다. '+FINGERS+'.','✕ 표시 줄은 치지 않고, ○ 표시 줄은 누르지 않은 채로 칩니다. 색이 들어간 점은 코드 이름이 되는 근음입니다.'], tips:['칸 한가운데가 아니라 몸통 쪽 쇠막대 바로 앞을 눌러야 적은 힘으로 깨끗한 소리가 납니다.','손가락 끝을 세워 옆줄을 건드리지 않게 하세요.'], go:[gc('Em 코드표 보기','Em')]},
+  {lv:1, t:'첫 코드: Em와 Am', d:['손가락 두세 개로 잡는 가장 쉬운 코드입니다. Em는 여섯 줄 전부, Am는 5번줄부터 칩니다.','잡은 다음에는 한 줄씩 튕겨서 먹먹한 줄이 없는지 꼭 확인하세요.'], tips:['Em에서 Am로 바꾸는 걸 1분 동안 몇 번 하는지 세어 보세요. 30번이 1차 목표입니다.','손끝이 아픈 건 정상입니다. 2주쯤 지나면 굳은살이 생깁니다.'], go:[gc('Em · Am 잡아 보기','Em','Am')]},
+  {lv:1, t:'첫 스트로크: 4비트 다운', d:['피크는 엄지와 검지 옆면으로 가볍게 쥐고 끝만 2~3mm 내놓습니다. 팔꿈치가 아니라 손목으로 줄을 쓸어내리세요.','메트로놈 소리에 맞춰 한 박에 한 번씩. 코드가 바뀌어도 오른손은 멈추지 않는 게 원칙입니다.'], tips:['박자를 놓치면 템포를 낮추세요. 느리게 정확한 것이 빠르게 틀리는 것보다 낫습니다.'], go:[gr('반주에 맞춰 치기','down4','em-am',70)]},
+
+  {lv:2, t:'오픈 코드 C · G · D', d:['이 세 코드에 Em만 더하면 대중가요 절반은 반주할 수 있습니다. C는 5번줄부터, D는 4번줄부터 치는 것만 조심하세요.'], tips:['G는 손을 넓게 벌려야 합니다. 손바닥을 넥에서 조금 떼면 편해집니다.','C에서 1번줄이 죽으면 검지를 더 세우세요.'], go:[gc('C · G · D 익히기','C','G','D','Em')]},
+  {lv:2, t:'E · A · Dm와 코드 체인지 요령', d:['코드를 빨리 바꾸는 비결은 손가락을 한꺼번에 움직이는 것입니다. 하나씩 차례로 놓는 습관을 초반에 버리세요.','두 코드 사이에 그대로 남는 손가락이 있으면 떼지 말고 축으로 쓰면 됩니다.'], tips:['E와 Am는 모양이 같고 한 줄씩만 내려갑니다.','마지막 박에서 미리 손을 떼고 이동해도 됩니다. 개방현이 살짝 울려도 자연스럽습니다.'], go:[gc('E · A · Dm 익히기','E','A','Dm','Am')]},
+  {lv:2, t:'8비트 다운업 스트로크', d:['손은 시계추처럼 계속 위아래로 움직이고, 칠 때만 줄에 닿습니다. 다운은 여섯 줄, 업은 가는 줄 서너 개면 충분합니다.'], tips:['업 스트로크에서 피크가 걸리면 피크를 살짝 눕혀 주세요.'], go:[gr('G – Em – C – D로 연습','du8','g-em-c-d',80)]},
+  {lv:2, t:'국민 스트로크 익히기', d:['다운, 다운업, (쉬고) 업다운업. 통기타 반주에서 가장 많이 쓰이는 패턴입니다.','3박 앞의 쉬는 자리에서도 손은 내려갑니다. 줄만 건드리지 않는 헛스윙입니다.'], tips:['입으로 "따 – 따다 – 다따다" 하고 먼저 불러 보면 빨리 붙습니다.'], go:[gr('G – D – Em – C로 연습','folk','g-d-em-c',84)]},
+  {lv:2, t:'세븐스 코드로 색 입히기', d:['기본 코드에 음 하나를 더하면 다음 코드로 가고 싶어지는 긴장감이 생깁니다. A7, D7, E7은 오히려 기본 코드보다 잡기 쉽습니다.'], tips:['G7 다음에는 C, D7 다음에는 G가 자연스럽게 이어집니다.'], go:[gc('세븐스 코드 보기','A7','D7','E7','G7','B7')]},
+  {lv:2, t:'F의 벽 넘기: 약식부터', d:['F는 누구나 한 번 막히는 코드입니다. 처음엔 네 줄만 잡는 약식 F나 Fmaj7으로 대신해도 곡은 충분히 굴러갑니다.'], tips:['검지로 1·2번줄을 함께 누를 때 손가락 옆면을 쓰면 힘이 덜 듭니다.'], go:[gc('F 약식 · Fmaj7','F (약식)','Fmaj7','C','Am'), gr('C – G – Am – Fmaj7 반주','ballad','c-g-am-fmaj7',76)]},
+
+  {lv:3, t:'바레 코드: F와 Bm', d:['검지 하나로 여러 줄을 한꺼번에 누르는 것이 바레입니다. 힘으로 누르는 게 아니라 검지를 프렛 가까이 붙이고 팔 무게로 당깁니다.'], tips:['검지를 살짝 돌려 뼈가 있는 옆면으로 누르세요.','하루 5분씩 2주. 어느 날 갑자기 소리가 납니다.'], go:[gc('바레 코드 잡기','F','Bm','B♭','F#m')]},
+  {lv:3, t:'바레 폼 옮기기', d:['F 모양을 두 칸 올리면 G, 네 칸 올리면 A가 됩니다. 6번줄 근음 폼과 5번줄 근음 폼 두 가지면 모든 메이저·마이너 코드를 잡을 수 있습니다.'], tips:['6번줄과 5번줄의 음 이름을 외워 두면 코드표 없이도 코드를 찾습니다.'], go:[gcat('바레 코드 전체 보기','바레 코드'), gr('D – A – Bm – G 반주','folk','d-a-bm-g',84)]},
+  {lv:3, t:'파워 코드', d:['근음과 5도, 두세 줄만 잡는 코드입니다. 메이저도 마이너도 아니라서 어디에나 쓸 수 있고, 모양 그대로 옮기기만 하면 됩니다.'], tips:['안 치는 줄은 검지 아랫부분으로 살짝 덮어 소리가 새지 않게 하세요.','일렉기타라면 상단의 드라이브를 켜고 쳐 보세요.'], go:[gcat('파워 코드 보기','파워 코드'), gr('8비트 다운으로 달리기','down8','power',100)]},
+  {lv:3, t:'뮤트 커팅과 셔플', d:['소리를 내는 것만큼 끊는 것이 리듬을 만듭니다. 뮤트 커팅은 오른손 손날로 줄을 덮으며 치는 타악기 소리입니다.','셔플은 한 박을 셋으로 나눠 출렁이는 리듬입니다.'], tips:['뮤트 소리가 2박·4박에 오면 드럼 스네어 역할을 합니다.'], go:[gr('뮤트 커팅 연습','chuck','g-d-em-c',80), gr('셔플 연습','shuffle','blues-a',90)]},
+  {lv:3, only:'acoustic', t:'아르페지오 핑거링', d:['코드를 한 음씩 풀어 치는 주법입니다. 엄지가 4·5·6번줄의 근음을, 검지·중지·약지가 각각 3·2·1번줄을 맡습니다.'], tips:['손가락은 줄을 뜯는 게 아니라 손바닥 쪽으로 가볍게 당깁니다.','패턴 표시의 R은 근음 줄, 숫자는 줄 번호입니다.'], go:[gr('캐논 진행 아르페지오','arp8','canon',70), gr('6/8 아르페지오','arp6','am-f-c-g',60)]},
+  {lv:3, only:'electric', t:'팜 뮤트와 얼터네이트 피킹', d:['오른손 손날을 브리지 바로 앞 줄 위에 살짝 얹고 치면 묵직하게 끊기는 소리가 납니다. 록 리프의 기본 질감입니다.','단음을 칠 때는 다운과 업을 번갈아 쓰는 얼터네이트 피킹이 속도의 기반이 됩니다.'], tips:['손을 너무 넥 쪽에 얹으면 음정이 사라집니다. 브리지에 걸치듯이.'], go:[gr('파워 코드 8비트','down8','power',110), gs('펜타토닉으로 피킹 연습','mpent',9)]},
+  {lv:3, t:'마이너 펜타토닉', d:['솔로의 첫 스케일입니다. 한 줄에 두 음씩이라 모양이 단순하고, 틀린 음이 거의 나오지 않습니다.','A 마이너 펜타토닉은 5프렛 박스 포지션부터 익히세요.'], tips:['스케일을 위아래로 훑는 데서 멈추지 말고 서너 음으로 짧은 멜로디를 만들어 보세요.'], go:[gs('A 마이너 펜타토닉','mpent',9)]},
+  {lv:3, t:'12마디 블루스', d:['A7 네 마디, D7 두 마디, A7 두 마디, E7 – D7 – A7 – E7. 이 열두 마디가 록과 재즈의 뿌리입니다.'], tips:['반주를 틀어 두고 A 마이너 펜타토닉으로 아무 음이나 쳐 보세요. 그게 즉흥연주의 시작입니다.'], go:[gr('블루스 셔플 반주','shuffle','blues-a',92), gs('A 마이너 펜타토닉','mpent',9)]},
+
+  {lv:4, t:'메이저 스케일과 지판 음 외우기', d:['온음-온음-반음-온음-온음-온음-반음. 이 간격이 도레미파솔라시도입니다.','지판 음은 6번줄과 5번줄의 자연음부터 외우세요. 12프렛에서 개방현과 같은 이름이 다시 시작됩니다.'], tips:['표시를 "도수"로 바꾸면 각 음이 근음에서 몇 번째인지 보입니다.'], go:[gs('C 메이저 스케일','major',0), gt('지판 음 이름 보기')]},
+  {lv:4, t:'코드에 색 더하기: sus4 · add9 · maj7', d:['같은 코드를 네 마디 치면 지루합니다. 3도를 4도로 올렸다 돌아오는 sus4, 9도를 얹는 add9만 섞어도 반주가 살아납니다.'], tips:['D – Dsus4 – D – Dsus2를 한 마디씩 돌려 보세요. 익숙한 소리가 납니다.'], go:[gcat('서스·애드 코드 보기','서스·애드'), gc('maj7 코드 보기','Cmaj7','Gmaj7','Dmaj7','Amaj7','Fmaj7')]},
+  {lv:4, t:'16비트 스트로크와 펑크 커팅', d:['한 박을 넷으로 쪼갭니다. 손은 쉬지 않고 16분음표로 움직이고, 어느 자리에서 줄에 닿느냐가 패턴을 결정합니다.'], tips:['펑크 커팅은 왼손이 절반입니다. 줄에서 손을 떼지 않고 힘만 뺐다 주세요.'], go:[gr('16비트 스트로크','s16','g-d-em-c',70), gr('펑크 커팅','funk','em-am',76)]},
+  {lv:4, t:'블루스 스케일과 표현 테크닉', d:['같은 음도 어떻게 가느냐에 따라 전혀 다르게 들립니다. 해머링 온은 왼손으로 줄을 때려서, 풀링 오프는 뜯어내듯 떼면서 다음 음을 냅니다.','슬라이드는 누른 채 미끄러지고, 벤딩은 줄을 밀어 올려 음을 높이고, 비브라토는 그 음을 흔들어 노래하게 합니다.'], tips:['벤딩은 손가락이 아니라 손목 회전으로 밉니다. 약지 뒤에 중지·검지를 받쳐 주세요.','♭5는 오래 머무는 음이 아니라 지나가는 음입니다.'], go:[gs('A 블루스 스케일','blues',9)]},
+  {lv:4, t:'CAGED로 지판 연결하기', d:['오픈 코드 C·A·G·E·D 다섯 모양은 넥 전체에 차례로 이어져 있습니다. 하나의 코드를 다섯 군데에서 잡을 수 있다는 뜻입니다.','바레 코드의 6번줄 근음 폼이 E 모양, 5번줄 근음 폼이 A 모양입니다.'], tips:['스케일 화면에서 메이저 펜타토닉을 띄워 놓고 근음(색 점) 주변 모양을 코드 폼과 겹쳐 보세요.'], go:[gs('C 메이저 펜타토닉','Mpent',0), gcat('바레 코드로 확인','바레 코드')]},
+  {lv:4, only:'acoustic', t:'트래비스 피킹', d:['엄지가 박마다 베이스 두 줄을 번갈아 치고, 나머지 손가락이 엇박에 멜로디 줄을 넣습니다. 혼자서 베이스와 반주를 같이 하는 주법입니다.'], tips:['엄지만 먼저 1분. 엄지가 자동으로 움직일 때 손가락을 얹으세요.'], go:[gr('트래비스 피킹','travis','c-g-am-fmaj7',70)]},
+  {lv:4, only:'electric', t:'드라이브 톤과 리프 만들기', d:['드라이브가 걸리면 음이 길게 늘어지고 화음이 뭉칩니다. 그래서 3도를 뺀 파워 코드와 단음 리프가 잘 어울립니다.','E 마이너 펜타토닉의 낮은 음 서너 개와 개방 6번줄만으로도 리프가 됩니다.'], tips:['드라이브에서는 안 치는 줄을 막는 뮤트가 더 중요해집니다.'], go:[gs('E 마이너 펜타토닉','mpent',4), gr('파워 코드 리프','down8','power',120)]},
+
+  {lv:5, t:'모드: 같은 음, 다른 중심', d:['C 메이저 스케일을 D에서 시작하면 D 도리안, G에서 시작하면 G 믹솔리디안입니다. 음은 같지만 중심이 바뀌면 분위기가 달라집니다.','각 모드를 구분 짓는 특징음 하나를 귀로 기억하세요. 도리안의 6도, 리디안의 ♯4, 프리지안의 ♭2.'], tips:['코드 하나를 길게 깔아 두고 그 위에서 모드를 쳐야 색이 들립니다.'], go:[gs('D 도리안','dorian',2), gs('G 믹솔리디안','mixo',7), gs('F 리디안','lydian',5), gs('E 프리지안','phryg',4)]},
+  {lv:5, t:'재즈 보이싱과 ii–V–I', d:['재즈 화성의 기본 문장입니다. Dm7 – G7 – Cmaj7. 긴장이 쌓였다가 풀리는 흐름을 손과 귀에 넣어 두세요.','개방현 없이 네 줄만 잡는 보이싱은 그대로 옮겨 열두 키에서 쓸 수 있습니다.'], tips:['코드가 바뀔 때 가장 적게 움직이는 보이싱을 고르는 게 요령입니다.'], go:[gc('이동형 보이싱','Dm7(Ⅴ)','G7(Ⅲ)','Cmaj7(Ⅲ)'), gr('ii–V–I 반주','ballad','251',90)]},
+  {lv:5, t:'텐션 코드: 9 · 13 · 7♯9', d:['7 코드 위에 9도, 13도를 얹으면 소리가 넓어집니다. 펑크의 9 코드, 블루스 마무리의 13 코드, 록의 7♯9가 대표적입니다.'], tips:['텐션 코드에서는 5도나 근음을 빼도 됩니다. 베이스가 채워 주니까요.'], go:[gc('텐션 코드 보기','C9','G13','E7#9')]},
+  {lv:5, t:'하모닉 · 멜로딕 마이너', d:['내추럴 마이너의 7도를 올리면 하모닉 마이너, 6도까지 올리면 멜로딕 마이너가 됩니다. 마이너 키의 V7 코드 위에서 진가가 드러납니다.'], tips:['A 하모닉 마이너를 E7 코드 위에서 쳐 보세요.'], go:[gs('A 하모닉 마이너','hminor',9), gs('A 멜로딕 마이너','mminor',9)]},
+  {lv:5, t:'디미니쉬 · 오그먼트 · m7♭5', d:['코드와 코드 사이를 반음으로 이어 주는 경과 코드들입니다. 디미니쉬 7은 세 칸마다 같은 구성음이 반복되는 대칭 구조입니다.'], tips:['C와 Dm 사이에 C#dim7을 넣어 보세요. Bdim7 모양을 두 칸 올리면 됩니다.'], go:[gc('경과 코드 보기','Bdim7','Caug','Bm7♭5')]},
+  {lv:5, t:'나만의 연습 루틴 설계', d:['실력은 연습 시간이 아니라 연습 구조에서 나옵니다. 워밍업 5분, 약점 기술 10분, 레퍼토리 10분, 즉흥 5분처럼 나눠 보세요.','템포는 틀리지 않는 속도에서 시작해 5BPM씩만 올립니다. 세 번 연속 깨끗하게 쳤을 때만 다음 템포로 넘어가세요.'], tips:['자기 연주를 녹음해서 들어 보세요. 가장 빠른 선생입니다.','좋아하는 곡을 귀로 따 보는 것이 마스터 단계의 진짜 공부입니다.'], go:[gr('메트로놈과 함께 연습','s16','c-g-am-f',80)]},
+];
+
+const L_BASS = [
+  {lv:1, t:'베이스의 역할과 자세', d:['베이스는 드럼의 리듬과 기타·건반의 화음을 이어 주는 다리입니다. 음 하나를 정확한 자리에 놓는 것이 전부이고, 그래서 어렵습니다.','스트랩 길이는 앉았을 때와 섰을 때 악기 높이가 같도록 맞추세요.'], tips:['오른손 엄지는 픽업이나 4번줄 위에 올려 지지대로 씁니다.'], go:[gt('지판 구경하기')]},
+  {lv:1, t:'줄 번호와 개방현', d:['가장 굵은 줄이 4번줄, 가장 가는 줄이 1번줄입니다. 개방현은 4번줄부터 E·A·D·G이고, 기타의 굵은 네 줄보다 한 옥타브 낮습니다.'], tips:['화면에서는 가는 1번줄이 위, 굵은 4번줄이 아래입니다.'], go:[gt('개방현 소리 듣기')]},
+  {lv:1, t:'튜닝', d:['낮은 음은 틀어져도 귀로 알아채기 어렵습니다. 연습 전에 반드시 튜너로 확인하고, 기준음으로 귀를 맞춰 보세요.'], tips:['12프렛 하모닉스로 맞추면 낮은 음보다 듣기 쉽습니다.'], go:[gt('기준음 듣기')]},
+  {lv:1, t:'투핑거 피킹과 뮤트', d:['검지와 중지를 번갈아 줄을 당깁니다. 친 손가락은 바로 아래 줄에 기대어 멈추는데, 이 동작이 자연스럽게 뮤트가 됩니다.','베이스는 안 치는 줄이 울리지 않게 막는 것이 절반입니다.'], tips:['같은 손가락을 연달아 쓰지 않는 습관을 처음부터 들이세요.'], go:[gr('4비트 루트로 연습','root4','em-am',70)]},
+  {lv:1, t:'루트 음 찾기', d:['코드 이름의 첫 글자가 베이스가 칠 음입니다. G 코드면 G, Am 코드면 A. 4번줄과 3번줄의 음 이름만 외워도 대부분의 근음을 찾을 수 있습니다.'], tips:['4번줄: 개방 E, 1프렛 F, 3프렛 G. 3번줄: 개방 A, 2프렛 B, 3프렛 C.'], go:[gr('온음표로 근음 짚기','whole','g-d-em-c',70), gt('지판 음 이름 보기')]},
+  {lv:1, t:'첫 합주: 4비트 루트', d:['메트로놈 소리와 내 음이 겹쳐서 하나로 들리면 성공입니다. 소리가 둘로 갈라져 들리면 박이 밀리거나 당겨진 겁니다.'], tips:['발로 박자를 밟으면서 치세요.'], go:[gr('G – Em – C – D','root4','g-em-c-d',76)]},
+
+  {lv:2, t:'8비트 루트', d:['록과 팝의 기본 엔진입니다. 여덟 음의 크기와 길이를 기계처럼 똑같이 맞추는 게 목표입니다.'], tips:['힘으로 치지 말고 앰프 볼륨을 올리세요. 가볍게 쳐야 오래 칩니다.'], go:[gr('8비트 루트','root8','g-d-em-c',90)]},
+  {lv:2, t:'루트–5도', d:['근음에서 한 줄 위, 두 프렛 옆에 5도가 있습니다. 메이저든 마이너든 5도는 같아서 어떤 코드에서도 안전합니다.'], tips:['지판에서 R과 5의 모양을 눈에 익히세요. 어느 근음에서나 같은 모양입니다.'], go:[gr('루트–5도','r5','c-g-am-f',84)]},
+  {lv:2, t:'옥타브', d:['근음에서 두 줄 위, 두 프렛 옆이 한 옥타브 위의 같은 음입니다. 검지와 소지(또는 약지)로 잡고 번갈아 칩니다.'], tips:['옥타브를 칠 때 안 쓰는 줄은 왼손 검지로 덮어 두세요.'], go:[gr('옥타브 패턴','oct','am-f-c-g',96)]},
+  {lv:2, t:'메이저 스케일', d:['한 포지션에서 손을 옮기지 않고 도레미파솔라시도를 칠 수 있습니다. 중지로 근음을 잡고 시작하세요.'], tips:['손가락 하나에 프렛 하나씩, 네 프렛을 네 손가락이 나눠 맡습니다.'], go:[gs('G 메이저 스케일','major',7)]},
+  {lv:2, t:'코드톤: 메이저와 마이너', d:['근음·3도·5도, 코드를 이루는 세 음입니다. 베이스 라인의 재료는 결국 이 코드톤이고, 3도가 메이저와 마이너를 가릅니다.'], tips:['같은 근음에서 메이저와 마이너를 번갈아 눌러 3도 위치 차이를 확인하세요.'], go:[gb('C 메이저 코드톤','maj',0), gb('A 마이너 코드톤','min',9)]},
+  {lv:2, t:'캐논 진행으로 한 곡 완주', d:['여덟 마디 진행을 끊기지 않고 끝까지 가는 연습입니다. 틀려도 멈추지 말고 다음 마디 첫 박에 다시 올라타세요.'], tips:['합주에서는 틀린 음보다 멈추는 것이 더 큰 사고입니다.'], go:[gr('캐논 진행','r5','canon',80)]},
+
+  {lv:3, t:'마이너 펜타토닉', d:['베이스 리프와 필인의 절반은 이 다섯 음에서 나옵니다. 근음, ♭3, 4, 5, ♭7.'], tips:['근음에서 ♭7로 내려갔다 돌아오는 것만으로도 리프가 됩니다.'], go:[gs('E 마이너 펜타토닉','mpent',4), gs('A 마이너 펜타토닉','mpent',9)]},
+  {lv:3, t:'록 리프와 쉼표', d:['쉼표는 치지 않는 구간이 아니라 소리를 끊는 연주입니다. 왼손을 살짝 떼거나 오른손을 줄에 대서 정확한 자리에서 음을 멈추세요.'], tips:['음의 시작만큼 끝나는 위치를 신경 쓰면 연주가 단단해집니다.'], go:[gr('록 리프','rock','power',104)]},
+  {lv:3, t:'셔플 부기', d:['근음·3도·5도·6도를 두 번씩 치며 올라가는 블루스의 고전 라인입니다. 출렁이는 셔플 리듬에 얹습니다.'], tips:['먼저 박자를 입으로 "따 – 다, 따 – 다" 하고 불러 보세요.'], go:[gr('12마디 블루스 부기','boogie','blues-a',96)]},
+  {lv:3, t:'데드노트와 고스트 노트', d:['왼손으로 줄을 덮은 채 치면 음정 없는 툭 소리가 납니다. 음 사이에 넣으면 드럼 하이햇처럼 그루브를 채워 줍니다.'], tips:['한 손가락만 대면 하모닉스가 울립니다. 손가락 두세 개로 가볍게 덮으세요.'], go:[gr('데드노트 그루브','ghost','em-am',84)]},
+  {lv:3, t:'내추럴 마이너와 필인', d:['마디 끝 한두 박에 스케일 음으로 다음 코드를 향해 걸어가는 것이 필인입니다. 네 마디에 한 번이면 충분합니다.'], tips:['필인은 양념입니다. 넣을까 말까 싶으면 넣지 마세요.'], go:[gs('A 내추럴 마이너','minor',9)]},
+
+  {lv:4, t:'워킹 베이스', d:['한 박에 한 음씩 걸어갑니다. 1박은 근음, 2·3박은 코드톤, 4박은 다음 코드 근음의 반음 위나 아래에서 접근하는 음입니다.'], tips:['패턴의 a가 접근음입니다. 다음 마디 근음으로 빨려 들어가는 느낌을 들어 보세요.'], go:[gr('워킹 베이스','walk','blues-a',100)]},
+  {lv:4, t:'7th 코드톤', d:['3화음에 7도를 더하면 라인의 선택지가 넓어집니다. 도미넌트 7의 ♭7, 메이저 7의 7도가 코드의 성격을 결정합니다.'], tips:['아르페지오로 올라갔다 내려오는 연습을 열두 키에서 해 보세요.'], go:[gb('G7 코드톤','7',7), gb('D 마이너 7','m7',2), gb('C 메이저 7','maj7',0)]},
+  {lv:4, t:'16비트 펑크 그루브', d:['한 박을 넷으로 쪼개고 그중 어디에 음을 놓을지 고르는 리듬입니다. 첫 박을 정확하고 강하게 치는 것이 펑크의 핵심입니다.'], tips:['60BPM에서 완벽하게, 그다음에 올립니다.'], go:[gr('16비트 펑크','funk16','em-am',72)]},
+  {lv:4, t:'슬랩 기초', d:['엄지 옆면 뼈로 줄을 때리는 썸, 검지로 줄을 잡아채는 팝. 보통 낮은 줄 근음은 썸으로, 높은 줄 옥타브는 팝으로 칩니다.','손목을 문고리 돌리듯 회전시키는 것이 요령이고, 엄지는 줄을 때린 뒤 바로 튕겨 나옵니다.'], tips:['옥타브 패턴을 썸–팝으로 번갈아 치는 것부터 시작하세요.'], go:[gr('옥타브로 썸–팝 연습','oct','em-am',80)]},
+  {lv:4, t:'도리안과 믹솔리디안', d:['마이너 7 코드 위에서는 도리안, 도미넌트 7 코드 위에서는 믹솔리디안. 펑크와 퓨전 베이스 라인의 주재료입니다.'], tips:['도리안의 6도를 라인에 한 번 넣어 보세요. 색이 확 달라집니다.'], go:[gs('D 도리안','dorian',2), gs('G 믹솔리디안','mixo',7)]},
+
+  {lv:5, t:'ii–V–I 워킹', d:['재즈 스탠더드의 기본 문장 위를 걷습니다. 코드가 마디마다 바뀌므로 4박의 접근음 선택이 라인의 품질을 좌우합니다.'], tips:['같은 진행을 매번 다른 음으로 걸어 보세요. 그게 즉흥입니다.'], go:[gr('ii–V–I 워킹','walk7','251',110), gb('m7♭5 코드톤','m7b5',11)]},
+  {lv:5, t:'모드와 코드 스케일', d:['코드마다 어울리는 스케일이 있습니다. 메이저 7에는 메이저나 리디안, 마이너 7에는 도리안, 도미넌트 7에는 믹솔리디안.'], tips:['스케일 전체를 훑지 말고 코드톤 사이를 잇는 경과음으로 쓰세요.'], go:[gs('F 리디안','lydian',5), gs('E 프리지안','phryg',4)]},
+  {lv:5, t:'하모닉 · 멜로딕 마이너', d:['마이너 키의 V7 코드 위에서 쓰는 스케일입니다. 올라간 7도가 근음으로 끌려가는 힘을 만듭니다.'], tips:['A 하모닉 마이너를 E7 위에서 연습하세요.'], go:[gs('A 하모닉 마이너','hminor',9), gs('A 멜로딕 마이너','mminor',9)]},
+  {lv:5, t:'하모닉스·태핑·코드 연주', d:['5·7·12프렛 쇠막대 바로 위에 손가락을 살짝 대고 치면 종소리 같은 하모닉스가 납니다.','높은 줄에서 근음과 10도를 함께 잡으면 베이스 한 대로 화음 반주도 할 수 있습니다.'], tips:['하모닉스는 브리지 가까이에서 쳐야 또렷합니다.'], go:[gt('지판에서 위치 확인')]},
+  {lv:5, t:'나만의 연습 루틴 설계', d:['워밍업 5분, 리듬 훈련 10분, 코드톤과 스케일 10분, 곡 카피 15분. 매일 같은 순서로 돌리면 실력이 쌓이는 게 보입니다.','좋아하는 베이시스트의 라인을 귀로 따서 그대로 쳐 보는 것이 가장 좋은 교재입니다.'], tips:['메트로놈을 2·4박에만 울린다고 생각하고 쳐 보세요. 스스로 박을 만드는 힘이 생깁니다.'], go:[gr('메트로놈과 함께','walk','c-g-am-f',90)]},
+];
+
+// 미리보기(data: URL)·시크릿 창에서는 localStorage 접근 자체가 예외를 던진다. 진도 저장만 건너뛴다.
+let store = null;
+try { store = localStorage; } catch (e) {}
+const saved = JSON.parse((store && store.getItem('guitar-class')) || '{}');
+const state = Object.assign({
+  page:'landing', inst:null, tab:'learn', lesson:null, back:null,
+  song:null, scat:'all', slv:0, acc:true, loop:{on:false, a:null, b:null, up:false},
+  cview:'dict', ccBest:{}, tr:0, capo:0,
+  songDone:[], streak:{last:'', n:0}, best:{note:0, chord:0, ear:0}, quiz:{mode:'note', score:0, run:0, q:null, pick:null},
+  chord:'Em', cat:'전체', list:null,
+  pat:'down4', prog:'g-d-em-c', bpm:80, click:true,
+  scale:'mpent', tset:'maj', root:9, label:'note', noteMode:'natural', drive:false,
+  done:{acoustic:[], electric:[], bass:[]},
+}, saved);
+const save = () => store && store.setItem('guitar-class', JSON.stringify({inst:state.inst, done:state.done, bpm:state.bpm, songDone:state.songDone, streak:state.streak, best:state.best, ccBest:state.ccBest}));
+const dayKey = back => new Date(Date.now() - back*864e5).toLocaleDateString('sv');
+function touchStreak() {
+  if (state.streak.last === dayKey(0)) return;
+  state.streak = {last:dayKey(0), n:state.streak.last === dayKey(1) ? state.streak.n+1 : 1};
+  save();
+}
+const streakNow = () => [dayKey(0), dayKey(1)].includes(state.streak.last) ? state.streak.n : 0;
+const lessonsDone = () => Object.values(state.done).reduce((a, d) => a + d.length, 0);
+const xp = () => 10*lessonsDone() + 15*state.songDone.length + 2*(state.best.note + state.best.chord + state.best.ear);
+const shownChords = s => s.pr ? [...new Set(curProg().ch.flatMap(c => c.split(',')))] : songChords(s);
+const songChords = s => [...new Set(s.pr ? s.pr.flatMap(c => c.split(',')) : s.ch ? parseSong(s).chords.flat() : [])];
+function party() {
+  const el = document.createElement('div'), colors = ['--accent-a','--accent-e','--accent-b','--sun'];
+  el.className = 'confetti';
+  for (let i = 0; i < 22; i++) el.innerHTML += `<i style="background:var(${colors[i%4]});--x:${Math.random()*320-160}px;--y:${Math.random()*260-190}px;--r:${Math.random()*540}deg"></i>`;
+  document.body.append(el);
+  setTimeout(() => el.remove(), 1200);
+}
+
+const bass = () => state.inst === 'bass';
+const T = () => INST[state.inst].t;
+const pcOf = n => ({C:0,D:2,E:4,F:5,G:7,A:9,B:11})[n[0]] + (n[1]==='#' ? 1 : n[1]==='♭' ? -1 : 0);
+const noteName = m => NAMES[m%12] + (Math.floor(m/12)-1);
+const lessons = () => (bass() ? L_BASS : L_GUITAR).map((l,i) => ({...l, id:(bass()?'b':'g')+i})).filter(l => !l.only || l.only===state.inst);
+const curPat = () => { const [id,n,lv,beats,s,tip,kind='strum'] = PATTERNS[bass()?'bass':'guitar'].find(p => p[0]===state.pat) || PATTERNS[bass()?'bass':'guitar'][0]; return {id,n,lv,beats,s,tip,kind}; };
+const curSong = () => SONGS.find(s => s.id === state.song);
+// 조옮김용 이동형 코드 틀. [6번줄 근음(E폼) 프렛 차이, 손가락, 5번줄 근음(A폼) 프렛 차이, 손가락]. 숫자는 근음 프렛 기준, x는 뮤트.
+const FORMS = {
+  '': [[0,2,2,1,0,0], '134211', ['x',0,2,2,2,0], '013331'],
+  'm': [[0,2,2,0,0,0], '134111', ['x',0,2,2,1,0], '013421'],
+  '7': [[0,2,0,1,0,0], '131211', ['x',0,2,0,2,0], '013141'],
+  'm7': [[0,2,0,0,0,0], '131111', ['x',0,2,0,1,0], '013121'],
+  'maj7': [null, null, ['x',0,2,1,2,0], '013241'],
+  '5': [[0,2,2,'x','x','x'], '134000', ['x',0,2,2,'x','x'], '013400'],
+  'sus4': [[0,2,2,2,0,0], '123411', ['x',0,2,2,3,0], '012341'],
+  'sus2': [null, null, ['x',0,2,2,0,0], '013411'],
+  'add9': [null, null, ['x',0,2,4,2,0], '012431'],
+  '9': [null, null, ['x',0,-1,0,0,'x'], '021330'],
+  '13': [[0,'x',0,1,2,'x'], '102340', null, null],
+  '7#9': [null, null, ['x',0,-1,0,1,'x'], '021340'],
+  'm7♭5': [null, null, ['x',0,1,0,1,'x'], '013240'],
+  'dim7': [null, null, ['x',0,1,-1,1,'x'], '023140'],
+  'aug': [null, null, ['x',0,-1,-2,-2,'x'], '032110'],
+};
+const ROOTS = ['C','C#','D','E♭','E','F','F#','G','A♭','A','B♭','B'], GEN = {};
+// A♭ 자리는 마이너 코드(G#m)와 분수 코드의 베이스(E/G#)일 때 관례대로 G#으로 적는다
+const trName = (name, n) => n % 12 ? name.replace(/[A-G][#♭]?/g, (r, at, all) => {
+  const pc = (pcOf(r) + n + 120) % 12;
+  return pc === 8 && (all[at-1] === '/' || /^m(?!aj)/.test(all.slice(at + r.length))) ? 'G#' : ROOTS[pc];
+}) : name;
+function chordOf(name) {
+  if (CH[name] || GEN[name]) return CH[name] || GEN[name];
+  const [, root, suf] = name.match(/^([A-G][#♭]?)([^/]*)/), pc = (pcOf(root) + 12) % 12, f = FORMS[suf] || FORMS[/^m(?!aj)/.test(suf) ? 'm' : ''];
+  // 분수 코드(D/F# 등)는 사전에 근음 코드가 있으면 그 모양을 그대로 쓴다
+  if (CH[root + suf]) return GEN[name] = {...CH[root + suf], n:name};
+  const pick = [0, 2].filter(i => f[i]).map(i => {
+    let r = (pc - (i ? 9 : 4) + 12) % 12 || 12;
+    if (r + Math.min(...f[i].filter(o => o !== 'x')) < 0) r += 12;
+    return {r, off:f[i], fg:f[i+1]};
+  }).sort((a, b) => a.r - b.r)[0];
+  return GEN[name] = {n:name, fr:pick.off.map(o => o === 'x' ? -1 : pick.r + o), fg:[...pick.fg].map(Number), cat:'조옮김', lv:3};
+}
+function songPreset() {
+  const s = curSong();
+  state.bpm = s.bpm;
+  if (s.pr) state.pat = bass() ? s.bp : s.pat;
+}
+function parseSong(s) {
+  const beats = s.beats || 4, bars = s.m.split('|').map(b => b.trim()), notes = [], t = T();
+  bars.forEach((b, bi) => {
+    let p = bi*beats;
+    b.split(/\s+/).forEach(tok => {
+      const m = tok.match(/^([a-g-])(#?)([',]*)([\d.]*)$/), dur = +m[4] || 1;
+      if (m[1] !== '-') {
+        let midi = 60 + {c:0,d:2,e:4,f:5,g:7,a:9,b:11}[m[1]] + (m[2] ? 1 : 0);
+        for (const o of m[3]) midi += o === "'" ? 12 : -12;
+        notes.push({b:p, midi, bar:bi});
+      }
+      p += dur;
+    });
+  });
+  const lo = Math.min(...notes.map(n => n.midi)), hi = Math.max(...notes.map(n => n.midi));
+  const top = t[t.length-1]+12, shift = [0,-12,-24,-36].find(x => hi+x <= top && lo+x >= t[0]) ?? -12;
+  // 베이스처럼 음역이 좁은 악기에서 통째로 옮겨도 넘치는 음은 그 음만 옥타브를 접는다
+  notes.forEach(n => { n.midi += shift; while (n.midi > top) n.midi -= 12; while (n.midi < t[0]) n.midi += 12; Object.assign(n, posFor(n.midi)); });
+  const chords = s.ch ? s.ch.split(' ').map(b => b === '-' ? [] : b.split(',').map(x => x === 'F*' ? 'F (약식)' : x)) : null;
+  return {beats, bars, notes, chords, total: bars.length*beats, grp: s.grp || 1, sig: s.sig || beats + '/4'};
+}
+const curProg = () => { if (state.tab === 'songs' && state.song) { const s = curSong(); return {id:s.id, n:'마디별 코드 진행', lv:s.lv, ch:s.pr.map(c => trName(c, bass() ? state.tr : state.tr - state.capo))}; } const [id,n,lv,ch] = PROGS.find(p => p[0]===state.prog) || PROGS[1]; return {id,n,lv,ch}; };
+
+let ctx, bus, tone, cleanG, driveG;
+const cache = {}, voices = [];
+function ac() {
+  if (!ctx) {
+    ctx = new AudioContext();
+    bus = ctx.createGain(); tone = ctx.createBiquadFilter(); tone.type = 'lowpass';
+    cleanG = ctx.createGain(); driveG = ctx.createGain();
+    const shaper = ctx.createWaveShaper(), curve = new Float32Array(1024);
+    for (let i = 0; i < 1024; i++) curve[i] = Math.tanh((i/512-1)*9);
+    shaper.curve = curve; shaper.oversample = '4x';
+    const cab = ctx.createBiquadFilter(); cab.type = 'lowpass'; cab.frequency.value = 3200;
+    const comp = ctx.createDynamicsCompressor(), out = ctx.createGain(); out.gain.value = .9;
+    bus.connect(tone); tone.connect(cleanG).connect(comp);
+    tone.connect(shaper).connect(cab).connect(driveG).connect(comp);
+    comp.connect(out).connect(ctx.destination);
+    voicing();
+    touchStreak();
+  }
+  if (ctx.state === 'suspended') ctx.resume();
+  return ctx;
+}
+function voicing() {
+  if (!ctx) return;
+  tone.frequency.value = {acoustic:9000, electric:4200, bass:1500}[state.inst];
+  const d = state.inst==='electric' && state.drive;
+  cleanG.gain.value = d ? 0 : 1; driveG.gain.value = d ? .22 : 0;
+}
+function stringBuf(midi) {
+  const key = state.inst + midi;
+  if (cache[key]) return cache[key];
+  const sr = ctx.sampleRate, freq = 440 * 2**((midi-69)/12), N = Math.round(sr/freq), len = sr*4|0;
+  const buf = ctx.createBuffer(1, len, sr), d = buf.getChannelData(0);
+  const [soft, decay] = {acoustic:[.8,.996], electric:[.35,.9975], bass:[.1,.9985]}[state.inst];
+  for (let i = 0; i < N; i++) d[i] = Math.random()*2-1;
+  for (let i = 1; i < N; i++) d[i] = d[i-1] + soft*(d[i]-d[i-1]);
+  let mean = 0, peak = 0;
+  for (let i = 0; i < N; i++) mean += d[i]/N;
+  for (let i = 0; i < N; i++) { d[i] -= mean; peak = Math.max(peak, Math.abs(d[i])); }
+  for (let i = 0; i < N; i++) d[i] /= peak;
+  for (let i = N; i < len; i++) d[i] = decay*.5*(d[i-N]+d[i-N+1]);
+  const fade = sr*.3|0;
+  for (let i = 0; i < fade; i++) d[len-1-i] *= i/fade;
+  // 피드백 루프의 실제 주기가 N-0.5 샘플이라 재생 속도로 음정을 보정한다
+  return cache[key] = {buf, rate: freq*(N-.5)/sr};
+}
+// lane: 멜로디와 반주가 같은 줄을 쓸 때 서로의 울림을 끊지 않도록 보이스 슬롯을 분리한다
+function pluck(s, f, when, vel = 1, mute, lane = 0) {
+  const c = ac(), t = when || c.currentTime, v = voices[s+lane];
+  if (v) { v.g.gain.cancelScheduledValues(t); v.g.gain.setTargetAtTime(0, t, .006); v.src.stop(t+.08); }
+  const {buf, rate} = stringBuf(T()[s]+f), src = c.createBufferSource(), g = c.createGain();
+  src.buffer = buf; src.playbackRate.value = rate;
+  g.gain.setValueAtTime((bass() ? .6 : .34)*vel, t);
+  if (mute) g.gain.setTargetAtTime(0, t+.015, .012);
+  src.connect(g).connect(bus); src.start(t);
+  voices[s+lane] = {src, g};
+}
+function strum(fr, dir, when, vel = 1, mute, lane = 0) {
+  const t = when || ac().currentTime, up = dir === 'U';
+  let o = fr.map((f,s) => [s,f]).filter(x => x[1] >= 0);
+  if (up) o = o.reverse().slice(0,4);
+  o.forEach(([s,f],k) => pluck(s, f, t + k*(up ? .011 : .017), vel*(up ? .75 : 1), mute, lane));
+}
+function tick(when, strong) {
+  const o = ctx.createOscillator(), g = ctx.createGain();
+  o.frequency.value = strong ? 1600 : 1100;
+  g.gain.setValueAtTime(.18, when); g.gain.exponentialRampToValueAtTime(.001, when+.05);
+  o.connect(g).connect(ctx.destination); o.start(when); o.stop(when+.06);
+}
+function posFor(m, near) {
+  let best;
+  T().forEach((o,s) => {
+    const f = m-o; if (f < 0 || f > 12) return;
+    const sc = near == null ? f : Math.abs(f-near-1);
+    if (!best || sc < best.sc) best = {s, f, sc};
+  });
+  return best;
+}
+function bassTones(name) {
+  const root = 28 + (pcOf(name)+8)%12, min = /^[A-G][#♭]?m(?!aj)/.test(name), rp = posFor(root);
+  const iv = {R:0, 3:min?3:4, 5:7, 6:9, 7:/maj7/.test(name)?11:10, 8:12};
+  return {root, min, rp, pos: k => k==='R' ? rp : posFor(root+iv[k], rp.f)};
+}
+
+let player = null, timers = [], seqTimers = [];
+function lit(midi) {
+  document.querySelectorAll(`.dot[data-midi="${midi}"]`).forEach(el => { el.classList.add('on'); setTimeout(() => el.classList.remove('on'), 240); });
+}
+function vib(s) {
+  document.querySelectorAll(`.str[data-s="${s}"]`).forEach(el => { el.classList.add('vib'); setTimeout(() => el.classList.remove('vib'), 300); });
+}
+function playSeq(list, gap) {
+  seqTimers.forEach(clearTimeout);
+  seqTimers = list.map(([s,f],i) => setTimeout(() => { pluck(s,f); lit(T()[s]+f); vib(s); }, i*gap));
+}
+function stopAll() {
+  clearInterval(player); player = null;
+  timers.forEach(clearTimeout); timers = [];
+  seqTimers.forEach(clearTimeout); seqTimers = [];
+  // 앞서 예약해 둔 음까지 지워야 멈춘 뒤에 소리가 새지 않는다
+  if (ctx) voices.forEach(v => { if (!v) return; v.g.gain.cancelScheduledValues(ctx.currentTime); v.g.gain.setTargetAtTime(0, ctx.currentTime, .02); v.src.stop(ctx.currentTime + .15); });
+}
+// heard: 방금 실제로 소리 난 위치. 스케줄러는 0.2초 앞서 예약하므로 일시 멈춤은 예약 위치가 아니라 이 값에서 이어 간다
+let heard = null, pausedAt = null;
+function setBtns() {
+  $('#playbtn').textContent = player ? '⏸ 일시 멈춤' : pausedAt ? '▶ 이어서' : '▶ 재생';
+  $('#stopbtn').disabled = !player && !pausedAt;
+}
+const resetLoop = () => state.loop = {on:false, a:null, b:null, up:false};
+const loopRange = nBars => { const L = state.loop, hi = L.b ?? L.a; return L.on && L.a != null && hi < nBars ? [L.a, hi] : null; };
+function startPlay(from) {
+  const c = ac(), pat = curPat(), prog = curProg(), n = pat.s.length, spb = n/pat.beats;
+  const R = loopRange(prog.ch.length), base = R ? R[0] : 0, len = R ? R[1]-R[0]+1 : prog.ch.length;
+  let slot = from ? (from.slot+1) % n : 0, bar = from ? from.bar + (from.slot+1 === n ? 1 : 0) : 0, next = c.currentTime + .12;
+  player = setInterval(() => {
+    while (next < c.currentTime + .2) {
+      if (R && state.loop.up && slot === 0 && bar > 0 && bar % len === 0) setBpm(state.bpm + 5);
+      const when = next, sl = slot, br = bar, bi = base + bar % len, names = prog.ch[bi].split(','), tok = pat.s[sl], beat = sl % spb === 0;
+      const name = names[Math.floor(sl*names.length/n)], chordStart = sl % (n/names.length) === 0;
+      let midi;
+      if (state.click && beat) tick(when, sl === 0);
+      if (tok !== '-') {
+        if (bass()) {
+          const b = bassTones(name);
+          let p = b.rp;
+          if (tok === 'a') { let m = bassTones(prog.ch[base + (bar+1) % len].split(',')[0]).root - 1; if (m < 28) m += 2; p = posFor(m, b.rp.f); }
+          else if (tok !== 'x') p = b.pos(tok);
+          pluck(p.s, p.f, when, beat ? 1 : .85, tok === 'x');
+          midi = T()[p.s] + p.f;
+        } else {
+          const cap = state.tab === 'songs' ? state.capo : 0, fr = chordOf(name).fr.map(f => f < 0 ? f : f + cap);
+          if (tok === 'D' || tok === 'U') strum(fr, tok, when, beat ? 1 : .8);
+          else if (tok === 'x') strum(fr.map(f => Math.max(f,0)), 'D', when, .7, true);
+          else {
+            const r = fr.findIndex(f => f >= 0), s = tok==='R' ? r : tok==='A' ? (r===0 ? 2 : r+1) : 6-tok;
+            if (fr[s] >= 0) pluck(s, fr[s], when, 1.1);
+          }
+        }
+      }
+      timers.push(setTimeout(() => {
+        heard = {slot:sl, bar:br};
+        document.querySelectorAll('.slot.on').forEach(e => e.classList.remove('on'));
+        $('#slot-'+sl).classList.add('on');
+        if (sl === 0) {
+          document.querySelectorAll('.pc.on').forEach(e => e.classList.remove('on'));
+          $('#pc-'+bi).classList.add('on');
+        }
+        if (chordStart) { $('#rh-name').textContent = name; $('#rh-board').innerHTML = rhBoard(name); }
+        const pend = $('#pend');
+        if (beat && pend) { pend.style.transitionDuration = 60/state.bpm*pat.beats/n*spb + 's'; pend.classList.toggle('r'); }
+        if (midi) lit(midi);
+      }, (when - c.currentTime)*1000));
+      next += 60/state.bpm*pat.beats/n;
+      if (++slot === n) { slot = 0; bar++; }
+    }
+  }, 25);
+  setBtns();
+}
+
+function startMelody(from) {
+  const c = ac(), P = parseSong(curSong()), all = [];
+  let ev = all;
+  for (let k = 0; k < P.total; k += P.grp) ev.push({b:k, click:true, strong:k % P.beats === 0});
+  if (P.chords && !bass()) P.chords.forEach((names, bi) => names.forEach((name, j) => ev.push({b:bi*P.beats + j*P.beats/names.length, chord:name})));
+  P.notes.forEach((n, i) => ev.push({b:n.b, note:i}));
+  const R = loopRange(P.bars.length), A = R ? R[0]*P.beats : 0, B = R ? (R[1]+1)*P.beats : P.total;
+  const seq = all.filter(e => e.b >= A && e.b < B).sort((a, b) => a.b - b.b);
+  seq.push(R ? {b:B, loop:true} : {b:B, end:true});
+  const resume = from && from.b >= A && from.b < B;
+  ev = resume ? seq.filter(e => e.b > from.b) : seq;
+  let i = 0, lt = c.currentTime + .15, lb = resume ? ev[0].b : A;
+  player = setInterval(() => {
+    while (i < ev.length) {
+      const e = ev[i], when = lt + (e.b-lb)*60/state.bpm;
+      if (when > c.currentTime + .2) break;
+      lt = when; lb = e.b; i++;
+      if (e.loop) { if (state.loop.up) setBpm(state.bpm + 5); ev = seq; i = 0; lb = A; continue; }
+      const later = fn => timers.push(setTimeout(fn, (when - c.currentTime)*1000));
+      later(() => heard = {b:e.b});
+      if (e.click) { if (state.click) tick(when, e.strong); }
+      else if (e.chord) { if (state.acc) strum(CH[e.chord].fr, 'D', when, .4, false, 6); }
+      else if (e.end) later(() => { stopAll(); heard = null; setBtns(); });
+      else {
+        const n = P.notes[e.note];
+        pluck(n.s, n.f, when, 1.15);
+        later(() => { document.querySelectorAll('.nt.on').forEach(x => x.classList.remove('on')); $('#nt-'+e.note).classList.add('on'); lit(n.midi); });
+      }
+    }
+  }, 25);
+  setBtns();
+}
+
+function board({lo = 0, hi = 5, dots = [], muted = [], barres = [], W = 64, wide}) {
+  const t = T(), n = t.length, gap = 30, top = 22, x0 = 58;
+  const w = x0 + (hi-lo)*W + 12, h = top + (n-1)*gap + 42;
+  const y = s => top + (n-1-s)*gap, x = f => f === 0 ? 38 : x0 + (f-lo-.5)*W, mid = top + (n-1)*gap/2;
+  let o = `<svg class="board" viewBox="0 0 ${w} ${h}" ${wide ? `style="min-width:${w*.9}px"` : ''} role="img"><title>${INST[state.inst].n} 지판, ${lo+1}~${hi}프렛</title>`;
+  o += `<rect class="wood" x="${x0}" y="${top-13}" width="${(hi-lo)*W}" height="${(n-1)*gap+26}" rx="4"/>`;
+  for (let f = lo+1; f <= hi; f++) {
+    if ([3,5,7,9].includes(f)) o += `<circle class="inlay" cx="${x(f)}" cy="${mid}" r="6"/>`;
+    if (f === 12) o += `<circle class="inlay" cx="${x(f)}" cy="${mid-gap}" r="6"/><circle class="inlay" cx="${x(f)}" cy="${mid+gap}" r="6"/>`;
+    o += `<text x="${x(f)}" y="${h-12}">${f}</text>`;
+  }
+  for (let k = lo; k <= hi; k++) { const fx = x0+(k-lo)*W; o += `<line class="${k ? 'fret' : 'nut'}" x1="${fx}" x2="${fx}" y1="${top-13}" y2="${top+(n-1)*gap+13}"/>`; }
+  t.forEach((m,s) => {
+    o += `<line class="str" data-s="${s}" x1="${x0}" x2="${w-12}" y1="${y(s)}" y2="${y(s)}" stroke-width="${1.2+(n-1-s)*.5}"/>`;
+    o += `<text class="sn" x="7" y="${y(s)}">${n-s}</text><text x="19" y="${y(s)}">${NAMES[m%12]}</text>`;
+    o += `<rect class="hit" data-act="pluck" data-s="${s}" data-f="0" x="27" y="${y(s)-gap/2}" width="${x0-30}" height="${gap}"/>`;
+    for (let f = lo+1; f <= hi; f++) o += `<rect class="hit" data-act="pluck" data-s="${s}" data-f="${f}" x="${x0+(f-lo-1)*W}" y="${y(s)-gap/2}" width="${W}" height="${gap}"/>`;
+  });
+  muted.forEach(s => o += `<text x="38" y="${y(s)}" font-size="13">✕</text>`);
+  barres.forEach(b => o += `<rect class="barre" x="${x(b.f)-10}" y="${y(b.to)-10}" width="20" height="${y(b.from)-y(b.to)+20}" rx="10"/>`);
+  dots.forEach(d => o += `<g class="dot ${d.kind}" data-midi="${d.midi}"><circle cx="${x(d.f)}" cy="${y(d.s)}" r="${d.kind==='open' ? 8 : 11}"/><text x="${x(d.f)}" y="${y(d.s)}">${d.label}</text></g>`);
+  return o + '</svg>';
+}
+function chordBoard(ch) {
+  const pos = ch.fr.filter(f => f > 0), mx = Math.max(...pos), lo = mx <= 5 ? 0 : Math.min(...pos)-1, root = pcOf(ch.n), t = T();
+  const dots = [], muted = [], barres = [];
+  ch.fr.forEach((f,s) => {
+    if (f < 0) return muted.push(s);
+    const isRoot = (t[s]+f)%12 === root;
+    dots.push({s, f, midi:t[s]+f, kind: f === 0 ? (isRoot ? 'root' : 'open') : (isRoot ? 'root' : 'finger'), label: f ? (ch.fg[s] || '') : ''});
+  });
+  [1,2,3,4].forEach(k => {
+    const ss = ch.fg.map((g,s) => g === k ? s : -1).filter(s => s >= 0);
+    if (ss.length > 1 && ss.every(s => ch.fr[s] === ch.fr[ss[0]])) barres.push({f:ch.fr[ss[0]], from:ss[0], to:ss[ss.length-1]});
+  });
+  return board({lo, hi:lo+5, dots, muted, barres});
+}
+function bassBoard(name) {
+  const b = bassTones(name), t = T();
+  return board({lo:0, hi:8, W:40, dots:['R','3','5','8'].map(k => { const p = b.pos(k); return {s:p.s, f:p.f, midi:t[p.s]+p.f, kind:k==='R' ? 'root' : 'finger', label:k==='3' && b.min ? '♭3' : k}; })});
+}
+const rhBoard = name => bass() ? bassBoard(name) : chordBoard(chordOf(name));
+const chip = (act, v, label, on, cls = '') => `<button class="chip ${cls} ${on ? 'on' : ''}" data-act="${act}" data-v="${v}">${label}</button>`;
+
+const art = (id, vb = '0 0 320 160', cls = 'art') => `<svg class="${cls}" viewBox="${vb}" aria-hidden="true"><use href="#${id}"/></svg>`;
+const LOGO = `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#pick"/></svg>`;
+function viewLanding() {
+  const nPat = PATTERNS.guitar.length + PATTERNS.bass.length;
+  return `<div class="land">
+  <header class="lnav"><span class="logo">${LOGO}기타 교실</span><button class="btn primary" data-act="${state.inst ? 'resume' : 'start'}">${state.inst ? '이어서 배우기' : '시작하기'}</button></header>
+  ${site.notice ? `<p class="notice">${esc(site.notice)}</p>` : ''}
+  <section class="hero">${art('a-stage', '0 0 800 400')}
+    <div class="hero-text"><p class="eyebrow">통기타 · 일렉기타 · 베이스</p>
+      <h1>첫 코드부터 무대까지, 눌러 보고 들으며 배우는 기타</h1>
+      <p class="lead">지판에 누를 자리가 보이고, 누르면 바로 소리가 납니다. 생기초부터 마스터까지 다섯 단계를 순서대로 따라오세요.</p>
+      <div class="btns"><button class="btn primary" data-act="start">악기 고르고 시작하기</button>${state.inst ? `<button class="btn" data-act="resume">${INST[state.inst].n} 이어서 하기</button>` : ''}</div>
+      <div class="stats"><div><b>${L_GUITAR.length + L_BASS.length}</b><span>레슨</span></div><div><b>${Object.keys(CH).length}</b><span>코드</span></div><div><b>${nPat}</b><span>리듬 패턴</span></div><div><b>${SONGS.length}</b><span>연습곡</span></div></div>
+    </div></section>
+  <section class="sec"><h2>이렇게 배웁니다</h2>
+    <div class="feat">
+      <div><svg viewBox="0 0 24 24">${ICON.chords}</svg><b>지판에 그대로 보이는 운지</b><span>손가락 번호, 근음, 치지 않는 줄까지 지판 위에 표시합니다.</span></div>
+      <div><svg viewBox="0 0 24 24">${ICON.tuner}</svg><b>누르면 나는 소리</b><span>코드 하나, 지판의 칸 하나까지 누르는 즉시 귀로 확인합니다.</span></div>
+      <div><svg viewBox="0 0 24 24">${ICON.rhythm}</svg><b>반주와 함께 치는 리듬</b><span>스트로크와 핑거링 패턴 ${nPat}가지를 메트로놈, 코드 진행에 맞춰 연습합니다.</span></div>
+      <div><svg viewBox="0 0 24 24">${ICON.songs}</svg><b>탭 악보로 따라 치는 곡</b><span>동요와 클래식은 멜로디 탭으로, 팝과 가요는 코드 반주로 완주합니다.</span></div>
+    </div></section>
+  <section class="sec"><h2>다섯 단계 로드맵</h2><p>단계마다 레슨을 마치면 그 수준에서 칠 수 있는 곡이 이어집니다.</p>
+    <div class="road">${LEVELS.map(([n], i) => `<div><em>Lv.${i+1}</em><b>${n}</b><span>${ROAD[i]}</span></div>`).join('')}</div></section>
+  <section class="sec"><h2>단계별 연습곡 ${SONGS.length}곡</h2><p>장르를 골라 내 수준에 맞는 곡부터 시작합니다.</p>
+    <div class="tiles">${Object.entries(CATS).map(([k,[n,a]]) => `<div class="tile">${art(a)}<div><b>${n}</b><span>${SONGS.filter(s => s.c === k).length}곡</span></div></div>`).join('')}</div></section>
+  <section class="sec" id="pick"><h2>어떤 악기로 시작할까요?</h2><p>나중에 언제든 바꿀 수 있고, 진도는 악기별로 따로 저장됩니다.</p>
+    <div class="picks">${Object.entries(INST).map(([k,v]) => `<button class="pick" style="--c:${v.c}" data-act="inst" data-v="${k}">${art(v.art, v.vb)}<div><b>${v.n}</b><span>${v.d}</span><em>${v.tag}</em></div></button>`).join('')}</div></section>
+  <p class="foot">소리는 브라우저에서 합성한 기타 음입니다. 팝·가요는 코드 진행만 담았고 가사와 멜로디는 싣지 않았습니다.</p></div>`;
+}
+const banner = (t, sub, pic) => `<div class="banner"><div><b>${t}</b><span>${sub}</span></div>${pic}</div>`;
+const medal = g => `<svg viewBox="0 0 44 44" aria-hidden="true"><path d="M13 3h7l4 13h-7ZM31 3h-7l-4 13h7Z" fill="var(--accent-e)"/><circle cx="22" cy="28" r="14" fill="var(--sun)"/><circle cx="22" cy="28" r="10.500" fill="none" stroke="var(--accent-ink)" stroke-width="1.200" opacity=".35"/><text x="22" y="28.500">${g}</text></svg>`;
+const METRO = `<svg class="art" viewBox="0 0 240 120" aria-hidden="true"><rect width="240" height="120" fill="var(--surface-2)"/><use href="#note" x="34" y="30" width="20" height="30" fill="var(--accent-e)"/><use href="#note" x="188" y="52" width="20" height="30" fill="var(--accent-b)"/>
+  <polygon points="88,106 152,106 136,14 104,14" fill="var(--art-top)" stroke="var(--art-edge)" stroke-width="4" stroke-linejoin="round"/><polygon points="101,94 139,94 130,26 110,26" fill="var(--art-guard)" opacity=".85"/>
+  <g class="pend" id="pend"><line x1="120" y1="100" x2="120" y2="22" stroke="var(--art-neck)" stroke-width="4" stroke-linecap="round"/><rect x="111" y="42" width="18" height="12" rx="3" fill="var(--accent)"/></g>
+  <rect x="84" y="98" width="72" height="13" rx="4" fill="var(--art-edge)"/></svg>`;
+function newQ() {
+  const z = state.quiz, t = T(), rnd = a => a[Math.random()*a.length|0], mix = a => a.map(x => [Math.random(), x]).sort((p, q) => p[0]-q[0]).map(x => x[1]);
+  if (z.mode === 'chord' && bass()) z.mode = 'note';
+  if (z.mode === 'note') {
+    const s = Math.random()*t.length|0, f = Math.random()*13|0, ans = NAMES[(t[s]+f)%12];
+    z.q = {s, f, ans, opts:mix([ans, ...mix(NAMES.filter(x => x !== ans)).slice(0,3)])};
+  } else if (z.mode === 'chord') {
+    const pool = Object.values(CH).filter(c => c.lv <= 3), c = rnd(pool);
+    z.q = {name:c.n, ans:c.n, opts:mix([c.n, ...mix(pool.filter(x => x.n !== c.n && x.cat === c.cat)).slice(0,3).map(x => x.n)])};
+  } else {
+    const kinds = bass() ? ['메이저','마이너'] : ['메이저','마이너','세븐스'], ans = rnd(kinds);
+    z.q = {ans, opts:kinds, root:Math.random()*12|0, name:rnd({메이저:['C','G','D','E','A'], 마이너:['Em','Am','Dm'], 세븐스:['A7','D7','E7','G7','B7']}[ans])};
+  }
+  z.pick = null;
+}
+function playQ() {
+  const z = state.quiz, q = z.q;
+  if (z.mode === 'note') pluck(q.s, q.f);
+  else if (!bass()) strum(CH[q.name].fr, 'D');
+  else { const r = 28 + q.root, rp = posFor(r); playSeq([0, q.ans === '마이너' ? 3 : 4, 7, 12].map(d => { const p = d ? posFor(r+d, rp.f) : rp; return [p.s, p.f]; }), 300); }
+}
+function viewQuiz() {
+  const z = state.quiz;
+  if (!z.q || (z.mode === 'chord' && bass())) newQ();
+  const q = z.q, done = z.pick != null, modes = [['note','지판 음 맞히기'], ...(bass() ? [] : [['chord','코드 이름 맞히기']]), ['ear','귀로 맞히기']];
+  const ask = {note:'지판에 표시된 자리는 무슨 음일까요?', chord:'이 운지는 무슨 코드일까요?', ear:bass() ? '들리는 아르페지오는 메이저일까요, 마이너일까요?' : '들리는 코드의 종류를 맞혀 보세요.'}[z.mode];
+  const pic = z.mode === 'note' ? `<div class="board-wrap">${board({lo:0, hi:12, W:50, wide:true, dots:[{s:q.s, f:q.f, midi:T()[q.s]+q.f, kind:'root', label:done ? q.ans : '?'}]})}</div>`
+    : z.mode === 'chord' || (done && !bass()) ? `<div class="board-wrap narrow">${chordBoard(CH[q.name])}</div>` : '';
+  return `${banner('퀴즈', '다섯 문제를 연달아 맞히면 축포가 터집니다.', art('b-quiz', '0 0 240 120'))}
+  <div class="chips">${modes.map(([k, n]) => chip('qmode', k, n, k === z.mode)).join('')}</div>
+  <section class="card" style="margin-top:14px"><div class="row"><h2>${ask}</h2></div>
+    <div class="score"><span>점수 <b>${z.score}</b></span><span>연속 <b>${z.run}</b></span><span>최고 <b>${state.best[z.mode]}</b></span></div>
+    ${pic}
+    ${done ? `<p style="margin-top:12px"><b>${z.pick === q.ans ? '정답입니다.' : `아쉽네요. 정답은 ${q.ans}${z.mode === 'ear' && !bass() ? ` (${q.name})` : ''}입니다.`}</b></p>` : ''}
+    <div class="quiz-opts">${q.opts.map(o => `<button class="chip ${done && o === q.ans ? 'ok' : done && o === z.pick ? 'no' : ''}" data-act="answer" data-v="${o}">${o}</button>`).join('')}</div>
+    <div class="btns"><button class="btn" data-act="qplay">♪ 소리 듣기</button>${done ? `<button class="btn primary" data-act="qnext">다음 문제 ›</button>` : ''}</div></section>`;
+}
+let sb = null;
+const cm = {req:0, view:'list', cat:'all', posts:[], more:false, post:null, comments:[], user:null, me:null, msg:'', edit:null, members:[], signup:false};
+const site = {notice:'', featured_song:''};
+const BCATS = {notice:'공지', free:'자유', qna:'질문', cert:'연습 인증', request:'곡 요청'};
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'})[c]);
+const fmtDate = d => new Date(d).toLocaleDateString('ko-KR', {year:'2-digit', month:'numeric', day:'numeric'});
+const ERRS = [['Invalid login credentials','이메일 또는 비밀번호가 맞지 않습니다.'], ['already registered','이미 가입된 이메일입니다.'], ['Email not confirmed','메일함에서 가입 확인 메일의 링크를 먼저 눌러 주세요.'],
+  ['row-level security','권한이 없습니다. 글쓰기가 제한된 계정이거나 운영자 전용 기능입니다.'], ['Failed to fetch','서버에 연결하지 못했습니다. 인터넷 연결을 확인해 주세요.'], ['rate limit','요청이 너무 잦습니다. 잠시 뒤에 다시 시도해 주세요.']];
+const errText = e => (ERRS.find(([k]) => e.message.includes(k)) || [0, e.message])[1];
+const say = t => { const el = $('#bmsg'); if (el) { el.textContent = t; el.hidden = !t; } };
+const boardRender = () => { if (state.page === 'app' && state.tab === 'board') render(); };
+async function initCloud() {
+  if (!CLOUD.url) return;
+  try {
+    await new Promise((ok, no) => { const s = document.createElement('script'); s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'; s.onload = ok; s.onerror = () => no(new Error('Failed to fetch')); document.head.append(s); });
+  } catch (e) { cm.msg = errText(e); return boardRender(); }
+  sb = supabase.createClient(CLOUD.url, CLOUD.key);
+  // 콜백 안에서 바로 supabase 호출을 하면 내부 잠금에 걸려 멈추므로 다음 틱으로 미룬다
+  sb.auth.onAuthStateChange((ev, session) => { cm.user = session ? session.user : null; setTimeout(loadMe); });
+  const {data} = await sb.from('settings').select('key,value');
+  (data || []).forEach(r => site[r.key] = r.value);
+  if (state.page === 'landing' || !state.inst || (state.tab === 'learn' && !state.lesson)) render();
+  else if (state.tab === 'board') loadPosts();
+}
+async function loadMe() {
+  cm.me = cm.user ? (await sb.from('profiles').select('*').eq('id', cm.user.id).single()).data : null;
+  boardRender();
+}
+async function loadPosts(more) {
+  const from = more ? cm.posts.length : 0;
+  let q = sb.from('posts').select('id,category,title,pinned,created_at,profiles(nickname),comments(count)');
+  if (cm.cat !== 'all') q = q.eq('category', cm.cat);
+  const {data, error} = await q.order('pinned', {ascending:false}).order('created_at', {ascending:false}).range(from, from+19);
+  if (error) cm.msg = errText(error);
+  else { cm.posts = more ? cm.posts.concat(data) : data; cm.more = data.length === 20; }
+  boardRender();
+}
+async function loadMembers() {
+  const {data, error} = await sb.from('profiles').select('*').order('created_at', {ascending:false}).limit(200);
+  if (error) cm.msg = errText(error); else cm.members = data;
+  boardRender();
+}
+function viewBoard() {
+  const head = banner('게시판', '연습 인증, 질문, 곡 요청을 나눠 보세요.', art('b-board', '0 0 240 120'));
+  if (!CLOUD.url) return `${head}<section class="card"><h2>게시판 연결 전입니다</h2><p style="margin-top:8px">운영자가 Supabase 주소와 공개 키를 넣으면 게시판이 열립니다. 설정 순서는 <b>guitar_class_supabase.sql</b> 파일 맨 위에 적혀 있습니다.</p></section>`;
+  if (!sb) return `${head}<section class="card"><p>${esc(cm.msg) || '게시판에 연결하는 중입니다…'}</p></section>`;
+  const me = cm.me, admin = !!(me && me.is_admin), mine = a => me && (admin || a === me.id);
+  const msg = `<p class="notice" id="bmsg" ${cm.msg ? '' : 'hidden'}>${esc(cm.msg)}</p>`;
+  const acct = `<div class="row acct">${me ? `<span><b>${esc(me.nickname)}</b>${admin ? ' <span class="tag">운영자</span>' : ''}${me.banned ? ' <span class="tag">글쓰기 제한</span>' : ''}</span><span class="chips">${admin ? chip('bview', 'admin', '운영자 관리', cm.view === 'admin') : ''}${chip('blogout', '', '로그아웃')}</span>`
+    : `<span class="dim">글과 댓글은 로그인 후 쓸 수 있습니다.</span>${chip('bview', 'auth', '로그인 · 가입')}`}</div>`;
+  const backBtn = `<button class="backbar" data-act="bview" data-v="list">‹ 글 목록으로</button>`;
+  if (cm.view === 'auth') return `${head}${backBtn}<section class="card"><h2>${cm.signup ? '회원 가입' : '로그인'}</h2>${msg}
+    <input class="field" id="aemail" type="email" placeholder="이메일" autocomplete="email">
+    <input class="field" id="apass" type="password" placeholder="비밀번호 (6자 이상)" autocomplete="${cm.signup ? 'new-password' : 'current-password'}">
+    ${cm.signup ? `<input class="field" id="anick" maxlength="16" placeholder="닉네임 (2~16자)">` : ''}
+    <div class="btns"><button class="btn primary" data-act="${cm.signup ? 'bsignup' : 'blogin'}">${cm.signup ? '가입하기' : '로그인'}</button>
+    <button class="link" data-act="bmode">${cm.signup ? '이미 계정이 있습니다' : '처음이라면 회원 가입'}</button></div></section>`;
+  if (cm.view === 'write') { const e = cm.edit || {category:'free', title:'', body:''}; return `${head}${backBtn}<section class="card"><h2>${cm.edit ? '글 수정' : '글쓰기'}</h2>${msg}
+    <select class="field" id="wcat" aria-label="분류">${Object.entries(BCATS).filter(([k]) => admin || k !== 'notice').map(([k, n]) => `<option value="${k}" ${k === e.category ? 'selected' : ''}>${n}</option>`).join('')}</select>
+    <input class="field" id="wtitle" maxlength="80" placeholder="제목" value="${esc(e.title)}">
+    <textarea class="field" id="wbody" maxlength="5000" placeholder="내용">${esc(e.body)}</textarea>
+    <div class="btns"><button class="btn primary" data-act="bsave">${cm.edit ? '수정 저장' : '등록'}</button></div></section>`; }
+  if (cm.view === 'post') { const p = cm.post; return `${head}${backBtn}${msg}<section class="card"><div class="chips"><span class="tag">${BCATS[p.category]}</span>${p.pinned ? '<span class="tag">상단 고정</span>' : ''}</div>
+    <h2 style="margin-top:10px">${esc(p.title)}</h2><p class="dim">${esc(p.profiles.nickname)} · ${fmtDate(p.created_at)}${p.updated_at ? ' · 수정됨' : ''}</p>
+    <p class="post-body">${esc(p.body)}</p>
+    ${mine(p.author) ? `<div class="btns">${p.author === me.id ? `<button class="btn" data-act="bedit">수정</button>` : ''}<button class="btn" data-act="bdel">삭제</button>${admin ? `<button class="btn" data-act="bpin">${p.pinned ? '고정 해제' : '상단 고정'}</button>` : ''}</div>` : ''}</section>
+    <section class="card"><h2>댓글 ${cm.comments.length}</h2>
+    ${cm.comments.map(c => `<div class="cmt"><b>${esc(c.profiles.nickname)}</b><small>${fmtDate(c.created_at)}</small>${mine(c.author) ? `<button class="link" data-act="cdel" data-v="${c.id}">삭제</button>` : ''}<p>${esc(c.body)}</p></div>`).join('') || `<p class="dim" style="margin-top:8px">첫 댓글을 남겨 보세요.</p>`}
+    ${me ? `<textarea class="field short" id="cbody" maxlength="1000" placeholder="댓글을 적어 주세요"></textarea><div class="btns"><button class="btn primary" data-act="csave">댓글 등록</button></div>` : `<div class="btns">${chip('bview', 'auth', '로그인하고 댓글 쓰기')}</div>`}</section>`; }
+  if (cm.view === 'admin' && admin) return `${head}${backBtn}${acct}${msg}
+    <section class="card"><h2>사이트 공지 띠</h2><p class="dim">첫 화면과 레슨 화면 맨 위에 표시됩니다. 비워 두면 숨깁니다.</p>
+      <input class="field" id="s-notice" maxlength="120" placeholder="예: 이번 주 토요일 오프라인 특강 안내" value="${esc(site.notice)}"><div class="btns"><button class="btn primary" data-act="ssave" data-v="notice">공지 저장</button></div></section>
+    <section class="card"><h2>추천곡 지정</h2><p class="dim">레슨 화면의 '오늘의 추천곡' 자리에 모든 이용자에게 같은 곡을 띄웁니다.</p>
+      <select class="field" id="s-featured_song" aria-label="추천곡"><option value="">자동 (단계별로 날마다 바뀜)</option>${SONGS.map(s => `<option value="${s.id}" ${s.id === site.featured_song ? 'selected' : ''}>${esc(s.t)} · ${esc(s.by)}</option>`).join('')}</select>
+      <div class="btns"><button class="btn primary" data-act="ssave" data-v="featured_song">추천곡 저장</button></div></section>
+    <section class="card"><h2>회원 ${cm.members.length}명</h2><p class="dim">글쓰기를 제한하면 그 회원은 글과 댓글을 새로 쓸 수 없습니다. 글·댓글 삭제와 상단 고정은 각 글 화면에서 합니다.</p>
+      ${cm.members.map(m => `<div class="cmt row"><span><b>${esc(m.nickname)}</b><small>${fmtDate(m.created_at)} 가입</small>${m.is_admin ? ' <span class="tag">운영자</span>' : ''}</span>${m.is_admin ? '' : `<button class="btn" data-act="mban" data-v="${m.id}">${m.banned ? '제한 해제' : '글쓰기 제한'}</button>`}</div>`).join('')}</section>`;
+  return `${head}${acct}${msg}
+  <div class="chips">${chip('bcat', 'all', '전체', cm.cat === 'all')}${Object.entries(BCATS).map(([k, n]) => chip('bcat', k, n, cm.cat === k)).join('')}</div>
+  <div class="btns" style="margin-bottom:14px"><button class="btn primary" data-act="bwrite">글쓰기</button></div>
+  ${cm.posts.map(p => `<button class="lesson" data-act="bopen" data-v="${p.id}"><i>${p.comments[0].count}</i><span>${p.pinned ? '[고정] ' : ''}${esc(p.title)}<small>${BCATS[p.category]} · ${esc(p.profiles.nickname)} · ${fmtDate(p.created_at)}</small></span></button>`).join('') || `<p class="dim">아직 글이 없습니다. 첫 글을 남겨 보세요.</p>`}
+  ${cm.more ? `<button class="btn" style="width:100%" data-act="bmore">더 보기</button>` : ''}
+  <p class="legend">동그라미 안 숫자는 댓글 수입니다.</p>`;
+}
+function tools(song) {
+  const L = state.loop, has = L.on && L.a != null;
+  return `<div class="chips" style="margin-top:12px">${song ? [.5, .75, 1].map(x => chip('speed', x, x === 1 ? '원래 템포' : `${x*100}% 속도`, false)).join('') : ''}
+    <button class="pill ${L.on ? 'on' : ''}" data-act="loop">구간 반복</button>${L.on ? `<button class="pill ${L.up ? 'on' : ''}" data-act="lup">반복마다 +5 BPM</button>` : ''}</div>
+  ${L.on ? `<p class="legend">${has ? `${L.a+1}${L.b != null && L.b !== L.a ? `~${L.b+1}` : ''}마디를 반복합니다. 다른 마디를 누르면 다시 고릅니다.` : '반복할 첫 마디와 끝 마디를 차례로 누르세요. 한 마디만 누르면 그 마디만 반복합니다.'}</p>` : ''}`;
+}
+const inLoop = bi => { const L = state.loop; return L.on && L.a != null && bi >= L.a && bi <= (L.b ?? L.a); };
+const ctrlRow = (extra = '') => `<div class="ctrl"><button class="btn primary" id="playbtn" data-act="play">▶ 재생</button><button class="btn" id="stopbtn" data-act="stop" disabled>■ 처음으로</button>
+  <button class="step" data-act="bpm" data-v="-5" aria-label="템포 내리기">−</button><output id="bpm">${state.bpm} BPM</output><button class="step" data-act="bpm" data-v="5" aria-label="템포 올리기">+</button>
+  <input type="range" id="bpmr" min="30" max="200" value="${state.bpm}" aria-label="템포">
+  <button class="pill ${state.click ? 'on' : ''}" data-act="click">메트로놈</button>${extra}</div>`;
+function viewSongs() {
+  const list = SONGS.filter(s => (state.scat === 'all' || s.c === state.scat) && (!state.slv || s.lv === state.slv));
+  const groups = LEVELS.map(([n], i) => { const g = list.filter(s => s.lv === i+1); return g.length ? `<section class="lv"><div class="lv-head"><b>Lv.${i+1}</b><strong>${n}</strong><span>${g.length}곡</span></div>
+    ${g.map(s => `<button class="lesson ${state.songDone.includes(s.id) ? 'done' : ''}" data-act="song" data-v="${s.id}"><i>${state.songDone.includes(s.id) ? '✓' : '♪'}</i><span>${s.t}<small>${s.by} · ${CATS[s.c][0]} · ${s.m ? '멜로디 탭' : '코드 반주'}</small></span></button>`).join('')}</section>` : ''; }).join('');
+  return `${banner('곡 따라 치기', `${SONGS.length}곡 중 ${state.songDone.length}곡 완주. 장르 그림을 누르면 그 장르만 보입니다.`, art('a-legend'))}
+  <div class="tiles">${Object.entries(CATS).map(([k,[n,a]]) => `<button class="tile ${state.scat === k ? 'on' : ''}" data-act="scat" data-v="${k}">${art(a)}<div><b>${n}</b><span>${SONGS.filter(s => s.c === k).length}곡</span></div></button>`).join('')}</div>
+  <div class="chips" style="margin-top:14px">${[0,1,2,3,4,5].map(l => chip('slv', l, l ? 'Lv.'+l : '전체 단계', state.slv === l, 'sm')).join('')}</div>
+  ${groups || `<p class="dim" style="margin-top:24px">이 조건에 맞는 곡이 없습니다. 단계나 장르를 바꿔 보세요.</p>`}`;
+}
+function viewSong() {
+  const s = curSong(), [cn, a] = CATS[s.c];
+  const names = shownChords(s), fin = state.songDone.includes(s.id), tr = state.tr, capo = state.capo;
+  const trBox = !s.pr ? '' : `<h3>조옮김${bass() ? '' : ' · 카포'}</h3>
+    <div class="ctrl"><span class="dim" style="min-width:42px">조옮김</span><button class="step" data-act="tr" data-v="-1" aria-label="반음 내리기">−</button><output>${tr > 0 ? '+' : ''}${tr}</output><button class="step" data-act="tr" data-v="1" aria-label="반음 올리기">+</button>
+      ${bass() ? '' : `</div><div class="ctrl"><span class="dim" style="min-width:42px">카포</span><button class="step" data-act="capo" data-v="-1" aria-label="카포 내리기">−</button><output>${capo}프렛</output><button class="step" data-act="capo" data-v="1" aria-label="카포 올리기">+</button>`}
+      ${tr || capo ? chip('trreset', '', '원래대로') : ''}</div>
+    <p class="legend">${tr || (capo && !bass()) ? `실제 소리: ${[...new Set(s.pr.flatMap(c => trName(c, tr).split(',')))].join(' · ')}${capo && !bass() ? `. 카포를 ${capo}프렛에 끼우고 아래 코드 모양으로 잡습니다.` : ''}`
+      : `조옮김은 노래 키를 반음씩 올리거나 내립니다.${bass() ? '' : ' 카포를 올리면 같은 키를 다른 코드 모양으로 잡을 수 있습니다.'}`}</p>`;
+  return `<button class="backbar" data-act="songs">‹ 곡 목록으로</button>
+  <section class="card"><div class="song-hero">${art(a)}<div><p class="dim">${cn} · Lv.${s.lv} ${LEVELS[s.lv-1][0]}</p><h2>${s.t}</h2><p class="dim">${s.by}</p></div></div>
+    <div class="chips" style="margin-top:14px"><span class="tag">${s.m ? '멜로디 탭' : '코드 반주'}</span>${s.key ? `<span class="tag">${s.key}</span>` : ''}<span class="tag">연습 템포 ${s.bpm}</span></div>
+    <p style="margin-top:12px">${s.tip}</p>
+    ${trBox}
+    ${!bass() && names.length ? `<h3>이 곡에 나오는 코드 (누르면 운지를 봅니다)</h3><div class="chips">${names.map(n => chip('needch', n, n, false)).join('')}</div>` : ''}
+    ${s.pr ? `<p class="legend">가사와 멜로디는 저작권 보호 대상이라 싣지 않았습니다. 원곡을 틀어 놓고 반주를 맞춰 보세요. 쉬운 키로 옮긴 연습용 진행이라 원곡 악보와 세부가 다를 수 있습니다.</p>` : ''}</section>
+  ${s.pr ? viewRhythm(true) : viewMelody(s)}
+  <button class="btn ${fin ? '' : 'primary'}" style="width:100%;margin-top:14px" data-act="sdone" data-v="${s.id}">${fin ? '✓ 완주한 곡 (취소)' : '끝까지 쳤어요, 완주 표시'}</button>`;
+}
+function viewMelody(s) {
+  const P = parseSong(s), n = T().length, lh = 13, top = 24, W = 160, h = top + (n-1)*lh + 12;
+  const bars = P.bars.map((_, bi) => {
+    let o = `<svg class="tab ${state.loop.on ? 'pickable' : ''}" viewBox="0 0 ${W} ${h}" role="img" data-act="lbar" data-v="${bi}"><title>${bi+1}마디</title>${inLoop(bi) ? `<rect class="selbg" width="${W}" height="${h}" rx="4"/>` : ''}`;
+    (P.chords ? P.chords[bi] : []).forEach((c, j, arr) => o += `<text class="cl" x="${8 + j*(W-16)/arr.length}" y="9">${c}</text>`);
+    for (let k = 0; k < n; k++) o += `<line x1="0" x2="${W}" y1="${top+k*lh}" y2="${top+k*lh}"/>`;
+    o += `<line x1="${W-.5}" x2="${W-.5}" y1="${top}" y2="${top+(n-1)*lh}"/>`;
+    P.notes.forEach((x, i) => {
+      if (x.bar !== bi) return;
+      const nx = 14 + (x.b - bi*P.beats)/P.beats*(W-24), ny = top + (n-1-x.s)*lh;
+      o += `<g class="nt" id="nt-${i}"><rect x="${nx-6}" y="${ny-6.5}" width="12" height="13" rx="3"/><text x="${nx}" y="${ny}">${x.f}</text></g>`;
+    });
+    return o + '</svg>';
+  });
+  const uniq = [...new Map(P.notes.map(x => [x.midi, x])).values()], wide = Math.max(...uniq.map(x => x.f)) > 5;
+  return `<section class="card"><div class="row"><h2>탭 악보</h2><span class="dim">${P.sig}박자 · ${P.bars.length}마디</span></div>
+    ${ctrlRow(P.chords && !bass() ? `<button class="pill ${state.acc ? 'on' : ''}" data-act="acc">코드 반주</button>` : '')}
+    ${tools(s)}
+    <div class="board-wrap ${wide ? '' : 'narrow'}">${board({lo:0, hi:wide ? 12 : 5, W:wide ? 50 : 64, wide, dots:uniq.map(x => ({s:x.s, f:x.f, midi:x.midi, kind:'ghost', label:NAMES[x.midi%12]}))})}</div>
+    <p class="legend">탭 악보의 맨 윗줄이 1번줄(가장 가는 줄)입니다. 숫자는 누를 프렛, 0은 개방현. 지판에는 이 곡에 쓰이는 음만 표시했습니다.</p>
+    <div class="tabs">${bars.join('')}</div></section>`;
+}
+function viewLearn() {
+  const ls = lessons(), done = state.done[state.inst], cnt = ls.filter(l => done.includes(l.id)).length, next = ls.find(l => !done.includes(l.id));
+  const pts = xp(), rank = RANKS.filter(r => r[0] <= pts).pop(), nextRank = RANKS.find(r => r[0] > pts);
+  const day = Math.floor(Date.now()/864e5), myLv = next ? next.lv : 5, pool = SONGS.filter(s => s.lv <= myLv && !state.songDone.includes(s.id));
+  let daySong = (pool.length ? pool : SONGS)[day % (pool.length || SONGS.length)];
+  const bestQ = Math.max(state.best.note, state.best.chord, state.best.ear);
+  const badges = [['★','첫 레슨',lessonsDone() >= 1], ['10','레슨 10개',lessonsDone() >= 10], ['♪','첫 완주',state.songDone.length >= 1], ['5곡','레퍼토리 5곡',state.songDone.length >= 5],
+    ['3일','3일 연속',streakNow() >= 3], ['7일','일주일 연속',streakNow() >= 7], ['Q10','퀴즈 10연속',bestQ >= 10], ['×2','두 악기 도전',Object.values(state.done).filter(d => d.length).length >= 2]];
+  const pick = SONGS.find(s => s.id === site.featured_song);
+  if (pick) daySong = pick;
+  return `${site.notice ? `<p class="notice">${esc(site.notice)}</p>` : ''}<section class="card deco-card">${art(INST[state.inst].art, INST[state.inst].vb, 'deco')}<div class="row"><h2>${INST[state.inst].n} 로드맵</h2><span class="dim">${cnt} / ${ls.length} 완료</span></div>
+    <div class="bar"><i style="--p:${cnt/ls.length}"></i></div>
+    <div class="rank">${medal('★')}<div><b>${rank[1]}</b><span class="dim">${nextRank ? `다음 칭호 '${nextRank[1]}'까지 ${nextRank[0]-pts} XP` : '최고 칭호에 올랐습니다'}</span></div>
+      <span class="streak"><svg viewBox="0 0 24 24" aria-hidden="true"><use href="#flame"/></svg>${streakNow()}일 연속</span></div>
+    ${next ? `<button class="btn primary" style="margin-top:14px" data-act="lesson" data-v="${next.id}">이어서 하기 · ${next.t}</button>` : `<p style="margin-top:14px">전 과정을 마쳤습니다. 이제 좋아하는 곡을 연주할 차례입니다.</p>`}</section>
+  <div class="today"><button data-act="song" data-v="${daySong.id}"><em>${pick ? '운영자 추천곡' : '오늘의 추천곡'}</em><b>${daySong.t}</b><span class="dim">${daySong.by}</span></button>
+    <button data-act="tab" data-v="quiz"><em>오늘의 도전</em><b>퀴즈 ${5 + day % 3 * 5}문제 연속 맞히기</b><span class="dim">최고 기록 ${Math.max(state.best.note, state.best.chord, state.best.ear)}연속</span></button></div>
+  ${LEVELS.map(([n,sub],i) => { const g = ls.filter(l => l.lv === i+1); return `<section class="lv"><div class="lv-head"><b>Lv.${i+1}</b><strong>${n}</strong><span>${sub} · ${g.filter(l => done.includes(l.id)).length}/${g.length}</span></div>
+    ${g.map((l,k) => `<button class="lesson ${done.includes(l.id) ? 'done' : ''}" data-act="lesson" data-v="${l.id}"><i>${done.includes(l.id) ? '✓' : k+1}</i><span>${l.t}</span></button>`).join('')}
+    <button class="lesson more" data-act="lvsongs" data-v="${i+1}"><i>♪</i><span>Lv.${i+1}에서 칠 수 있는 곡 ${SONGS.filter(s => s.lv === i+1).length}곡 ›</span></button></section>`; }).join('')}
+  <section class="card" style="margin-top:26px"><div class="row"><h2>배지</h2><span class="dim">${badges.filter(b => b[2]).length} / ${badges.length} 획득 · ${pts} XP</span></div>
+    <div class="medals">${badges.map(([g, n, on]) => `<div class="medal ${on ? 'on' : 'off'}">${medal(g)}${n}</div>`).join('')}</div></section>
+  <section class="card"><p class="dim"><b>오늘의 기타 상식</b></p><p style="margin-top:6px">${FACTS[day % FACTS.length]}</p></section>`;
+}
+function viewLesson() {
+  const ls = lessons(), i = ls.findIndex(l => l.id === state.lesson), l = ls[i], isDone = state.done[state.inst].includes(l.id), nx = ls[i+1];
+  return `<button class="backbar" data-act="back">‹ 로드맵으로</button>
+  <section class="card body deco-card">${art(INST[state.inst].art, INST[state.inst].vb, 'deco')}<p class="dim">Lv.${l.lv} ${LEVELS[l.lv-1][0]} · ${i+1} / ${ls.length}</p><h2>${l.t}</h2>
+    ${l.d.map(p => `<p>${p}</p>`).join('')}
+    <ul class="tips">${l.tips.map(t => `<li>${t}</li>`).join('')}</ul>
+    <h3>실습</h3><div class="chips">${l.go.map((g,k) => chip('go', k, g.l + ' ›', false)).join('')}</div>
+    <div class="btns"><button class="btn ${isDone ? '' : 'primary'}" data-act="done" data-v="${l.id}">${isDone ? '✓ 완료함 (취소)' : '이 레슨 완료'}</button>
+    ${nx ? `<button class="btn" data-act="lesson" data-v="${nx.id}">다음 레슨 ›</button>` : ''}</div></section>`;
+}
+const cc = {a:'Em', b:'Am', run:false, done:false, record:false, count:0, end:0, timer:null};
+const cviewChips = () => `<div class="chips" style="margin-bottom:14px">${chip('cview', 'dict', '코드 사전', state.cview === 'dict')}${chip('cview', 'change', '1분 코드 체인지', state.cview === 'change')}</div>`;
+function viewChange() {
+  const pool = Object.values(CH).filter(c => c.lv <= 3), key = [cc.a, cc.b].sort().join('|'), best = state.ccBest[key] || 0;
+  const opts = cur => pool.map(c => `<option ${c.n === cur ? 'selected' : ''}>${c.n}</option>`).join('');
+  const records = Object.entries(state.ccBest).sort((p, q) => q[1] - p[1]).slice(0, 6);
+  const box = n => `<div class="ccbox ${cc.run && n === cc.a ? 'on' : ''}" data-n="${n}"><b>${n}</b><div class="board-wrap">${chordBoard(CH[n])}</div></div>`;
+  return `${banner('1분 코드 체인지', '두 코드를 1분 동안 몇 번 바꾸는지 셉니다. 60번이 넘으면 그 체인지는 졸업입니다.', art('b-chords', '0 0 240 120'))}${cviewChips()}
+  <section class="card"><div class="row"><h2>${cc.a} ↔ ${cc.b}</h2><span class="dim">최고 기록 ${best}회</span></div>
+    ${cc.run ? `<div class="cc-live"><span id="cc-time">60초</span><b id="cc-count">0</b><span>다음 코드 <b id="cc-next">${cc.b}</b></span></div>
+        <div class="bar"><i id="cc-bar" style="--p:1"></i></div>
+        <button class="btn primary cc-tap" data-act="cctap">바꿨다! (스페이스바)</button>
+        <p class="legend">코드를 바꿔 깨끗한 소리가 날 때마다 한 번씩 누릅니다. 손이 바쁘면 발로 스페이스바를 눌러도 됩니다.</p>`
+      : `${cc.done ? `<p class="notice" style="margin-top:12px">${cc.count}회 바꿨습니다. ${cc.record ? '새 최고 기록입니다.' : `최고 기록은 ${best}회입니다.`} ${cc.count >= 60 ? '이 체인지는 충분히 빠릅니다. 다른 조합으로 넘어가세요.' : cc.count >= 30 ? '곡을 반주할 수 있는 속도입니다. 60회를 노려 보세요.' : '30회가 첫 목표입니다. 매일 한 번씩만 해도 금방 늡니다.'}</p>` : ''}
+        <div class="row" style="margin-top:12px"><select class="field half" id="cc-a" aria-label="첫 번째 코드">${opts(cc.a)}</select><select class="field half" id="cc-b" aria-label="두 번째 코드">${opts(cc.b)}</select></div>
+        <div class="btns"><button class="btn primary" data-act="ccstart">${cc.done ? '다시 도전' : '1분 시작'}</button></div>`}
+    <div class="ccgrid">${box(cc.a)}${box(cc.b)}</div></section>
+  ${cc.run ? '' : `<h3>자주 연습하는 조합</h3><div class="chips">${['Em|Am','C|G','G|D','D|A','Am|C','C|Fmaj7','G|Em','A|E','C|F','F|Bm'].map(p => chip('ccpair', p, p.replace('|', ' ↔ '), p.split('|').sort().join('|') === key)).join('')}</div>
+  ${records.length ? `<h3>내 기록</h3><div class="chips">${records.map(([k, v]) => chip('ccpair', k, `${k.replace('|', ' ↔ ')} <small>${v}회</small>`, false)).join('')}</div>` : ''}`}`;
+}
+function viewChords() {
+  if (state.cview === 'change') return viewChange();
+  const all = Object.values(CH), cats = ['전체', ...new Set(all.map(c => c.cat))];
+  if (state.cat === '레슨' && state.list) cats.unshift('레슨');
+  const list = state.cat === '전체' ? all : state.cat === '레슨' ? state.list.map(chordOf) : all.filter(c => c.cat === state.cat);
+  if (!list.some(c => c.n === state.chord)) state.chord = list[0].n;
+  const ch = chordOf(state.chord), t = T();
+  return `${banner('코드 사전', `${all.length}개 코드. 누르면 소리가 나고, 퀴즈 탭에서 실력을 확인할 수 있습니다.`, art('b-chords', '0 0 240 120'))}${cviewChips()}<section class="card"><div class="row"><h2>${ch.n}</h2><span class="dim">구성음 ${ch.fr.map((f,s) => f < 0 ? '' : NAMES[(t[s]+f)%12]).filter(Boolean).join(' · ')}</span></div>
+    <div class="board-wrap narrow">${chordBoard(ch)}</div>
+    <p class="legend">숫자는 손가락(${FINGERS}) · 색 점은 근음 · ○ 개방현 · ✕ 치지 않는 줄. 지판을 누르면 그 음이 납니다.</p>
+    <div class="btns"><button class="btn primary" data-act="strum" data-v="D">↓ 다운</button><button class="btn" data-act="strum" data-v="U">↑ 업</button><button class="btn" data-act="strum" data-v="A">한 줄씩 듣기</button></div></section>
+  <div class="chips">${cats.map(c => chip('cat', c, c === '레슨' ? '선택한 코드' : c, c === state.cat)).join('')}</div>
+  <h3>코드를 누르면 소리가 납니다</h3>
+  <div class="chips">${list.map(c => chip('chord', c.n, `${c.n} <small>Lv.${c.lv}</small>`, c.n === state.chord)).join('')}</div>`;
+}
+function viewRhythm(inSong) {
+  const pat = curPat(), prog = curProg(), first = (loopRange(prog.ch.length) || [0])[0], spb = pat.s.length/pat.beats, counts = {1:[''], 2:['','&'], 3:['','·','a'], 4:['','e','&','a']}[spb];
+  const slots = [...pat.s].map((tok,i) => {
+    let g = {D:'↓', U:'↑', x:'✕'}[tok] || tok, ghost = tok === '-';
+    if (ghost) g = pat.kind !== 'strum' ? '·' : spb === 3 ? ['↓','·','↑'][i%3] : i%2 ? '↑' : '↓';
+    return `<div class="slot ${ghost ? 'ghost' : ''} ${i%spb ? '' : 'beat'}" id="slot-${i}"><b>${g}</b><i>${i%spb ? counts[i%spb] : i/spb+1}</i></div>`;
+  }).join('');
+  const legend = {strum:'↓ 다운 · ↑ 업 · ✕ 뮤트 · 흐린 화살표는 헛스윙', arp:'R 근음 줄 · A 교대 베이스 줄 · 숫자는 줄 번호', bass:'R 근음 · 3 3도 · 5 5도 · 6 6도 · 7 7도 · 8 옥타브 · a 접근음 · ✕ 데드노트'}[pat.kind];
+  const pats = PATTERNS[bass() ? 'bass' : 'guitar'];
+  return `${inSong ? '' : banner(bass() ? '리듬 연습실' : '스트로크 연습실', '재생하면 메트로놈 추가 박자에 맞춰 흔들립니다.', METRO)}<section class="card"><div class="row"><h2>${pat.n}</h2><span class="dim">Lv.${pat.lv} · ${pat.beats === 3 ? '3/4' : pat.id === 'arp6' ? '6/8' : '4/4'}</span></div>
+    <p class="dim">${pat.tip}</p>
+    <div class="slots" style="grid-template-columns:repeat(${pat.s.length},1fr)">${slots}</div>
+    <p class="legend">${legend}</p>
+    ${ctrlRow()}${tools(inSong && curSong())}</section>
+  <section class="card"><div class="row"><h2 id="rh-name">${prog.ch[first].split(',')[0]}</h2><span class="dim">${prog.n}</span></div>
+    <div class="chips" style="margin-top:10px">${prog.ch.map((c,i) => `<button class="pc ${i === first ? 'on' : ''} ${inLoop(i) ? 'sel' : ''}" id="pc-${i}" data-act="lbar" data-v="${i}">${c.replace(',', ' ')}</button>`).join('')}</div>
+    <div class="board-wrap narrow" id="rh-board">${rhBoard(prog.ch[first].split(',')[0])}</div></section>
+  <h3>${bass() ? '리듬 패턴' : '스트로크 · 핑거링 패턴'}</h3>
+  <div class="chips">${pats.map(p => chip('pat', p[0], `${p[1]} <small>Lv.${p[2]}</small>`, p[0] === pat.id)).join('')}</div>
+  ${inSong ? '' : `<h3>코드 진행</h3>
+  <div class="chips">${PROGS.map(p => chip('prog', p[0], `${p[1]} <small>Lv.${p[2]}</small>`, p[0] === prog.id)).join('')}</div>`}`;
+}
+function viewMap(kind) {
+  const sets = kind === 'tone' ? TONES : SCALES, key = kind === 'tone' ? 'tset' : 'scale';
+  const [id,n,lv,iv,desc,dn] = sets.find(x => x[0] === state[key]) || sets[0];
+  const dots = [];
+  T().forEach((o,s) => { for (let f = 0; f <= 12; f++) { const d = (o+f-state.root+120)%12; if (iv.includes(d)) dots.push({s, f, midi:o+f, kind:d ? 'finger' : 'root', label:state.label === 'note' ? NAMES[(o+f)%12] : (dn && dn[d]) || DEG[d]}); } });
+  return `${kind === 'tone' ? banner('코드톤 지도', '코드를 이루는 음이 지판 어디에 있는지 한눈에 봅니다.', art('b-chords', '0 0 240 120')) : banner('스케일 지도', '색 점이 근음입니다. 근음에서 출발해 길을 따라 올라가 보세요.', art('b-scales', '0 0 240 120'))}<section class="card"><div class="row"><h2>${NAMES[state.root]} ${n}</h2><span class="dim">Lv.${lv} · ${iv.map(d => NAMES[(state.root+d)%12]).join(' ')}</span></div>
+    <p class="dim">${desc}</p>
+    <div class="board-wrap">${board({lo:0, hi:12, W:50, dots, wide:true})}</div>
+    <div class="btns"><button class="btn primary" data-act="playmap" data-v="${kind}">▶ 올라갔다 내려오기</button>
+      ${chip('label','note','음 이름',state.label === 'note')}${chip('label','deg','도수',state.label === 'deg')}</div></section>
+  <h3>근음</h3><div class="chips">${NAMES.map((x,i) => chip('root', i, x, i === state.root, 'sm')).join('')}</div>
+  <h3>${kind === 'tone' ? '코드 종류' : '스케일'}</h3>
+  <div class="chips">${sets.map(x => chip(key, x[0], `${x[1]} <small>Lv.${x[2]}</small>`, x[0] === id)).join('')}</div>`;
+}
+// YIN 방식 음높이 검출. 자기상관보다 옥타브를 잘못 짚는 일이 적어 낮은 베이스 줄에서도 안정적이다.
+function detectPitch(buf, sr) {
+  let rms = 0;
+  for (let i = 0; i < buf.length; i++) rms += buf[i]*buf[i];
+  if (Math.sqrt(rms/buf.length) < .008) return 0;
+  const minLag = Math.floor(sr/1200), maxLag = Math.floor(sr/28), W = Math.min(buf.length - maxLag, 4096), d = new Float32Array(maxLag+1);
+  let run = 0, tau = 0;
+  for (let t = 1; t <= maxLag; t++) {
+    let sum = 0;
+    for (let j = 0; j < W; j++) { const x = buf[j] - buf[j+t]; sum += x*x; }
+    run += sum; d[t] = sum*t/run;
+  }
+  for (let t = minLag; t < maxLag; t++) if (d[t] < .12) { while (t+1 < maxLag && d[t+1] < d[t]) t++; tau = t; break; }
+  if (!tau) return 0;
+  const a = d[tau-1], b = d[tau], c = d[tau+1], shift = a + c - 2*b ? (a - c)/(2*(a + c - 2*b)) : 0;
+  return sr/(tau + shift);
+}
+let mic = null, micLock = null, micErr = '';
+function showPitch(f) {
+  const t = T(), n = t.length, hz = m => 440 * 2**((m-69)/12), cents = s => 1200*Math.log2(f/hz(t[s]));
+  if (!f) return;
+  const s = micLock ?? t.map((m, i) => i).sort((p, q) => Math.abs(cents(p)) - Math.abs(cents(q)))[0], c = cents(s), ok = Math.abs(c) <= 5;
+  $('#needle').style.transform = `rotate(${Math.max(-50, Math.min(50, c))*.9}deg)`;
+  $('#gauge').classList.toggle('ok', ok);
+  $('#tn-note').textContent = `${n-s}번줄 ${NAMES[t[s]%12]}`;
+  $('#tn-hz').textContent = `${f.toFixed(1)}Hz · 목표 ${hz(t[s]).toFixed(1)}Hz · ${c > 0 ? '+' : ''}${c.toFixed(0)}센트`;
+  $('#tn-msg').textContent = ok ? '맞았습니다.' : Math.abs(c) > 300 ? '목표 음과 많이 다릅니다. 줄 번호를 확인해 주세요.' : c < 0 ? '낮습니다. 줄감개를 조여 올려 주세요.' : '높습니다. 줄감개를 풀어 내려 주세요.';
+  document.querySelectorAll('.tstr').forEach(el => el.classList.toggle('hit', +el.dataset.v === s));
+}
+async function micStart() {
+  const c = ac();
+  micErr = '';
+  let stream;
+  try {
+    if (!navigator.mediaDevices) throw new Error('unsupported');
+    stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false, noiseSuppression:false, autoGainControl:false}});
+  } catch (e) {
+    micErr = e.name === 'NotAllowedError' ? '마이크 사용이 허용되지 않았습니다. 주소창의 마이크 아이콘에서 허용한 뒤 다시 눌러 주세요.'
+      : e.message === 'unsupported' ? '이 화면에서는 마이크를 쓸 수 없습니다. 파일을 크롬·엣지에서 직접 열거나 https 주소로 접속해 주세요.' : '마이크를 찾지 못했습니다. 연결 상태를 확인해 주세요.';
+    return render();
+  }
+  const src = c.createMediaStreamSource(stream), an = c.createAnalyser();
+  an.fftSize = 8192; src.connect(an);
+  mic = {stream, src, buf:new Float32Array(8192)};
+  mic.timer = setInterval(() => { an.getFloatTimeDomainData(mic.buf); showPitch(detectPitch(mic.buf, c.sampleRate)); }, 120);
+  render();
+}
+function micStop() {
+  if (!mic) return;
+  clearInterval(mic.timer); mic.stream.getTracks().forEach(t => t.stop()); mic.src.disconnect(); mic = null;
+}
+function micCard() {
+  const t = T(), n = t.length;
+  let ticks = '';
+  for (let k = -5; k <= 5; k++) { const a = k*9*Math.PI/180, r = k % 5 ? 82 : 76; ticks += `<line class="${k ? '' : 'mid'}" x1="${120+Math.sin(a)*r}" y1="${118-Math.cos(a)*r}" x2="${120+Math.sin(a)*94}" y2="${118-Math.cos(a)*94}"/>`; }
+  return `<section class="card"><div class="row"><h2>마이크 튜너</h2><button class="btn ${mic ? '' : 'primary'}" data-act="mic">${mic ? '마이크 끄기' : '마이크 켜기'}</button></div>
+    ${micErr ? `<p class="notice" style="margin-top:12px">${micErr}</p>` : ''}
+    ${mic ? `<svg class="gauge" id="gauge" viewBox="0 0 240 132" role="img"><title>튜너 바늘. 가운데가 정확한 음, 왼쪽은 낮음, 오른쪽은 높음</title>${ticks}
+        <text x="34" y="128">낮음</text><text x="206" y="128">높음</text><line id="needle" x1="120" y1="118" x2="120" y2="32"/><circle cx="120" cy="118" r="7"/></svg>
+      <div class="tn"><b id="tn-note">–</b><span id="tn-hz">줄 하나를 튕겨 주세요</span><p id="tn-msg">기타를 마이크 가까이 두고 한 줄만 울려 주세요.</p></div>
+      <div class="chips">${chip('tstr', 'auto', '자동 인식', micLock == null)}${t.map((m, s) => `<button class="chip tstr ${micLock === s ? 'on' : ''}" data-act="tstr" data-v="${s}">${n-s}번줄 ${NAMES[m%12]}</button>`).join('')}</div>
+      <p class="legend">자동 인식은 가장 가까운 줄을 찾아 줍니다. 줄이 많이 풀려 있으면 맞출 줄을 직접 눌러 고정하세요.</p>`
+    : `<p class="dim" style="margin-top:8px">마이크로 ${INST[state.inst].n} 소리를 듣고 음이 높은지 낮은지 바늘로 보여 줍니다. 처음 켤 때 브라우저가 마이크 사용을 묻습니다.</p>`}</section>`;
+}
+function viewTuner() {
+  const t = T(), n = t.length, dots = [];
+  if (state.noteMode !== 'none') t.forEach((o,s) => { for (let f = 0; f <= 12; f++) { const nm = NAMES[(o+f)%12]; if (state.noteMode === 'all' || nm.length === 1) dots.push({s, f, midi:o+f, kind:'ghost', label:nm}); } });
+  return `${banner('튜닝과 지판', '연습 전 30초, 줄부터 맞추고 시작합니다.', art('b-tuner', '0 0 240 120'))}${micCard()}<section class="card"><div class="row"><h2>개방현 기준음</h2><button class="btn" data-act="openall">▶ 차례로 듣기</button></div>
+    <p class="dim">굵은 줄부터 ${t.map(m => NAMES[m%12]).join(' · ')}. 버튼 소리와 내 악기 소리가 같아질 때까지 줄감개를 돌리세요.</p>
+    <div class="tune" style="margin-top:12px">${t.map((m,s) => `<button data-act="open" data-v="${s}"><b>${n-s}번줄 ${NAMES[m%12]}</b><span>${noteName(m)} · ${(440*2**((m-69)/12)).toFixed(1)}Hz</span></button>`).join('')}</div></section>
+  <section class="card"><h2>지판 전체</h2><p class="dim">아무 칸이나 눌러 보세요. 한 칸이 반음, 12프렛에서 개방현과 같은 이름이 다시 시작됩니다.</p>
+    <div class="board-wrap">${board({lo:0, hi:12, W:50, dots, wide:true})}</div>
+    <div class="btns">${chip('noteMode','natural','자연음만',state.noteMode === 'natural')}${chip('noteMode','all','모든 음',state.noteMode === 'all')}${chip('noteMode','none','이름 숨기기',state.noteMode === 'none')}</div></section>`;
+}
+
+const ICON = {
+  learn:'<path d="M3 20h4v-4h4v-4h4V8h4V4"/>', chords:'<path d="M6 4v16M12 4v16M18 4v16M6 9h12M6 15h12"/>',
+  rhythm:'<path d="M8 4v15m0 0-3-3m3 3 3-3M16 20V5m0 0-3 3m3-3 3 3"/>', scales:'<path d="m3 17 5-5 4 3 4-8 5 4"/>',
+  tuner:'<path d="M5 18a9 9 0 1 1 14 0M12 13l4-5"/>',
+  songs:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
+  quiz:'<path d="M8 9c0-3 2-4 4-4s4 1 4 4c0 3-4 3-4 6M12 19v.5"/>',
+  board:'<path d="M4 5h16v11H10l-4 4v-4H4Z"/>',
+};
+function render() {
+  stopAll();
+  heard = pausedAt = null;
+  if (state.page !== 'app' || state.tab !== 'tuner') { micStop(); micErr = ''; }
+  if (cc.timer) { clearInterval(cc.timer); cc.timer = null; }
+  cc.run = cc.run && cc.end > Date.now() && state.tab === 'chords' && state.cview === 'change' && !cc.done;
+  const landing = state.page === 'landing' || !state.inst;
+  document.body.dataset.inst = landing ? '' : state.inst;
+  if (landing) return $('#app').innerHTML = viewLanding();
+  const tabs = [['learn','레슨'], ['songs','곡'], ['chords', bass() ? '코드톤' : '코드'], ['rhythm', bass() ? '리듬' : '스트로크'], ['scales','스케일'], ['tuner','튜닝'], ['quiz','퀴즈'], ['board','게시판']];
+  const view = state.tab === 'learn' ? (state.lesson ? viewLesson() : viewLearn())
+    : state.tab === 'songs' ? (state.song ? viewSong() : viewSongs())
+    : state.tab === 'quiz' ? viewQuiz() : state.tab === 'board' ? viewBoard()
+    : state.tab === 'chords' ? (bass() ? viewMap('tone') : viewChords())
+    : state.tab === 'rhythm' ? viewRhythm() : state.tab === 'scales' ? viewMap('scale') : viewTuner();
+  $('#app').innerHTML = `<header class="top"><button class="home" data-act="home" aria-label="처음 화면으로">${LOGO}</button><div class="seg">${Object.entries(INST).map(([k,v]) => `<button data-act="inst" data-v="${k}" class="${k === state.inst ? 'on' : ''}">${v.n}</button>`).join('')}</div>
+    ${state.inst === 'electric' ? `<button class="pill ${state.drive ? 'on' : ''}" data-act="drive">드라이브</button>` : ''}</header>
+  <main>${state.back ? `<button class="backbar" data-act="return">‹ ${state.back.song ? '곡으로' : '레슨으로'} 돌아가기</button>` : ''}${view}</main>
+  <nav class="nav">${tabs.map(([k,l]) => `<button data-act="tab" data-v="${k}" class="${k === state.tab ? 'on' : ''}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k]}</svg>${l}</button>`).join('')}</nav>`;
+}
+function setBpm(n) {
+  state.bpm = Math.min(200, Math.max(30, n));
+  $('#bpm').textContent = state.bpm + ' BPM'; $('#bpmr').value = state.bpm; save();
+}
+const top0 = () => scrollTo(0,0);
+const ACT = {
+  start() { $('#pick').scrollIntoView({behavior:'smooth'}); },
+  mic() { if (mic) { micStop(); render(); } else micStart(); },
+  tstr(v) { micLock = v === 'auto' ? null : +v; render(); },
+  resume() { state.page = 'app'; render(); top0(); },
+  home() { state.page = 'landing'; render(); top0(); },
+  inst(v) { state.page = 'app'; state.inst = v; state.lesson = state.back = null; state.quiz.q = null; micLock = null; if (state.song) songPreset(); voicing(); save(); render(); top0(); },
+  tab(v) { state.tab = v; state.lesson = state.song = state.back = null; resetLoop(); if (v === 'board' && sb) { cm.view = 'list'; cm.msg = ''; loadPosts(); } render(); top0(); },
+  bview(v) { cm.req++; cm.view = v; cm.msg = ''; if (v === 'list') loadPosts(); if (v === 'admin') loadMembers(); render(); top0(); },
+  bcat(v) { cm.cat = v; cm.msg = ''; loadPosts(); },
+  bmore() { loadPosts(true); },
+  bmode() { cm.signup = !cm.signup; render(); },
+  bwrite() { cm.edit = null; cm.msg = ''; cm.view = cm.me ? 'write' : 'auth'; render(); top0(); },
+  bedit() { cm.edit = cm.post; cm.view = 'write'; render(); top0(); },
+  async bopen(v) {
+    cm.msg = '';
+    // 응답을 기다리는 사이 다른 화면으로 옮겼으면 늦게 온 결과로 화면을 되돌리지 않는다
+    const req = ++cm.req;
+    const [p, c] = await Promise.all([sb.from('posts').select('*,profiles(nickname)').eq('id', v).single(),
+      sb.from('comments').select('id,body,created_at,author,profiles(nickname)').eq('post_id', v).order('created_at')]);
+    if (req !== cm.req) return;
+    if (p.error || c.error) cm.msg = errText(p.error || c.error);
+    else { cm.post = p.data; cm.comments = c.data; cm.view = 'post'; }
+    boardRender();
+  },
+  async bsave() {
+    const row = {category:$('#wcat').value, title:$('#wtitle').value.trim(), body:$('#wbody').value.trim()};
+    if (!row.title || !row.body) return say('제목과 내용을 모두 적어 주세요.');
+    const {error} = await (cm.edit ? sb.from('posts').update({...row, updated_at:new Date().toISOString()}).eq('id', cm.edit.id) : sb.from('posts').insert(row));
+    if (error) return say(errText(error));
+    if (cm.edit) return ACT.bopen(cm.edit.id);
+    cm.view = 'list'; loadPosts();
+  },
+  async bdel() {
+    if (!confirm('이 글을 삭제할까요? 댓글도 함께 지워집니다.')) return;
+    const {error} = await sb.from('posts').delete().eq('id', cm.post.id);
+    if (error) return say(errText(error));
+    cm.view = 'list'; loadPosts();
+  },
+  async bpin() {
+    const req = cm.req, {error} = await sb.from('posts').update({pinned:!cm.post.pinned}).eq('id', cm.post.id);
+    if (error) say(errText(error)); else if (req === cm.req) ACT.bopen(cm.post.id);
+  },
+  async csave() {
+    const body = $('#cbody').value.trim();
+    if (!body) return say('댓글 내용을 적어 주세요.');
+    const req = cm.req, {error} = await sb.from('comments').insert({post_id:cm.post.id, body});
+    if (error) say(errText(error)); else if (req === cm.req) ACT.bopen(cm.post.id);
+  },
+  async cdel(v) {
+    if (!confirm('이 댓글을 삭제할까요?')) return;
+    const req = cm.req, {error} = await sb.from('comments').delete().eq('id', v);
+    if (error) say(errText(error)); else if (req === cm.req) ACT.bopen(cm.post.id);
+  },
+  async blogin() {
+    const {error} = await sb.auth.signInWithPassword({email:$('#aemail').value.trim(), password:$('#apass').value});
+    if (error) return say(errText(error));
+    cm.view = 'list'; loadPosts();
+  },
+  async bsignup() {
+    const nickname = $('#anick').value.trim(), password = $('#apass').value;
+    if (nickname.length < 2) return say('닉네임은 2자 이상으로 적어 주세요.');
+    if (password.length < 6) return say('비밀번호는 6자 이상이어야 합니다.');
+    const {data, error} = await sb.auth.signUp({email:$('#aemail').value.trim(), password, options:{data:{nickname}}});
+    if (error) return say(errText(error));
+    if (!data.session) return say('가입 확인 메일을 보냈습니다. 메일의 링크를 누른 뒤 로그인해 주세요.');
+    cm.view = 'list'; loadPosts();
+  },
+  async blogout() { await sb.auth.signOut(); cm.me = cm.user = null; cm.view = 'list'; render(); },
+  async ssave(v) {
+    const value = $('#s-'+v).value.trim(), {error} = await sb.from('settings').update({value}).eq('key', v);
+    if (error) return say(errText(error));
+    site[v] = value; say('저장했습니다. 이용자 화면에는 새로 열 때부터 반영됩니다.');
+  },
+  async mban(v) {
+    const m = cm.members.find(x => x.id === v), {error} = await sb.rpc('admin_set_banned', {target:v, flag:!m.banned});
+    error ? say(errText(error)) : loadMembers();
+  },
+  lesson(v) { state.lesson = v; render(); top0(); },
+  back() { state.lesson = null; render(); },
+  return() { Object.assign(state, {lesson:null, song:null}, state.back, {back:null}); render(); top0(); },
+  songs() { state.song = null; resetLoop(); render(); },
+  song(v) { state.song = v; state.tr = state.capo = 0; resetLoop(); songPreset(); render(); top0(); },
+  speed(v) { setBpm(Math.round(curSong().bpm * v)); },
+  loop() { const on = !state.loop.on; resetLoop(); state.loop.on = on; render(); },
+  lup(v, el) { state.loop.up = !state.loop.up; el.classList.toggle('on'); },
+  lbar(v) {
+    const L = state.loop, bar = +v;
+    if (!L.on) return;
+    if (L.a == null || L.b != null) { L.a = bar; L.b = null; } else { const lo = Math.min(L.a, bar); L.b = Math.max(L.a, bar); L.a = lo; }
+    render();
+  },
+  scat(v) { state.scat = state.scat === v ? 'all' : v; render(); },
+  slv(v) { state.slv = +v; render(); },
+  lvsongs(v) { Object.assign(state, {tab:'songs', song:null, lesson:null, scat:'all', slv:+v}); render(); top0(); },
+  needch(v) { const s = curSong(); Object.assign(state, {back:{tab:'songs', song:s.id}, tab:'chords', cat:'레슨', chord:v, list:shownChords(s)}); render(); top0(); },
+  acc(v, el) { state.acc = !state.acc; el.classList.toggle('on'); },
+  done(v) { const d = state.done[state.inst], i = d.indexOf(v); i < 0 ? (d.push(v), party()) : d.splice(i,1); save(); render(); },
+  sdone(v) { const d = state.songDone, i = d.indexOf(v); i < 0 ? (d.push(v), party()) : d.splice(i,1); save(); render(); },
+  qmode(v) { Object.assign(state.quiz, {mode:v, score:0, run:0}); newQ(); render(); if (v === 'ear') playQ(); },
+  qnext() { newQ(); render(); if (state.quiz.mode === 'ear') playQ(); },
+  qplay() { playQ(); },
+  answer(v) {
+    const z = state.quiz;
+    if (z.pick != null) return;
+    z.pick = v;
+    if (v === z.q.ans) { z.score++; z.run++; state.best[z.mode] = Math.max(state.best[z.mode], z.run); if (z.run % 5 === 0) party(); } else z.run = 0;
+    save(); render(); playQ();
+  },
+  go(v) { const g = lessons().find(l => l.id === state.lesson).go[v]; Object.assign(state, g.set, {tab:g.tab, back:{tab:'learn', lesson:state.lesson}, lesson:null}); save(); render(); top0(); },
+  chord(v) { state.chord = v; render(); strum(chordOf(v).fr, 'D'); },
+  cview(v) { state.cview = v; render(); },
+  ccpair(v) { [cc.a, cc.b] = v.split('|'); cc.done = false; render(); },
+  ccstart() {
+    Object.assign(cc, {count:0, run:true, done:false, end:Date.now() + 60000});
+    render();
+    cc.timer = setInterval(() => {
+      const left = cc.end - Date.now();
+      if (left > 0) { $('#cc-time').textContent = Math.ceil(left/1000) + '초'; $('#cc-bar').style.setProperty('--p', left/60000); return; }
+      const key = [cc.a, cc.b].sort().join('|'), record = cc.count > (state.ccBest[key] || 0);
+      if (record) { state.ccBest[key] = cc.count; save(); party(); }
+      Object.assign(cc, {done:true, record});
+      render();
+    }, 100);
+  },
+  cctap() {
+    if (!cc.run) return;
+    cc.count++;
+    tick(ac().currentTime, false);
+    $('#cc-count').textContent = cc.count;
+    const next = cc.count % 2 ? cc.a : cc.b;
+    $('#cc-next').textContent = next;
+    document.querySelectorAll('.ccbox').forEach(el => el.classList.toggle('on', el.dataset.n === next));
+  },
+  tr(v) { state.tr = Math.max(-6, Math.min(6, state.tr + +v)); render(); },
+  capo(v) { state.capo = Math.max(0, Math.min(9, state.capo + +v)); render(); },
+  trreset() { state.tr = state.capo = 0; render(); },
+  cat(v) { state.cat = v; render(); },
+  strum(v) { const fr = chordOf(state.chord).fr; v === 'A' ? playSeq(fr.map((f,s) => [s,f]).filter(x => x[1] >= 0), 320) : strum(fr, v); },
+  pluck(v, el) { pluck(+el.dataset.s, +el.dataset.f); vib(el.dataset.s); },
+  pat(v) { state.pat = v; render(); },
+  prog(v) { state.prog = v; resetLoop(); render(); },
+  play() {
+    if (player) { stopAll(); pausedAt = heard; setBtns(); return; }
+    const from = pausedAt;
+    pausedAt = null;
+    state.tab === 'songs' && curSong().m ? startMelody(from) : startPlay(from);
+  },
+  stop() {
+    stopAll(); heard = pausedAt = null; setBtns();
+    document.querySelectorAll('.slot.on, .nt.on').forEach(e => e.classList.remove('on'));
+  },
+  bpm(v) { setBpm(state.bpm + +v); },
+  click(v, el) { state.click = !state.click; el.classList.toggle('on'); },
+  scale(v) { state.scale = v; render(); },
+  tset(v) { state.tset = v; render(); },
+  root(v) { state.root = +v; render(); },
+  label(v) { state.label = v; render(); },
+  noteMode(v) { state.noteMode = v; render(); },
+  playmap(v) {
+    const iv = (v === 'tone' ? TONES.find(x => x[0] === state.tset) : SCALES.find(x => x[0] === state.scale))[3], t = T();
+    const base = t[0] + (state.root - t[0]%12 + 12)%12, up = [];
+    for (let o = 0; o < (bass() ? 1 : 2); o++) iv.forEach(d => up.push(base + o*12 + d));
+    up.push(base + (bass() ? 12 : 24));
+    playSeq([...up, ...up.slice(0,-1).reverse()].map(m => { const p = posFor(m, base - t[0]); return [p.s, p.f]; }), 260);
+  },
+  open(v) { pluck(+v, 0); vib(v); },
+  openall() { playSeq(T().map((m,s) => [s,0]), 700); },
+  drive(v, el) { state.drive = !state.drive; el.classList.toggle('on'); voicing(); },
+};
+document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (el) ACT[el.dataset.act](el.dataset.v, el); });
+document.addEventListener('change', e => {
+  if (e.target.id === 'cc-a' || e.target.id === 'cc-b') { cc[e.target.id.slice(3)] = e.target.value; cc.done = false; render(); }
+});
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' && cc.run) { e.preventDefault(); return ACT.cctap(); }
+  if (e.code !== 'Space' || !$('#playbtn') || e.target.closest('button, input, textarea, select')) return;
+  e.preventDefault(); ACT.play();
+});
+document.addEventListener('input', e => { if (e.target.id === 'bpmr') setBpm(+e.target.value); });
+render();
+initCloud();
+</script>
+</body>
+</html>
