@@ -1647,7 +1647,8 @@ const ACT = {
     const nickname = $('#anick').value.trim(), password = $('#apass').value;
     if (nickname.length < 2) return say('닉네임은 2자 이상으로 적어 주세요.');
     if (password.length < 6) return say('비밀번호는 6자 이상이어야 합니다.');
-    const {data, error} = await sb.auth.signUp({email:$('#aemail').value.trim(), password, options:{data:{nickname}}});
+    // 돌아올 주소를 직접 알려 준다. 생략하면 서버가 브라우저의 Referer(도메인만 담김)를 써서 /guitar-class/ 가 빠진 주소로 보낸다.
+    const {data, error} = await sb.auth.signUp({email:$('#aemail').value.trim(), password, options:{data:{nickname}, emailRedirectTo:location.origin + location.pathname}});
     if (error) return say(errText(error));
     if (!data.session) return say('가입 확인 메일을 보냈습니다. 메일의 링크를 누르면 가입이 끝나고 이 사이트로 돌아옵니다.');
     ACT.afterAuth();
