@@ -37,9 +37,9 @@ h3{font-size:14px;color:var(--ink-dim);font-weight:600;margin:22px 0 10px}
 
 main{max-width:760px;margin:0 auto;padding:16px 16px 100px}
 .nav{position:fixed;left:0;right:0;bottom:0;z-index:5;display:flex;justify-content:center;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
-.nav button{flex:1;min-width:0;max-width:150px;min-height:58px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10.5px;font-weight:600;color:var(--ink-dim)}
+.nav button{flex:1;min-width:0;max-width:150px;min-height:60px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:12px;font-weight:600;color:var(--ink-dim)}
 .nav button.on{color:var(--accent)}
-.nav svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -186,7 +186,15 @@ textarea.field.short{min-height:84px}
 .home{flex:none;width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:var(--surface)}
 .home svg{width:24px;height:24px;fill:var(--accent)}
 .land{max-width:1040px;margin:0 auto;padding:0 16px 56px}
-.lnav{display:flex;justify-content:space-between;align-items:center;padding:14px 0}
+.lnav{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:14px 0}
+.lnav div{display:flex;gap:8px}
+.lnav .btn{padding:0 14px;font-size:14px}
+.sub{display:flex;gap:4px;background:var(--surface);border-radius:12px;padding:3px;margin-bottom:14px}
+.sub button{flex:1;min-height:42px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink-dim)}
+.sub button.on{background:var(--surface-2);color:var(--accent)}
+.sec.first{margin-top:28px}
+.join{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.join p{color:var(--ink-dim);margin-top:6px}
 .hero{display:grid;border-radius:20px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
 .hero-text{padding:24px 20px 28px}
 .hero-text .eyebrow{font-size:13px;font-weight:700;color:var(--accent);letter-spacing:.06em;margin-bottom:10px}
@@ -205,11 +213,12 @@ textarea.field.short{min-height:84px}
 .road em{font-style:normal;font-size:12px;font-weight:700;color:var(--accent)}
 .road b{display:block;font-size:17px}
 .pick{display:block;width:100%;text-align:left;border-radius:var(--radius);overflow:hidden;background:var(--surface);border:1px solid var(--line)}
-.pick .art{background:var(--surface-2);padding:22px 18px;max-height:170px}
-.pick div{padding:16px 18px 18px;border-top:3px solid var(--c)}
-.pick b{display:block;font-size:20px}
-.pick span{display:block;color:var(--ink-dim);font-size:14px;margin-top:4px}
-.pick em{display:block;font-style:normal;font-size:12px;font-weight:700;color:var(--c);margin-top:10px;letter-spacing:.08em}
+.pick .art{background:var(--surface-2);padding:10px 6px;max-height:84px}
+.pick div{padding:10px 10px 12px;border-top:3px solid var(--c)}
+.pick b{display:block;font-size:15px}
+.pick span{display:none;color:var(--ink-dim);font-size:14px;margin-top:4px}
+.pick em{display:block;font-style:normal;font-size:10.5px;font-weight:700;color:var(--c);margin-top:4px}
+.picks{grid-template-columns:repeat(3,1fr);gap:8px}
 .foot{margin-top:48px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-dim)}
 .tiles{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(132px,1fr);gap:10px;margin-top:18px;overflow-x:auto;padding:3px}
 .tile{display:block;text-align:left;border-radius:12px;overflow:hidden;background:var(--surface);border:1px solid var(--line)}
@@ -240,6 +249,12 @@ textarea.field.short{min-height:84px}
   .road div{border-left:0;border-top:4px solid var(--accent)}
   .tabs{grid-template-columns:repeat(4,1fr)}
   .hero-text{padding:36px 32px}
+  .picks{gap:12px}
+  .pick .art{padding:22px 18px;max-height:170px}
+  .pick div{padding:16px 18px 18px}
+  .pick b{font-size:20px}
+  .pick span{display:block}
+  .pick em{font-size:12px;margin-top:10px;letter-spacing:.08em}
 }
 @media(min-width:960px){
   .hero{grid-template-columns:1fr 1.1fr;align-items:center}
@@ -766,7 +781,7 @@ let store = null;
 try { store = localStorage; } catch (e) {}
 const saved = JSON.parse((store && store.getItem('guitar-class')) || '{}');
 const state = Object.assign({
-  page:'landing', inst:null, tab:'learn', lesson:null, back:null,
+  page:'landing', inst:null, tab:'learn', practice:'chords', lesson:null, back:null,
   song:null, scat:'all', slv:0, acc:true, loop:{on:false, a:null, b:null, up:false},
   cview:'dict', ccBest:{}, tr:0, capo:0,
   songDone:[], streak:{last:'', n:0}, best:{note:0, chord:0, ear:0}, quiz:{mode:'note', score:0, run:0, q:null, pick:null},
@@ -775,6 +790,10 @@ const state = Object.assign({
   scale:'mpent', tset:'maj', root:9, label:'note', noteMode:'natural', drive:false,
   done:{acoustic:[], electric:[], bass:[]},
 }, saved);
+// 악기를 이미 고른 사람은 소개 화면을 건너뛰고 레슨으로 바로 간다. 가입 확인 메일에서 돌아오면 게시판을 연다.
+if (state.inst) state.page = 'app';
+if (/access_token|type=signup/.test(location.hash)) { state.page = 'app'; state.tab = 'board'; }
+const PRACTICE = ['chords', 'rhythm', 'scales', 'quiz'];
 const save = () => store && store.setItem('guitar-class', JSON.stringify({inst:state.inst, done:state.done, bpm:state.bpm, songDone:state.songDone, streak:state.streak, best:state.best, ccBest:state.ccBest}));
 const dayKey = back => new Date(Date.now() - back*864e5).toLocaleDateString('sv');
 function touchStreak() {
@@ -1104,17 +1123,19 @@ const chip = (act, v, label, on, cls = '') => `<button class="chip ${cls} ${on ?
 const art = (id, vb = '0 0 320 160', cls = 'art') => `<svg class="${cls}" viewBox="${vb}" aria-hidden="true"><use href="#${id}"/></svg>`;
 const LOGO = `<svg viewBox="0 0 24 24" aria-hidden="true"><use href="#pick"/></svg>`;
 function viewLanding() {
-  const nPat = PATTERNS.guitar.length + PATTERNS.bass.length;
+  const nPat = PATTERNS.guitar.length + PATTERNS.bass.length, back = state.inst;
   return `<div class="land">
-  <header class="lnav"><span class="logo">${LOGO}기타 교실</span><button class="btn primary" data-act="${state.inst ? 'resume' : 'start'}">${state.inst ? '이어서 배우기' : '시작하기'}</button></header>
+  <header class="lnav"><span class="logo">${LOGO}기타 교실</span><div><button class="btn" data-act="community">게시판</button><button class="btn primary" data-act="${back ? 'resume' : 'start'}">${back ? '이어서 배우기' : '시작하기'}</button></div></header>
   ${site.notice ? `<p class="notice">${esc(site.notice)}</p>` : ''}
   <section class="hero">${art('a-stage', '0 0 800 400')}
     <div class="hero-text"><p class="eyebrow">통기타 · 일렉기타 · 베이스</p>
       <h1>첫 코드부터 무대까지, 눌러 보고 들으며 배우는 기타</h1>
-      <p class="lead">지판에 누를 자리가 보이고, 누르면 바로 소리가 납니다. 생기초부터 마스터까지 다섯 단계를 순서대로 따라오세요.</p>
-      <div class="btns"><button class="btn primary" data-act="start">악기 고르고 시작하기</button>${state.inst ? `<button class="btn" data-act="resume">${INST[state.inst].n} 이어서 하기</button>` : ''}</div>
+      <p class="lead">지판에 누를 자리가 보이고, 누르면 바로 소리가 납니다. 가입 없이 악기만 고르면 바로 시작합니다.</p>
+      <div class="btns">${back ? `<button class="btn primary" data-act="resume">${INST[back].n} 이어서 하기</button><button class="btn" data-act="start">다른 악기 고르기</button>` : `<button class="btn primary" data-act="start">악기 고르고 시작하기</button><button class="btn" data-act="community">게시판 둘러보기</button>`}</div>
       <div class="stats"><div><b>${L_GUITAR.length + L_BASS.length}</b><span>레슨</span></div><div><b>${Object.keys(CH).length}</b><span>코드</span></div><div><b>${nPat}</b><span>리듬 패턴</span></div><div><b>${SONGS.length}</b><span>연습곡</span></div></div>
     </div></section>
+  <section class="sec first" id="pick"><h2>어떤 악기로 시작할까요?</h2><p>나중에 언제든 바꿀 수 있고, 진도는 악기별로 따로 저장됩니다.</p>
+    <div class="picks">${Object.entries(INST).map(([k,v]) => `<button class="pick" style="--c:${v.c}" data-act="inst" data-v="${k}">${art(v.art, v.vb)}<div><b>${v.n}</b><span>${v.d}</span><em>${v.tag}</em></div></button>`).join('')}</div></section>
   <section class="sec"><h2>이렇게 배웁니다</h2>
     <div class="feat">
       <div><svg viewBox="0 0 24 24">${ICON.chords}</svg><b>지판에 그대로 보이는 운지</b><span>손가락 번호, 근음, 치지 않는 줄까지 지판 위에 표시합니다.</span></div>
@@ -1126,8 +1147,8 @@ function viewLanding() {
     <div class="road">${LEVELS.map(([n], i) => `<div><em>Lv.${i+1}</em><b>${n}</b><span>${ROAD[i]}</span></div>`).join('')}</div></section>
   <section class="sec"><h2>단계별 연습곡 ${SONGS.length}곡</h2><p>장르를 골라 내 수준에 맞는 곡부터 시작합니다.</p>
     <div class="tiles">${Object.entries(CATS).map(([k,[n,a]]) => `<div class="tile">${art(a)}<div><b>${n}</b><span>${SONGS.filter(s => s.c === k).length}곡</span></div></div>`).join('')}</div></section>
-  <section class="sec" id="pick"><h2>어떤 악기로 시작할까요?</h2><p>나중에 언제든 바꿀 수 있고, 진도는 악기별로 따로 저장됩니다.</p>
-    <div class="picks">${Object.entries(INST).map(([k,v]) => `<button class="pick" style="--c:${v.c}" data-act="inst" data-v="${k}">${art(v.art, v.vb)}<div><b>${v.n}</b><span>${v.d}</span><em>${v.tag}</em></div></button>`).join('')}</div></section>
+  <section class="sec join"><h2>함께 연습하는 게시판</h2><p>연습 인증, 질문, 곡 요청을 나눕니다. 읽기는 가입 없이 되고, 글과 댓글은 이메일 가입 후 씁니다.</p>
+    <div class="btns"><button class="btn primary" data-act="community">게시판 둘러보기</button><button class="btn" data-act="start">${back ? '악기 다시 고르기' : '악기 고르고 시작하기'}</button></div></section>
   <p class="foot">소리는 브라우저에서 합성한 기타 음입니다. 팝·가요는 코드 진행만 담았고 가사와 멜로디는 싣지 않았습니다.</p></div>`;
 }
 const banner = (t, sub, pic) => `<div class="banner"><div><b>${t}</b><span>${sub}</span></div>${pic}</div>`;
@@ -1512,10 +1533,16 @@ function render() {
   if (state.page !== 'app' || state.tab !== 'tuner') { micStop(); micErr = ''; }
   if (cc.timer) { clearInterval(cc.timer); cc.timer = null; }
   cc.run = cc.run && cc.end > Date.now() && state.tab === 'chords' && state.cview === 'change' && !cc.done;
-  const landing = state.page === 'landing' || !state.inst;
-  document.body.dataset.inst = landing ? '' : state.inst;
+  // 게시판은 악기를 고르지 않아도 볼 수 있다
+  const landing = state.page === 'landing' || (!state.inst && state.tab !== 'board');
+  document.body.dataset.inst = landing ? '' : state.inst || '';
   if (landing) return $('#app').innerHTML = viewLanding();
-  const tabs = [['learn','레슨'], ['songs','곡'], ['chords', bass() ? '코드톤' : '코드'], ['rhythm', bass() ? '리듬' : '스트로크'], ['scales','스케일'], ['tuner','튜닝'], ['quiz','퀴즈'], ['board','게시판']];
+  // 하단 메뉴는 다섯 개로 줄이고, 연습 도구 네 가지는 '연습' 안에서 고른다
+  const inPractice = PRACTICE.includes(state.tab);
+  if (inPractice) state.practice = state.tab;
+  const tabs = [['learn','레슨','learn'], ['songs','곡','songs'], [state.practice,'연습','chords'], ['tuner','튜닝','tuner'], ['board','게시판','board']];
+  const ptools = [['chords', bass() ? '코드톤' : '코드'], ['rhythm', bass() ? '리듬' : '스트로크'], ['scales','스케일'], ['quiz','퀴즈']];
+  const sub = inPractice ? `<div class="sub">${ptools.map(([k,l]) => `<button data-act="tab" data-v="${k}" class="${k === state.tab ? 'on' : ''}">${l}</button>`).join('')}</div>` : '';
   const view = state.tab === 'learn' ? (state.lesson ? viewLesson() : viewLearn())
     : state.tab === 'songs' ? (state.song ? viewSong() : viewSongs())
     : state.tab === 'quiz' ? viewQuiz() : state.tab === 'board' ? viewBoard()
@@ -1523,8 +1550,8 @@ function render() {
     : state.tab === 'rhythm' ? viewRhythm() : state.tab === 'scales' ? viewMap('scale') : viewTuner();
   $('#app').innerHTML = `<header class="top"><button class="home" data-act="home" aria-label="처음 화면으로">${LOGO}</button><div class="seg">${Object.entries(INST).map(([k,v]) => `<button data-act="inst" data-v="${k}" class="${k === state.inst ? 'on' : ''}">${v.n}</button>`).join('')}</div>
     ${state.inst === 'electric' ? `<button class="pill ${state.drive ? 'on' : ''}" data-act="drive">드라이브</button>` : ''}</header>
-  <main>${state.back ? `<button class="backbar" data-act="return">‹ ${state.back.song ? '곡으로' : '레슨으로'} 돌아가기</button>` : ''}${view}</main>
-  <nav class="nav">${tabs.map(([k,l]) => `<button data-act="tab" data-v="${k}" class="${k === state.tab ? 'on' : ''}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[k]}</svg>${l}</button>`).join('')}</nav>`;
+  <main>${state.back ? `<button class="backbar" data-act="return">‹ ${state.back.song ? '곡으로' : '레슨으로'} 돌아가기</button>` : ''}${sub}${view}</main>
+  <nav class="nav">${tabs.map(([k,l,ic]) => `<button data-act="tab" data-v="${k}" class="${k === state.tab ? 'on' : ''}"><svg viewBox="0 0 24 24" aria-hidden="true">${ICON[ic]}</svg>${l}</button>`).join('')}</nav>`;
 }
 function setBpm(n) {
   state.bpm = Math.min(200, Math.max(30, n));
@@ -1537,8 +1564,13 @@ const ACT = {
   tstr(v) { micLock = v === 'auto' ? null : +v; render(); },
   resume() { state.page = 'app'; render(); top0(); },
   home() { state.page = 'landing'; render(); top0(); },
-  inst(v) { state.page = 'app'; state.inst = v; state.lesson = state.back = null; state.quiz.q = null; micLock = null; if (state.song) songPreset(); voicing(); save(); render(); top0(); },
-  tab(v) { state.tab = v; state.lesson = state.song = state.back = null; resetLoop(); if (v === 'board' && sb) { cm.view = 'list'; cm.msg = ''; loadPosts(); } render(); top0(); },
+  community() { state.page = 'app'; ACT.tab('board'); },
+  inst(v) { if (!state.inst && state.tab === 'board') state.tab = 'learn'; state.page = 'app'; state.inst = v; state.lesson = state.back = null; state.quiz.q = null; micLock = null; if (state.song) songPreset(); voicing(); save(); render(); top0(); },
+  tab(v) {
+    // 악기를 아직 고르지 않았으면 악기 선택으로 보낸다. 고르고 나면 누른 메뉴가 열린다.
+    if (!state.inst && v !== 'board') { state.tab = v; state.page = 'landing'; render(); return ACT.start(); }
+    state.tab = v; state.lesson = state.song = state.back = null; resetLoop(); if (v === 'board' && sb) { cm.view = 'list'; cm.msg = ''; loadPosts(); } render(); top0();
+  },
   bview(v) { cm.req++; cm.view = v; cm.msg = ''; if (v === 'list') loadPosts(); if (v === 'admin') loadMembers(); render(); top0(); },
   bcat(v) { cm.cat = v; cm.msg = ''; loadPosts(); },
   bmore() { loadPosts(true); },
