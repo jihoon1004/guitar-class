@@ -29,7 +29,7 @@ h3{font-size:14px;color:var(--ink-dim);font-weight:600;margin:22px 0 10px}
 .dim{color:var(--ink-dim);font-size:14px}
 
 .top{position:sticky;top:0;z-index:5;display:flex;gap:8px;align-items:center;padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--line)}
-.seg{display:flex;flex:1;background:var(--surface);border-radius:12px;padding:3px}
+.seg{display:flex;flex:1;max-width:560px;background:var(--surface);border-radius:12px;padding:3px}
 .seg button{flex:1;min-height:40px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink-dim)}
 .seg button.on{background:var(--accent);color:var(--accent-ink)}
 .pill{min-height:44px;padding:0 14px;border-radius:22px;border:1px solid var(--line);font-size:13px;font-weight:600;color:var(--ink-dim)}
@@ -194,6 +194,13 @@ textarea.field.short{min-height:84px}
 .sub button{flex:1;min-height:42px;border-radius:9px;font-size:14px;font-weight:600;color:var(--ink-dim)}
 .sub button.on{background:var(--surface-2);color:var(--accent)}
 .sec.first{margin-top:28px}
+.lvrow{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px}
+.lvrow .chip{padding:0;min-width:0;justify-content:center}
+.srch{margin:14px 0 0}
+.lesson .hot{font-style:normal;font-size:11px;font-weight:700;color:var(--accent);border:1px solid var(--accent);border-radius:6px;padding:0 5px;margin-left:6px;vertical-align:2px}
+a.chip{text-decoration:none;color:var(--accent);border-color:var(--accent)}
+.trbox{margin-top:14px;border-top:1px solid var(--line)}
+.trbox summary{min-height:46px;display:flex;align-items:center;font-weight:700;color:var(--ink-dim);cursor:pointer}
 .joinrow{gap:10px;margin-top:12px;padding:10px 12px 10px 14px;border-radius:12px;background:var(--surface);border:1px solid var(--line)}
 .joinrow .chip{flex:none;border-color:var(--accent);color:var(--accent)}
 .join{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
@@ -560,7 +567,7 @@ const TONES = [
 
 const ROAD = ['자세 · 튜닝 · 첫 코드', '오픈 코드 · 기본 스트로크', '바레 · 파워 코드 · 펜타토닉', '16비트 · 스케일 · 표현 테크닉', '모드 · 재즈 보이싱 · 텐션'];
 const CATS = {
-  kids: ['동요', 'a-kids'], classic: ['클래식', 'a-classic'], inst: ['연주곡', 'a-inst'], legend: ['명곡', 'a-legend'], pop: ['팝송', 'a-pop'], rock: ['락', 'a-rock'], kpop: ['한국 가요', 'a-kpop'],
+  kpop: ['한국 가요', 'a-kpop'], pop: ['팝송', 'a-pop'], rock: ['락', 'a-rock'], legend: ['명곡', 'a-legend'], carol: ['캐럴', 'a-kids'], kids: ['동요', 'a-kids'], classic: ['클래식', 'a-classic'], inst: ['연주곡', 'a-inst'],
 };
 const RANKS = [[0,'입문자'], [50,'코드 수집가'], [150,'버스커'], [300,'세션 연주자'], [500,'밴드 리더'], [800,'기타 히어로']];
 const FACTS = [
@@ -575,7 +582,7 @@ const FACTS = [
 ];
 // m: 멜로디(소문자=4옥타브, ' 한 옥타브 위, 쉼표 한 옥타브 아래, 숫자=박 수, - 쉼표, | 마디). ch: 마디별 반주 코드. pr: 코드 반주곡의 마디별 진행.
 const SONGS = [
-  {id:'twinkle', c:'kids', lv:1, t:'작은 별', by:'프랑스 민요', bpm:90,
+  {id:'twinkle', hot:1, c:'kids', lv:1, t:'작은 별', by:'프랑스 민요', bpm:90,
     m:'c c g g | a a g2 | f f e e | d d c2 | g g f f | e e d2 | g g f f | e e d2 | c c g g | a a g2 | f f e e | d d c2',
     ch:'C F*,C F*,C G,C C,F* C,G C,F* C,G C F*,C F*,C G,C', tip:'여섯 음으로 끝나는 첫 멜로디입니다. 한 음씩 또박또박, 다음 음을 누를 손가락을 미리 준비하세요.'},
   {id:'plane', c:'kids', lv:1, t:'비행기', by:'미국 민요', bpm:96,
@@ -584,7 +591,7 @@ const SONGS = [
   {id:'butterfly', c:'kids', lv:1, t:'나비야', by:'독일 민요', bpm:96,
     m:'g e e2 | f d d2 | c d e f | g g g2 | g e e2 | f d d2 | c e g g | e e e2 | d d d d | d e f2 | e e e e | e f g2 | g e e2 | f d d2 | c e g g | c4',
     ch:'C G C C C G C C G G C C C G C C', tip:'같은 음이 반복되는 곳에서 박자가 빨라지기 쉽습니다. 메트로놈을 켜고 치세요.'},
-  {id:'jingle', c:'kids', lv:1, t:'징글벨', by:'J. 피어폰트', bpm:110,
+  {id:'jingle', c:'carol', hot:1, lv:1, t:'징글벨', by:'J. 피어폰트', bpm:110,
     m:'e e e2 | e e e2 | e g c d | e4 | f f f f | f e e e | e d d e | d2 g2 | e e e2 | e e e2 | e g c d | e4 | f f f f | f e e e | g g f d | c4',
     ch:'C C C C F* C G G C C C C F* C G C', tip:'후렴 부분입니다. 같은 음을 연달아 칠 때 피크를 다운·업으로 번갈아 쓰면 편합니다.'},
   {id:'birthday', c:'kids', lv:2, t:'생일 축하합니다', by:'힐 자매', bpm:90, beats:3,
@@ -596,7 +603,7 @@ const SONGS = [
   {id:'minuet', c:'classic', lv:2, t:'미뉴에트 G장조', by:'페촐트 (바흐 음악 수첩)', bpm:100, beats:3,
     m:'d g,.5 a,.5 b,.5 c.5 | d g, g, | e c.5 d.5 e.5 f#.5 | g g, g, | c d.5 c.5 b,.5 a,.5 | b, c.5 b,.5 a,.5 g,.5 | f#, g,.5 a,.5 b,.5 g,.5 | a,3 | d g,.5 a,.5 b,.5 c.5 | d g, g, | e c.5 d.5 e.5 f#.5 | g g, g, | c d.5 c.5 b,.5 a,.5 | b, c.5 b,.5 a,.5 g,.5 | a, b,.5 a,.5 g,.5 f#,.5 | g,3',
     tip:'8분음표가 섞인 3박자 춤곡입니다. 다운·업을 번갈아 치는 얼터네이트 피킹으로 연습하세요.'},
-  {id:'canon', c:'classic', lv:2, t:'캐논', by:'파헬벨', bpm:70, key:'쉬운 C키 (원곡 D)', pr:['C','G','Am','Em','F','C','F','G'], pat:'arp8', bp:'r5',
+  {id:'canon', hot:1, c:'classic', lv:2, t:'캐논', by:'파헬벨', bpm:70, key:'쉬운 C키 (원곡 D)', pr:['C','G','Am','Em','F','C','F','G'], pat:'arp8', bp:'r5',
     tip:'여덟 마디가 끝없이 반복됩니다. 수많은 가요가 이 진행을 빌려 썼으니 손에 익혀 두면 두고두고 씁니다.'},
   {id:'elise', c:'classic', lv:3, t:'엘리제를 위하여', by:'베토벤', bpm:92, beats:3,
     m:'-2 e.5 d#.5 | e.5 d#.5 e.5 b,.5 d.5 c.5 | a,1 -.5 c,.5 e,.5 a,.5 | b,1 -.5 e,.5 g#,.5 b,.5 | c1 -.5 e,.5 e.5 d#.5 | e.5 d#.5 e.5 b,.5 d.5 c.5 | a,1 -.5 c,.5 e,.5 a,.5 | b,1 -.5 e,.5 c.5 b,.5 | a,3',
@@ -607,13 +614,13 @@ const SONGS = [
   {id:'grace', c:'legend', lv:2, t:'어메이징 그레이스', by:'전통 찬송가', bpm:84, beats:3,
     m:"-2 d | g2 b.5 g.5 | b2 a | g2 e | d2 d | g2 b.5 g.5 | b2 a | d'3 | d'2 b | d'1.5 b.5 d'.5 b.5 | g2 d | e1.5 g.5 g.5 e.5 | d2 d | g2 b.5 g.5 | b2 a | g3",
     ch:'- G G C G G G D D G G C G G D G', tip:'다섯 음(펜타토닉)만으로 된 멜로디입니다. 긴 음을 끝까지 눌러 울림을 유지하세요.'},
-  {id:'standbyme', c:'legend', lv:2, t:'Stand By Me', by:'Ben E. King', bpm:116, key:'원곡 A · 카포 2', pr:['G','G','Em','Em','C','D','G','G'], pat:'folk', bp:'r5',
+  {id:'standbyme', hot:1, c:'legend', lv:2, t:'Stand By Me', by:'Ben E. King', bpm:116, key:'원곡 A · 카포 2', pr:['G','G','Em','Em','C','D','G','G'], pat:'folk', bp:'r5',
     tip:'G – Em – C – D, 이른바 50년대 진행입니다. 코드가 두 마디씩 머물러서 체인지 연습에 여유가 있습니다.'},
   {id:'knockin', c:'legend', lv:2, t:"Knockin' on Heaven's Door", by:'Bob Dylan', bpm:70, key:'원곡 G', pr:['G','D','Am','Am','G','D','C','C'], pat:'ballad', bp:'root4',
     tip:'네 마디씩 끝만 Am과 C로 바뀝니다. 느린 곡일수록 오른손이 일정해야 합니다.'},
   {id:'countryroads', c:'legend', lv:2, t:'Take Me Home, Country Roads', by:'John Denver', bpm:82, key:'원곡 A · 카포 2', pr:['G','G','Em','Em','D','D','C','G'], pat:'folk', bp:'r5',
     tip:'벌스 진행입니다. 국민 스트로크가 가장 잘 어울리는 곡 중 하나입니다.'},
-  {id:'letitbe', c:'legend', lv:3, t:'Let It Be', by:'The Beatles', bpm:72, key:'원곡 C', pr:['C','G','Am','F','C','G','F','C'], pat:'ballad', bp:'root8',
+  {id:'letitbe', hot:1, c:'legend', lv:3, t:'Let It Be', by:'The Beatles', bpm:72, key:'원곡 C', pr:['C','G','Am','F','C','G','F','C'], pat:'ballad', bp:'root8',
     tip:'F 바레 코드가 들어가는 첫 곡으로 좋습니다. 힘들면 약식 F로 바꿔 잡아도 됩니다.'},
   {id:'hotelcal', c:'rock', lv:4, t:'Hotel California', by:'Eagles', bpm:74, key:'원곡 Bm', pr:['Bm','F#','A','E','G','D','Em','F#'], pat:'s16', bp:'rock',
     tip:'여덟 마디마다 코드가 전부 다릅니다. 바레 코드 Bm·F# 사이 이동을 따로 떼어 연습하세요.'},
@@ -621,15 +628,15 @@ const SONGS = [
     tip:'메이저 ii–V–I과 마이너 ii–V–i이 한 곡에 다 들어 있습니다. 재즈 입문곡으로 가장 많이 쓰입니다.'},
   {id:'imyours', c:'pop', lv:2, t:"I'm Yours", by:'Jason Mraz', bpm:76, key:'원곡 B · 카포 4', pr:['G','D','Em','C'], pat:'chuck', bp:'ghost',
     tip:'2박·4박의 뮤트 커팅이 이 곡의 그루브입니다. 왼손은 그대로 두고 오른손 손날로만 끊으세요.'},
-  {id:'riptide', c:'pop', lv:2, t:'Riptide', by:'Vance Joy', bpm:100, key:'원곡 D♭ · 카포 1', pr:['Am','G','C','C'], pat:'folk', bp:'r5',
+  {id:'riptide', hot:1, c:'pop', lv:2, t:'Riptide', by:'Vance Joy', bpm:100, key:'원곡 D♭ · 카포 1', pr:['Am','G','C','C'], pat:'folk', bp:'r5',
     tip:'코드 세 개로 끝까지 갑니다. 빠른 템포에서 손목 힘을 빼는 연습이 됩니다.'},
   {id:'zombie', c:'pop', lv:2, t:'Zombie', by:'The Cranberries', bpm:84, key:'원곡 Em', pr:['Em','C','G','D'], pat:'du8', bp:'root8',
     tip:'벌스는 작게, 후렴은 세게. 같은 코드로 강약을 조절하는 연습곡입니다.'},
   {id:'vivalavida', c:'pop', lv:2, t:'Viva La Vida', by:'Coldplay', bpm:138, key:'원곡 A♭ · 카포 1', pr:['C','D','G','Em'], pat:'down4', bp:'root8',
     tip:'원곡은 현악기가 엇박으로 밀고 갑니다. 먼저 4비트 다운으로 코드 자리를 익힌 뒤 리듬을 쪼개 보세요.'},
-  {id:'perfect', c:'pop', lv:2, t:'Perfect', by:'Ed Sheeran', bpm:63, key:'원곡 A♭ · 카포 1', pr:['G','Em','C','D'], pat:'arp6', bp:'root4',
+  {id:'perfect', hot:1, c:'pop', lv:2, t:'Perfect', by:'Ed Sheeran', bpm:63, key:'원곡 A♭ · 카포 1', pr:['G','Em','C','D'], pat:'arp6', bp:'root4',
     tip:'6/8박자 발라드입니다. 여섯 음 아르페지오를 흐르듯 이어 주세요.'},
-  {id:'creep', c:'rock', lv:3, t:'Creep', by:'Radiohead', bpm:92, key:'원곡 G', pr:['G','B','C','Cm'], pat:'arp8', bp:'root8',
+  {id:'creep', hot:1, c:'rock', lv:3, t:'Creep', by:'Radiohead', bpm:92, key:'원곡 G', pr:['G','B','C','Cm'], pat:'arp8', bp:'root8',
     tip:'B와 Cm 두 바레 코드가 관문입니다. C에서 Cm로 갈 때 3도 한 음이 내려가는 소리를 들어 보세요.'},
   {id:'thinking', c:'pop', lv:3, t:'Thinking Out Loud', by:'Ed Sheeran', bpm:79, key:'원곡 D', pr:['D','D/F#','G','A'], pat:'chuck', bp:'ghost',
     tip:'베이스 음이 D – F# – G – A로 올라가는 진행입니다. D/F#의 6번줄 2프렛은 엄지나 검지로 잡습니다.'},
@@ -637,9 +644,9 @@ const SONGS = [
     tip:'Am7 – D7 – G로 흘러가는 진행이 곡 전체에 깔립니다. 세븐스 코드의 느슨한 울림이 봄 분위기를 만듭니다.'},
   {id:'dontworry', c:'kpop', lv:2, t:'걱정말아요 그대', by:'전인권', bpm:68, key:'쉬운 G키 (원곡 A는 카포 2)', pr:['G','D','Em','D'], pat:'ballad', bp:'root4',
     tip:'벌스 진행입니다. 느린 템포에서 코드가 바뀌는 첫 박을 또렷하게 쳐 주세요.'},
-  {id:'yeosu', c:'kpop', lv:3, t:'여수 밤바다', by:'버스커 버스커', bpm:72, key:'원곡 E · 카포 4', pr:['C','Em','F','G'], pat:'arp8', bp:'root4',
+  {id:'yeosu', hot:1, c:'kpop', lv:3, t:'여수 밤바다', by:'버스커 버스커', bpm:72, key:'원곡 E · 카포 4', pr:['C','Em','F','G'], pat:'arp8', bp:'root4',
     tip:'도입부 진행입니다. 아르페지오로 조용히 시작해 후렴에서 스트로크로 넓혀 보세요.'},
-  {id:'youandme', c:'kpop', lv:4, t:'너에게 난, 나에게 넌', by:'자전거 탄 풍경', bpm:92, key:'원곡 G', pr:['G','D','Em','Bm','C','G','Am','D7'], pat:'s16', bp:'r5',
+  {id:'youandme', hot:1, c:'kpop', lv:4, t:'너에게 난, 나에게 넌', by:'자전거 탄 풍경', bpm:92, key:'원곡 G', pr:['G','D','Em','Bm','C','G','Am','D7'], pat:'s16', bp:'r5',
     tip:'캐논과 같은 뼈대의 순환 코드입니다. 처음부터 끝까지 흐르는 16비트 스트로크를 일정하게 유지하는 것이 핵심입니다.'},
   {id:'london', c:'kids', lv:1, t:'런던 다리', by:'영국 민요', bpm:100,
     m:'g1.5 a.5 g f | e f g2 | d e f2 | e f g2 | g1.5 a.5 g f | e f g2 | d2 g2 | e2 c2',
@@ -658,7 +665,7 @@ const SONGS = [
     ch:'- Am C G Em Am Am E E Am C G Em Am E Am Am C C G Em Am Am E E C C G Em Am E Am Am', tip:'클래식 기타 독주로 사랑받는 선율입니다. 점음표가 만드는 흔들리는 3박자 리듬을 살려 주세요.'},
   {id:'canonrock', c:'inst', lv:3, t:'Canon Rock', by:'JerryC (원곡 파헬벨)', bpm:100, key:'원곡 D', pr:['D5','A5','B5','F#5','G5','D5','G5','A5'], pat:'down8', bp:'root8',
     tip:'유튜브 기타 영상의 전설이 된 편곡입니다. 여기서는 리듬 기타가 깔아 주는 파워 코드 진행을 연습합니다. 드라이브를 켜고 팜 뮤트로 쳐 보세요.'},
-  {id:'riverflows', c:'inst', lv:2, t:'River Flows in You', by:'이루마', bpm:66, key:'원곡 A · 카포 2', pr:['Em','C','G','D'], pat:'arp8', bp:'root4',
+  {id:'riverflows', hot:1, c:'inst', lv:2, t:'River Flows in You', by:'이루마', bpm:66, key:'원곡 A · 카포 2', pr:['Em','C','G','D'], pat:'arp8', bp:'root4',
     tip:'피아노곡이지만 핑거스타일 기타 커버로도 유명합니다. 네 코드 아르페지오를 끊기지 않게 이어 주세요.'},
   {id:'dustwind', c:'inst', lv:4, t:'Dust in the Wind', by:'Kansas', bpm:94, key:'원곡 C', pr:['C,G/B','Am','G,Dm7','Am'], pat:'travis', bp:'r5',
     tip:'트래비스 피킹 교과서로 통하는 곡입니다. 엄지가 박마다 베이스를 치는 동작이 흔들리지 않아야 합니다.'},
@@ -666,7 +673,7 @@ const SONGS = [
     tip:'G – D – C – D 네 코드가 느긋하게 돕니다. 스트로크를 작게, 소리를 줄이는 연습에 좋습니다.'},
   {id:'hallelujah', c:'legend', lv:3, t:'Hallelujah', by:'Leonard Cohen', bpm:56, key:'원곡 C', pr:['C','Am','C','Am','F','G','C','G'], pat:'arp6', bp:'root4',
     tip:'6/8박자 아르페지오 곡입니다. 한 마디에 여섯 음, 첫 음과 넷째 음에 살짝 힘을 줍니다.'},
-  {id:'heyjude', c:'legend', lv:3, t:'Hey Jude', by:'The Beatles', bpm:74, key:'원곡 F', pr:['F','C','C7','F','B♭','F','C','F'], pat:'ballad', bp:'root4',
+  {id:'heyjude', hot:1, c:'legend', lv:3, t:'Hey Jude', by:'The Beatles', bpm:74, key:'원곡 F', pr:['F','C','C7','F','B♭','F','C','F'], pat:'ballad', bp:'root4',
     tip:'F와 B♭ 두 바레 코드가 번갈아 나옵니다. 바레 코드 지구력을 기르는 곡입니다.'},
   {id:'flyme', c:'legend', lv:5, t:'Fly Me to the Moon', by:'재즈 스탠더드', bpm:120, key:'Am (C 메이저)', pr:['Am7','Dm7','G7','Cmaj7','Fmaj7','Bm7♭5','E7','Am7'], pat:'ballad', bp:'walk7',
     tip:'4도씩 내려가는 순환 진행입니다. 코드마다 가장 가까운 자리로 손을 옮기는 연습을 하세요.'},
@@ -696,6 +703,66 @@ const SONGS = [
     tip:'디스코 리듬의 네 코드 순환입니다. 뮤트 커팅으로 짧게 끊어 쳐야 원곡의 탄력이 납니다.'},
   {id:'wiing', c:'kpop', lv:4, t:'위잉위잉', by:'혁오', bpm:88, key:'원곡 키', pr:['Gm','C9','Am7','D9'], pat:'s16', bp:'ghost',
     tip:'네 코드가 곡 내내 반복됩니다. 9 코드의 나른한 울림과 가벼운 16비트가 어울립니다.'},
+  // ── 2026-11 추가: 한국 가요 ── 가사·멜로디는 싣지 않고 대표 코드 진행만 담는다
+  {id:'bamletter', c:'kpop', hot:1, lv:3, t:'밤편지', by:'아이유', bpm:80, key:'원곡 E♭ · 카포 3', pr:['F','G','Em','Am','F','G','Em','A','Dm','G','C','C'], pat:'arp8', bp:'root4',
+    tip:'F – G – Em – Am이 두 번 돌고 Dm – G – C로 닫힙니다. F 바레가 버거우면 F (약식)으로 잡고, 아르페지오로 조용히 이어 주세요.'},
+  {id:'meaning', c:'kpop', lv:3, t:'너의 의미', by:'아이유 (원곡 산울림)', bpm:72, key:'원곡 C', pr:['C','G/B','Am7','C/G','F','C/E','Dm7','G7'], pat:'arp8', bp:'root4',
+    tip:'베이스가 도 – 시 – 라 – 솔 – 파 – 미 – 레로 한 칸씩 내려가는 진행입니다. 분수 코드는 슬래시 뒤 음을 가장 낮게 울려 주세요.'},
+  {id:'bombombom', c:'kpop', lv:2, t:'봄봄봄', by:'로이킴', bpm:96, key:'쉬운 C키', pr:['C','G7','Am7','E7','F','G7','C','G'], pat:'folk', bp:'r5',
+    tip:'Am7 다음의 E7이 이 곡의 봄 냄새입니다. E7에서 손이 늦으면 앞 마디 마지막 박에 미리 옮기세요.'},
+  {id:'aloha', c:'kpop', lv:2, t:'아로하', by:'쿨 (조정석 리메이크)', bpm:88, key:'카포 3', pr:['C','Em','F','G','C','Em','F','G'], pat:'ballad', bp:'root4',
+    tip:'C – Em – F – G 네 코드가 곡 전체를 끌고 갑니다. 발라드 스트로크로 시작해 후렴에서 국민 스트로크로 바꿔 보세요.'},
+  {id:'milkyway', c:'kpop', lv:2, t:'사랑은 은하수 다방에서', by:'10cm', bpm:100, key:'원곡 B · 카포 4', pr:['G','Bm','Am7','D','G','Em','Am7','D'], pat:'folk', bp:'r5',
+    tip:'G 대신 Gadd9(320033)로 잡으면 원곡의 맑은 울림에 가까워집니다. Bm은 바레 대신 x2443x 네 줄만 눌러도 됩니다.'},
+  {id:'springsnow', c:'kpop', hot:1, lv:2, t:'봄눈', by:'10cm', bpm:76, key:'원곡 A · 카포 2', pr:['G','D','Em','C','G','D','C','C'], pat:'ballad', bp:'root4',
+    tip:'G – D – Em – C, 가장 많이 쓰는 네 코드로 끝까지 칩니다. 첫 곡으로 고르기 좋습니다.'},
+  {id:'timeofourlife', c:'kpop', hot:1, lv:2, t:'한 페이지가 될 수 있게', by:'DAY6', bpm:120, key:'원곡 E♭ · 카포 3', pr:['F','G','Am','C','F','G','C','C'], pat:'du8', bp:'root8',
+    tip:'밴드곡이라 일렉기타·베이스로도 신납니다. 8비트 다운업을 끊지 말고 밀어붙이세요. F가 어려우면 F (약식)으로.'},
+  {id:'hesitate', c:'kpop', lv:3, t:'주저하는 연인들을 위해', by:'잔나비', bpm:68, key:'원곡 B♭ · 카포 3', pr:['G','Bm','C','G','Cm','Bm'], pat:'arp6', bp:'root4',
+    tip:'6/8박자로 출렁이는 곡입니다. C에서 Cm으로 바뀌는 순간이 이 곡의 아련함이니, 그 마디를 천천히 따로 연습하세요.'},
+  {id:'dust', c:'kpop', lv:2, t:'먼지가 되어', by:'김광석 (원곡 이윤수)', bpm:84, key:'쉬운 Am키', pr:['Am','Am/G','Am/F','E7'], pat:'arp8', bp:'root4',
+    tip:'Am을 잡은 채 베이스만 라 – 솔 – 파로 내리고 E7로 돌아옵니다. 네 마디가 곡 전체를 받칩니다.'},
+  {id:'onlyspring', c:'kpop', lv:3, t:'나만, 봄', by:'볼빨간사춘기', bpm:96, key:'원곡 G', pr:['Cmaj7','Bm7','Em7','Em7','Am7','D7','Gmaj7','Gmaj7'], pat:'du8', bp:'root4',
+    tip:'세븐스 코드로만 된 진행이라 소리가 말랑합니다. 코드 사전에서 Cmaj7·Bm7·Gmaj7 운지를 먼저 익히세요.'},
+
+  // ── 캐럴 ── 저작권이 끝난 곡은 멜로디 탭까지, 보호 중인 곡은 코드 진행만
+  {id:'silentnight', c:'carol', hot:1, lv:2, t:'고요한 밤 거룩한 밤', by:'F. 그루버 (1818)', bpm:84, beats:3,
+    m:"g1.5 a.5 g | e3 | g1.5 a.5 g | e3 | d'2 d' | b3 | c'2 c' | g3 | a2 a | c'1.5 b.5 a | g1.5 a.5 g | e3 | a2 a | c'1.5 b.5 a | g1.5 a.5 g | e3 | d'2 d' | f'1.5 d'.5 b | c'3 | e'3 | c'1.5 g.5 e | g1.5 f.5 d | c3",
+    ch:'C C C C G G C C F F C C F F C C G G7 C C C G7 C', tip:'3박자 곡입니다. 첫 박을 조금 길게, 둘째 박을 짧게 끊는 리듬(점8분음표)이 곡 내내 이어집니다.'},
+  {id:'wewish', c:'carol', lv:2, t:'We Wish You a Merry Christmas', by:'영국 전통 캐럴', bpm:120, beats:3,
+    m:"-2 g | c' c'.5 d'.5 c'.5 b.5 | a a a | d' d'.5 e'.5 d'.5 c'.5 | b g g | e' e'.5 f'.5 e'.5 d'.5 | c' a g.5 g.5 | a d' b | c'3",
+    ch:'- C F D7 G E7 Am F,G C', tip:'못갖춘마디로 시작합니다. 같은 모양의 프레이즈가 한 음씩 올라가니 손가락 순서를 그대로 옮겨 쓰세요.'},
+  {id:'deckhalls', c:'carol', lv:2, t:'Deck the Halls', by:'웨일스 전통 캐럴', bpm:110,
+    m:"g1.5 f.5 e d | c d e c | d.5 e.5 f.5 d.5 e1.5 d.5 | c b, c2 | g1.5 f.5 e d | c d e c | d.5 e.5 f.5 d.5 e1.5 d.5 | c b, c2 | g1.5 f.5 e d | c d e c | a.5 a.5 a.5 a.5 g1.5 f.5 | e d c2",
+    ch:'C C G7,C G7,C C C G7,C G7,C C C F,C G7,C', tip:'"팔라랄라" 후렴이 빠르게 굴러갑니다. 가운데 \'Tis the season 구간은 빼고 첫 줄과 마지막 줄만 담았습니다.'},
+  {id:'rudolph', c:'carol', lv:2, t:'루돌프 사슴코', by:'Johnny Marks', bpm:100, key:'쉬운 C키', pr:['C','C','G7','G7','G7','G7','C','C'], pat:'folk', bp:'r5',
+    tip:'C와 G7 두 코드로 첫 구간을 끝까지 갑니다. 코드를 바꾸기 전 마지막 박에서 손을 미리 떼세요.'},
+  {id:'lastchristmas', c:'carol', hot:1, lv:2, t:'Last Christmas', by:'Wham!', bpm:108, key:'원곡 D · 카포 2', pr:['C','C','Am','Am','Dm','Dm','G','G'], pat:'du8', bp:'root8',
+    tip:'C – Am – Dm – G가 처음부터 끝까지 돕니다. 두 마디씩 머무니 8비트 다운업을 고르게 유지하는 연습에 좋습니다.'},
+
+  // ── 팝 · 락 · 명곡 ──
+  {id:'heysoul', c:'pop', hot:1, lv:2, t:'Hey, Soul Sister', by:'Train', bpm:97, key:'원곡 E · 카포 4', pr:['C','G','Am','F'], pat:'folk', bp:'r5',
+    tip:'원곡은 우쿨렐레 반주입니다. 높은 줄 위주로 가볍게 긁으면 분위기가 삽니다.'},
+  {id:'someoneloved', c:'pop', lv:2, t:'Someone You Loved', by:'Lewis Capaldi', bpm:90, key:'원곡 D♭ · 카포 1', pr:['C','G','Am','F'], pat:'ballad', bp:'root4',
+    tip:'C – G – Am – F가 곡 전체입니다. 원곡은 피아노라 기타는 한 마디에 한 번씩 길게 울려도 충분합니다.'},
+  {id:'countonme', c:'pop', lv:2, t:'Count on Me', by:'Bruno Mars', bpm:90, key:'원곡 C', pr:['C','Em','Am','G','F','F'], pat:'folk', bp:'r5',
+    tip:'C – Em – Am – G – F. Am과 G는 반 마디씩 짧게 지나갑니다. 핑거스타일로 치면 더 원곡에 가깝습니다.'},
+  {id:'wonderwall', c:'rock', hot:1, lv:2, t:'Wonderwall', by:'Oasis', bpm:87, key:'원곡 F#m · 카포 2', pr:['Em7','G','Dsus4','Asus4'], pat:'du8', bp:'root8',
+    tip:'네 코드 모두 3·4번 손가락을 1·2번 줄 3프렛에 그대로 둡니다. 손가락 하나만 움직이는 연습이 핵심입니다. 원곡의 마지막 코드는 A7sus4입니다.'},
+  {id:'sweethome', c:'rock', lv:2, t:'Sweet Home Alabama', by:'Lynyrd Skynyrd', bpm:98, key:'원곡 D', pr:['D','C','G','G'], pat:'du8', bp:'root8',
+    tip:'원곡은 D와 C를 반 마디씩, G를 한 마디 칩니다. 손에 익으면 D – C를 한 마디 안에 몰아 보세요.'},
+  {id:'freefallin', c:'rock', lv:2, t:'Free Fallin\'', by:'Tom Petty', bpm:84, key:'원곡 F · 카포 3', pr:['D','Dsus4','D','A'], pat:'du8', bp:'root4',
+    tip:'D를 잡은 채 새끼손가락만 1번 줄 3프렛에 올렸다 내리면 Dsus4입니다. 손 모양이 거의 그대로라 리듬에만 집중할 수 있습니다.'},
+  {id:'basketcase', c:'rock', hot:1, lv:3, t:'Basket Case', by:'Green Day', bpm:150, key:'원곡 E♭ (반음 내림 튜닝)', pr:['E5','B5','C#5','G#5','A5','E5','B5','B5'], pat:'down8', bp:'root8',
+    tip:'파워 코드 8비트 다운이 전부입니다. 템포를 120에서 시작해 원곡 속도까지 끌어올리세요.'},
+  {id:'wildthing', c:'rock', lv:2, t:'Wild Thing', by:'The Troggs', bpm:104, key:'원곡 A', pr:['A','D','E','D'], pat:'down8', bp:'root8',
+    tip:'A – D – E – D, 록의 가장 기본 진행입니다. 일렉기타에 드라이브를 켜고 쳐 보세요.'},
+  {id:'browneyed', c:'legend', lv:2, t:'Brown Eyed Girl', by:'Van Morrison', bpm:140, key:'원곡 G', pr:['G','C','G','D'], pat:'du8', bp:'r5',
+    tip:'G – C – G – D가 한 마디씩 돌아갑니다. 경쾌하게 다운업을 섞어 주세요.'},
+  {id:'blowin', c:'legend', lv:2, t:'Blowin\' in the Wind', by:'Bob Dylan', bpm:88, key:'원곡 D', pr:['G','A','D','G','G','A','D','D'], pat:'folk', bp:'r5',
+    tip:'후렴 진행입니다. G – A – D 세 코드만으로 포크의 정석을 익힙니다.'},
+  {id:'badmoon', c:'legend', lv:2, t:'Bad Moon Rising', by:'Creedence Clearwater Revival', bpm:130, key:'원곡 D', pr:['D','A','G','D','D','A','G','D'], pat:'du8', bp:'root8',
+    tip:'A – G를 반 마디씩 빠르게 지나갑니다. 코드는 쉬워도 손이 바쁜 곡이라 체인지 연습에 그만입니다.'},
 ];
 
 const gc = (l, ...list) => ({l, tab:'chords', set:{cat:'레슨', list, chord:list[0]}});
@@ -785,7 +852,7 @@ try { store = localStorage; } catch (e) {}
 const saved = JSON.parse((store && store.getItem('guitar-class')) || '{}');
 const state = Object.assign({
   page:'landing', inst:null, tab:'learn', practice:'chords', lesson:null, back:null,
-  song:null, scat:'all', slv:0, acc:true, loop:{on:false, a:null, b:null, up:false},
+  song:null, scat:'all', slv:0, sq:'', trOpen:false, acc:true, loop:{on:false, a:null, b:null, up:false},
   cview:'dict', ccBest:{}, tr:0, capo:0,
   songDone:[], streak:{last:'', n:0}, best:{note:0, chord:0, ear:0}, quiz:{mode:'note', score:0, run:0, q:null, pick:null},
   chord:'Em', cat:'전체', list:null,
@@ -1150,7 +1217,7 @@ function viewLanding() {
   <section class="sec"><h2>다섯 단계 로드맵</h2><p>단계마다 레슨을 마치면 그 수준에서 칠 수 있는 곡이 이어집니다.</p>
     <div class="road">${LEVELS.map(([n], i) => `<div><em>Lv.${i+1}</em><b>${n}</b><span>${ROAD[i]}</span></div>`).join('')}</div></section>
   <section class="sec"><h2>단계별 연습곡 ${SONGS.length}곡</h2><p>장르를 골라 내 수준에 맞는 곡부터 시작합니다.</p>
-    <div class="tiles">${Object.entries(CATS).map(([k,[n,a]]) => `<div class="tile">${art(a)}<div><b>${n}</b><span>${SONGS.filter(s => s.c === k).length}곡</span></div></div>`).join('')}</div></section>
+    <div class="tiles">${Object.entries(CATS).map(([k,[n,a]]) => `<button class="tile" data-act="gocat" data-v="${k}">${art(a)}<div><b>${n}</b><span>${SONGS.filter(s => s.c === k).length}곡 보기 ›</span></div></button>`).join('')}</div></section>
   <section class="sec join"><h2>함께 연습하는 게시판</h2><p>연습 인증, 질문, 곡 요청을 나눕니다. 읽기는 가입 없이 되고, 글과 댓글은 이메일 가입 후 씁니다.</p>
     <div class="btns"><button class="btn primary" data-act="community">게시판 둘러보기</button><button class="btn" data-act="start">${back ? '악기 다시 고르기' : '악기 고르고 시작하기'}</button></div></section>
   <p class="foot">소리는 브라우저에서 합성한 기타 음입니다. 팝·가요는 코드 진행만 담았고 가사와 멜로디는 싣지 않았습니다.</p></div>`;
@@ -1298,31 +1365,39 @@ const ctrlRow = (extra = '') => `<div class="ctrl"><button class="btn primary" i
   <span class="tempo"><button class="step" data-act="bpm" data-v="-5" aria-label="템포 내리기">−</button><output id="bpm">${state.bpm} BPM</output><button class="step" data-act="bpm" data-v="5" aria-label="템포 올리기">+</button></span>
   <input type="range" id="bpmr" min="30" max="200" value="${state.bpm}" aria-label="템포">
   <button class="pill ${state.click ? 'on' : ''}" data-act="click">메트로놈</button>${extra}</div>`;
+// 검색어는 제목·가수에서 찾는다. 띄어쓰기와 대소문자는 무시한다
+const norm = t => t.toLowerCase().replace(/[\s'’,.!()·-]/g, '');
+function songList() {
+  const q = norm(state.sq || '');
+  const list = SONGS.filter(s => (state.scat === 'all' || s.c === state.scat) && (!state.slv || s.lv === state.slv) && (!q || norm(s.t + s.by).includes(q)));
+  const groups = LEVELS.map(([n], i) => { const g = list.filter(s => s.lv === i+1).sort((x, y) => (y.hot || 0) - (x.hot || 0)); return g.length ? `<section class="lv"><div class="lv-head"><b>Lv.${i+1}</b><strong>${n}</strong><span>${g.length}곡</span></div>
+    ${g.map(s => `<button class="lesson ${state.songDone.includes(s.id) ? 'done' : ''}" data-act="song" data-v="${s.id}"><i>${state.songDone.includes(s.id) ? '✓' : '♪'}</i><span>${s.t}${s.hot ? '<em class="hot">인기</em>' : ''}<small>${s.by} · ${CATS[s.c][0]} · ${s.m ? '멜로디 탭' : '코드 반주'}</small></span></button>`).join('')}</section>` : ''; }).join('');
+  return groups || `<p class="dim" style="margin-top:24px">${q ? `'${esc(state.sq)}'에 맞는 곡이 없습니다. 게시판 곡 요청에 남겨 주시면 추가를 검토합니다.` : '이 조건에 맞는 곡이 없습니다. 단계나 장르를 바꿔 보세요.'}</p>`;
+}
 function viewSongs() {
-  const list = SONGS.filter(s => (state.scat === 'all' || s.c === state.scat) && (!state.slv || s.lv === state.slv));
-  const groups = LEVELS.map(([n], i) => { const g = list.filter(s => s.lv === i+1); return g.length ? `<section class="lv"><div class="lv-head"><b>Lv.${i+1}</b><strong>${n}</strong><span>${g.length}곡</span></div>
-    ${g.map(s => `<button class="lesson ${state.songDone.includes(s.id) ? 'done' : ''}" data-act="song" data-v="${s.id}"><i>${state.songDone.includes(s.id) ? '✓' : '♪'}</i><span>${s.t}<small>${s.by} · ${CATS[s.c][0]} · ${s.m ? '멜로디 탭' : '코드 반주'}</small></span></button>`).join('')}</section>` : ''; }).join('');
-  return `${banner('곡 따라 치기', `${SONGS.length}곡 중 ${state.songDone.length}곡 완주. 장르 그림을 누르면 그 장르만 보입니다.`, art('a-legend'))}
-  <div class="tiles">${Object.entries(CATS).map(([k,[n,a]]) => `<button class="tile ${state.scat === k ? 'on' : ''}" data-act="scat" data-v="${k}">${art(a)}<div><b>${n}</b><span>${SONGS.filter(s => s.c === k).length}곡</span></div></button>`).join('')}</div>
-  <div class="chips" style="margin-top:14px">${[0,1,2,3,4,5].map(l => chip('slv', l, l ? 'Lv.'+l : '전체 단계', state.slv === l, 'sm')).join('')}</div>
-  ${groups || `<p class="dim" style="margin-top:24px">이 조건에 맞는 곡이 없습니다. 단계나 장르를 바꿔 보세요.</p>`}`;
+  const n = c => SONGS.filter(s => c === 'all' || s.c === c).length;
+  return `${banner('곡 따라 치기', `${SONGS.length}곡 중 ${state.songDone.length}곡 완주. 제목이나 가수로 찾거나 장르를 골라 보세요.`, art('a-legend'))}
+  <input class="field srch" id="sq" type="search" placeholder="곡 제목 · 가수 검색" value="${esc(state.sq || '')}" autocomplete="off" aria-label="곡 검색">
+  <div class="chips" style="margin-top:12px">${[['all','전체'], ...Object.entries(CATS).map(([k,[t]]) => [k, t])].map(([k,t]) => chip('scat', k, `${t} <small>${n(k)}</small>`, state.scat === k)).join('')}</div>
+  <div class="chips lvrow">${[0,1,2,3,4,5].map(l => chip('slv', l, l ? 'Lv.'+l : '전체', state.slv === l, 'sm')).join('')}</div>
+  <div id="songlist">${songList()}</div>`;
 }
 function viewSong() {
   const s = curSong(), [cn, a] = CATS[s.c];
   const names = shownChords(s), fin = state.songDone.includes(s.id), tr = state.tr, capo = state.capo;
-  const trBox = !s.pr ? '' : `<h3>조옮김${bass() ? '' : ' · 카포'}</h3>
+  const trBox = !s.pr ? '' : `<details class="trbox" ${tr || capo || state.trOpen ? 'open' : ''}><summary>조옮김${bass() ? '' : ' · 카포'} (키 바꾸기) ›</summary>
     <div class="ctrl"><span class="dim" style="min-width:42px">조옮김</span><button class="step" data-act="tr" data-v="-1" aria-label="반음 내리기">−</button><output>${tr > 0 ? '+' : ''}${tr}</output><button class="step" data-act="tr" data-v="1" aria-label="반음 올리기">+</button>
       ${bass() ? '' : `</div><div class="ctrl"><span class="dim" style="min-width:42px">카포</span><button class="step" data-act="capo" data-v="-1" aria-label="카포 내리기">−</button><output>${capo}프렛</output><button class="step" data-act="capo" data-v="1" aria-label="카포 올리기">+</button>`}
       ${tr || capo ? chip('trreset', '', '원래대로') : ''}</div>
     <p class="legend">${tr || (capo && !bass()) ? `실제 소리: ${[...new Set(s.pr.flatMap(c => trName(c, tr).split(',')))].join(' · ')}${capo && !bass() ? `. 카포를 ${capo}프렛에 끼우고 아래 코드 모양으로 잡습니다.` : ''}`
-      : `조옮김은 노래 키를 반음씩 올리거나 내립니다.${bass() ? '' : ' 카포를 올리면 같은 키를 다른 코드 모양으로 잡을 수 있습니다.'}`}</p>`;
+      : `조옮김은 노래 키를 반음씩 올리거나 내립니다.${bass() ? '' : ' 카포를 올리면 같은 키를 다른 코드 모양으로 잡을 수 있습니다.'}`}</p></details>`;
   return `<button class="backbar" data-act="songs">‹ 곡 목록으로</button>
   <section class="card"><div class="song-hero">${art(a)}<div><p class="dim">${cn} · Lv.${s.lv} ${LEVELS[s.lv-1][0]}</p><h2>${s.t}</h2><p class="dim">${s.by}</p></div></div>
-    <div class="chips" style="margin-top:14px"><span class="tag">${s.m ? '멜로디 탭' : '코드 반주'}</span>${s.key ? `<span class="tag">${s.key}</span>` : ''}<span class="tag">연습 템포 ${s.bpm}</span></div>
+    <div class="chips" style="margin-top:14px"><span class="tag">${s.m ? '멜로디 탭' : '코드 반주'}</span>${s.key ? `<span class="tag">${s.key}</span>` : ''}<span class="tag">연습 템포 ${s.bpm}</span>${s.pr ? `<a class="chip" href="https://www.youtube.com/results?search_query=${encodeURIComponent(s.t + ' ' + s.by.replace(/\(.*?\)/g, ''))}" target="_blank" rel="noopener">▶ 원곡 듣기</a>` : ''}</div>
     <p style="margin-top:12px">${s.tip}</p>
-    ${trBox}
     ${!bass() && names.length ? `<h3>이 곡에 나오는 코드 (누르면 운지를 봅니다)</h3><div class="chips">${names.map(n => chip('needch', n, n, false)).join('')}</div>` : ''}
-    ${s.pr ? `<p class="legend">가사와 멜로디는 저작권 보호 대상이라 싣지 않았습니다. 원곡을 틀어 놓고 반주를 맞춰 보세요. 쉬운 키로 옮긴 연습용 진행이라 원곡 악보와 세부가 다를 수 있습니다.</p>` : ''}</section>
+    ${s.pr ? `<p class="legend">가사와 멜로디는 저작권 보호 대상이라 싣지 않았습니다. 위 '원곡 듣기'로 원곡을 틀어 놓고 반주를 맞춰 보세요. 대표 구간만 쉬운 키로 옮긴 연습용 진행이라 원곡 악보와 세부가 다를 수 있습니다.</p>` : ''}
+    ${trBox}</section>
   ${s.pr ? viewRhythm(true) : viewMelody(s)}
   <button class="btn ${fin ? '' : 'primary'}" style="width:100%;margin-top:14px" data-act="sdone" data-v="${s.id}">${fin ? '✓ 완주한 곡 (취소)' : '끝까지 쳤어요, 완주 표시'}</button>`;
 }
@@ -1381,7 +1456,7 @@ function viewLesson() {
     <ul class="tips">${l.tips.map(t => `<li>${t}</li>`).join('')}</ul>
     <h3>실습</h3><div class="chips">${l.go.map((g,k) => chip('go', k, g.l + ' ›', false)).join('')}</div>
     <div class="btns"><button class="btn ${isDone ? '' : 'primary'}" data-act="done" data-v="${l.id}">${isDone ? '✓ 완료함 (취소)' : '이 레슨 완료'}</button>
-    ${nx ? `<button class="btn" data-act="lesson" data-v="${nx.id}">다음 레슨 ›</button>` : ''}</div></section>`;
+    ${nx ? `<button class="btn ${isDone ? 'primary' : ''}" data-act="lesson" data-v="${nx.id}">다음 레슨 ›</button>` : ''}</div></section>`;
 }
 const cc = {a:'Em', b:'Am', run:false, done:false, record:false, count:0, end:0, timer:null};
 const cviewChips = () => `<div class="chips" style="margin-bottom:14px">${chip('cview', 'dict', '코드 사전', state.cview === 'dict')}${chip('cview', 'change', '1분 코드 체인지', state.cview === 'change')}</div>`;
@@ -1579,6 +1654,7 @@ const ACT = {
   join() { cm.go = true; cm.signup = true; cm.msg = ''; cm.view = 'auth'; state.page = 'app'; state.tab = 'board'; state.lesson = state.song = state.back = null; render(); top0(); },
   // 첫 화면에서 가입·로그인하러 온 사람은 끝나면 악기 선택이나 레슨으로 보낸다
   afterAuth() {
+    if (cm.after) { cm.view = cm.after; cm.after = null; cm.msg = ''; render(); return top0(); }
     if (!cm.go) { cm.view = 'list'; return loadPosts(); }
     cm.go = false; cm.view = 'list';
     if (state.inst) { state.tab = 'learn'; render(); return top0(); }
@@ -1592,11 +1668,16 @@ const ACT = {
     if (!state.inst && v !== 'board') { state.tab = v; state.page = 'landing'; render(); return ACT.start(); }
     state.tab = v; state.lesson = state.song = state.back = null; resetLoop(); if (v === 'board' && sb) { cm.view = 'list'; cm.msg = ''; loadPosts(); } render(); top0();
   },
-  bview(v) { cm.req++; cm.view = v; cm.msg = ''; cm.go = false; if (v === 'list') loadPosts(); if (v === 'admin') loadMembers(); render(); top0(); },
+  bview(v) { cm.req++; cm.view = v; cm.msg = ''; cm.go = false; cm.after = null; if (v === 'list') loadPosts(); if (v === 'admin') loadMembers(); render(); top0(); },
   bcat(v) { cm.cat = v; cm.msg = ''; loadPosts(); },
   bmore() { loadPosts(true); },
   bmode() { cm.signup = !cm.signup; render(); },
-  bwrite() { cm.edit = null; cm.msg = ''; cm.view = cm.me ? 'write' : 'auth'; render(); top0(); },
+  bwrite() {
+    cm.edit = null; cm.msg = ''; cm.view = cm.me ? 'write' : 'auth';
+    // 로그인하고 나면 쓰려던 글쓰기 화면으로 돌아온다
+    if (!cm.me) { cm.after = 'write'; cm.signup = false; cm.msg = '글을 쓰려면 로그인해 주세요. 처음이라면 아래 "처음이라면 회원 가입"을 누르세요.'; }
+    render(); top0();
+  },
   bedit() { cm.edit = cm.post; cm.view = 'write'; render(); top0(); },
   async bopen(v) {
     cm.msg = '';
@@ -1667,7 +1748,7 @@ const ACT = {
   back() { state.lesson = null; render(); },
   return() { Object.assign(state, {lesson:null, song:null}, state.back, {back:null}); render(); top0(); },
   songs() { state.song = null; resetLoop(); render(); },
-  song(v) { state.song = v; state.tr = state.capo = 0; resetLoop(); songPreset(); render(); top0(); },
+  song(v) { state.song = v; state.trOpen = false; state.tr = state.capo = 0; resetLoop(); songPreset(); render(); top0(); },
   speed(v) { setBpm(Math.round(curSong().bpm * v)); },
   loop() { const on = !state.loop.on; resetLoop(); state.loop.on = on; render(); },
   lup(v, el) { state.loop.up = !state.loop.up; el.classList.toggle('on'); },
@@ -1678,8 +1759,9 @@ const ACT = {
     render();
   },
   scat(v) { state.scat = state.scat === v ? 'all' : v; render(); },
+  gocat(v) { Object.assign(state, {scat:v, slv:0, sq:'', song:null}); state.page = 'app'; ACT.tab('songs'); },
   slv(v) { state.slv = +v; render(); },
-  lvsongs(v) { Object.assign(state, {tab:'songs', song:null, lesson:null, scat:'all', slv:+v}); render(); top0(); },
+  lvsongs(v) { Object.assign(state, {tab:'songs', song:null, lesson:null, scat:'all', slv:+v, sq:''}); render(); top0(); },
   needch(v) { const s = curSong(); Object.assign(state, {back:{tab:'songs', song:s.id}, tab:'chords', cat:'레슨', chord:v, list:shownChords(s)}); render(); top0(); },
   acc(v, el) { state.acc = !state.acc; el.classList.toggle('on'); },
   done(v) { const d = state.done[state.inst], i = d.indexOf(v); i < 0 ? (d.push(v), party()) : d.splice(i,1); save(); render(); },
@@ -1719,8 +1801,8 @@ const ACT = {
     $('#cc-next').textContent = next;
     document.querySelectorAll('.ccbox').forEach(el => el.classList.toggle('on', el.dataset.n === next));
   },
-  tr(v) { state.tr = Math.max(-6, Math.min(6, state.tr + +v)); render(); },
-  capo(v) { state.capo = Math.max(0, Math.min(9, state.capo + +v)); render(); },
+  tr(v) { state.trOpen = true; state.tr = Math.max(-6, Math.min(6, state.tr + +v)); render(); },
+  capo(v) { state.trOpen = true; state.capo = Math.max(0, Math.min(9, state.capo + +v)); render(); },
   trreset() { state.tr = state.capo = 0; render(); },
   cat(v) { state.cat = v; render(); },
   strum(v) { const fr = chordOf(state.chord).fr; v === 'A' ? playSeq(fr.map((f,s) => [s,f]).filter(x => x[1] >= 0), 320) : strum(fr, v); },
@@ -1764,7 +1846,11 @@ document.addEventListener('keydown', e => {
   if (e.code !== 'Space' || !$('#playbtn') || e.target.closest('button, input, textarea, select')) return;
   e.preventDefault(); ACT.play();
 });
-document.addEventListener('input', e => { if (e.target.id === 'bpmr') setBpm(+e.target.value); });
+document.addEventListener('input', e => {
+  if (e.target.id === 'bpmr') setBpm(+e.target.value);
+  // 검색창은 다시 그리지 않고 목록만 바꾼다 (한글 조합 중에 입력이 끊기지 않게)
+  if (e.target.id === 'sq') { state.sq = e.target.value; const l = $('#songlist'); if (l) l.innerHTML = songList(); }
+});
 render();
 initCloud();
 </script>
