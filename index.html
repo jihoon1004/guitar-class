@@ -1800,7 +1800,8 @@ const ACT = {
   back() { state.lesson = null; render(); },
   return() { Object.assign(state, {lesson:null, song:null}, state.back, {back:null}); render(); top0(); },
   songs() { state.song = null; resetLoop(); render(); },
-  song(v) { state.song = v; state.schord = null; state.trOpen = false; state.tr = state.capo = 0; resetLoop(); songPreset(); render(); top0(); },
+  // 레슨 화면의 추천곡처럼 다른 탭에서 곡을 열면 곡 탭으로 옮겨 간다
+  song(v) { if (state.tab !== 'songs') Object.assign(state, {tab:'songs', lesson:null, back:null}); state.song = v; state.schord = null; state.trOpen = false; state.tr = state.capo = 0; resetLoop(); songPreset(); render(); top0(); },
   speed(v) { setBpm(Math.round(curSong().bpm * v)); },
   loop() { const on = !state.loop.on; resetLoop(); state.loop.on = on; render(); },
   lup(v, el) { state.loop.up = !state.loop.up; el.classList.toggle('on'); },
