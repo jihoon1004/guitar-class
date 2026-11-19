@@ -477,7 +477,7 @@ const LEVELS = [
 const CH = {};
 [
   ['Em','022000','023000','오픈 코드',1],['Am','x02210','002310','오픈 코드',1],
-  ['C','x32010','032010','오픈 코드',2],['G','320003','210003','오픈 코드',2],['D','xx0232','000132','오픈 코드',2],
+  ['C','x32010','032010','오픈 코드',2],['G','320003','320004','오픈 코드',2],['D','xx0232','000132','오픈 코드',2],
   ['E','022100','023100','오픈 코드',2],['A','x02220','001230','오픈 코드',2],['Dm','xx0231','000231','오픈 코드',2],
   ['F (약식)','xx3211','003211','오픈 코드',2],
   ['A7','x02020','002030','세븐스',2],['D7','xx0212','000213','세븐스',2],['E7','020100','020100','세븐스',2],
@@ -487,7 +487,7 @@ const CH = {};
   ['Dmaj7','xx0222','000111','세븐스',4],['Amaj7','x02120','002130','세븐스',4],
   ['Asus4','x02230','001230','서스·애드',4],['Asus2','x02200','001200','서스·애드',4],['Dsus4','xx0233','000134','서스·애드',4],
   ['Dsus2','xx0230','000130','서스·애드',4],['Esus4','022200','023400','서스·애드',4],['Cadd9','x32030','021030','서스·애드',4],
-  ['G/B','x20003','010003','서스·애드',4],['D/F#','2x0232','100243','서스·애드',4],
+  ['G/B','x20003','020004','서스·애드',4],['D/F#','2x0232','100243','서스·애드',4],
   ['F','133211','134211','바레 코드',3],['Bm','x24432','013421','바레 코드',3],['B♭','x13331','012341','바레 코드',3],
   ['F#m','244222','134111','바레 코드',3],['Gm','355333','134111','바레 코드',3],['Cm','x35543','013421','바레 코드',3],
   ['C#m','x46654','013421','바레 코드',3],['F#','244322','134211','바레 코드',3],['B','x24442','013331','바레 코드',3],['Bm7','x24232','013121','바레 코드',3],['F#m7','242222','131111','바레 코드',3],
@@ -698,7 +698,7 @@ const SONGS = [
   {id:'risingsun', c:'rock', lv:2, t:'House of the Rising Sun', by:'미국 민요 (The Animals)', bpm:78, key:'원곡 Am', pr:['Am','C','D','F','Am','C','E','E','Am','C','D','F','Am','E','Am','E'], pat:'arp6', bp:'root4',
     tip:'아르페지오 입문곡으로 가장 유명합니다. 한 마디에 여섯 음을 올라갔다 내려오며 고르게 칩니다.'},
   {id:'timeofyourlife', c:'rock', lv:2, t:'Good Riddance (Time of Your Life)', by:'Green Day', bpm:95, key:'원곡 G', pr:['G','G','Cadd9','D'], pat:'arp8', bp:'r5',
-    tip:'피크로 치는 아르페지오의 대표곡입니다. G와 Cadd9은 약지를 2번줄 3프렛에 둔 채로 바꾸면 편합니다.'},
+    tip:'피크로 치는 아르페지오의 대표곡입니다. G를 중지·약지·소지로 잡으면 Cadd9으로 갈 때 중지·약지가 한 줄씩만 내려가면 됩니다.'},
   {id:'dynamite', c:'kpop', lv:2, t:'Dynamite', by:'BTS', bpm:114, key:'원곡 C#m · 카포 4', pr:['Am','Dm','G','C'], pat:'chuck', bp:'oct',
     tip:'디스코 리듬의 네 코드 순환입니다. 뮤트 커팅으로 짧게 끊어 쳐야 원곡의 탄력이 납니다.'},
   {id:'wiing', c:'kpop', lv:4, t:'위잉위잉', by:'혁오', bpm:88, key:'원곡 키', pr:['Gm','C9','Am7','D9'], pat:'s16', bp:'ghost',
@@ -763,7 +763,38 @@ const SONGS = [
     tip:'후렴 진행입니다. G – A – D 세 코드만으로 포크의 정석을 익힙니다.'},
   {id:'badmoon', c:'legend', lv:2, t:'Bad Moon Rising', by:'Creedence Clearwater Revival', bpm:130, key:'원곡 D', pr:['D','A','G','D','D','A','G','D'], pat:'du8', bp:'root8',
     tip:'A – G를 반 마디씩 빠르게 지나갑니다. 코드는 쉬워도 손이 바쁜 곡이라 체인지 연습에 그만입니다.'},
+  {id:'saints', c:'kids', lv:1, t:'성자의 행진', by:'미국 흑인 영가', bpm:110,
+    m:'-1 c e f | g4 | -1 c e f | g4 | -1 c e f | g2 e2 | c2 e2 | d4 | -1 e e d | c3 c | e2 g2 | g1 f3 | -1 c e f | g2 e2 | c2 d2 | c4',
+    ch:'C C C C C C C G C C7 F F C C G C', tip:'마디 첫 박을 쉬고 세 음이 튀어나오는 곡입니다. 쉼표 자리에서 피크를 멈추지 말고 허공을 한 번 치듯 박을 세세요.'},
+  {id:'frere', c:'kids', lv:1, t:'프레르 자크 (돌림노래)', by:'프랑스 민요', bpm:100,
+    m:'c d e c | c d e c | e f g2 | e f g2 | g.5 a.5 g.5 f.5 e c | g.5 a.5 g.5 f.5 e c | c g, c2 | c g, c2',
+    ch:'C C C C C C C C', tip:'두 마디 뒤에 같은 멜로디를 따라 들어가면 돌림노래가 됩니다. 친구와 번갈아 쳐 보세요. 5·6마디의 8분음표는 다운·업으로.'},
+  {id:'auralee', c:'legend', lv:2, t:'Aura Lee (러브 미 텐더 원곡)', by:'미국 민요 (1861)', bpm:84,
+    m:'d g f# g | a e a2 | g f# e f# | g4 | d g f# g | a e a2 | g f# e f# | g4',
+    ch:'G A7 D7 G G A7 D7 G', tip:'엘비스 프레슬리의 Love Me Tender가 이 선율을 빌려 왔습니다. 반주 G 코드는 중지·약지·소지로 잡고 검지는 A7을 위해 비워 두세요.'},
+  {id:'imagine', c:'legend', lv:2, t:'Imagine', by:'John Lennon', bpm:76, key:'원곡 C', pr:['C,Cmaj7','F','C,Cmaj7','F'], pat:'ballad', bp:'root4',
+    tip:'C에서 검지 하나만 떼면 Cmaj7입니다. 피아노 원곡의 느긋한 흐름을 스트로크로 옮겨 보세요. F가 어려우면 Fmaj7으로 바꿔 잡아도 됩니다.'},
+  {id:'wakemeup', c:'pop', lv:3, t:'Wake Me Up', by:'Avicii', bpm:124, key:'원곡 Bm', pr:['Bm','G','D','A'], pat:'du8', bp:'root8',
+    tip:'Bm 바레 하나만 넘으면 나머지는 오픈 코드입니다. 통기타로 시작해 크게 터지는 곡이라 스트로크 강약 연습에 좋습니다.'},
+  {id:'shapeofyou', c:'pop', lv:3, t:'Shape of You', by:'Ed Sheeran', bpm:96, key:'원곡 C#m · 카포 4', pr:['Am','Dm','F','G'], pat:'chuck', bp:'ghost',
+    tip:'네 코드가 끝까지 반복됩니다. 2·4박 뮤트 커팅으로 원곡 마림바 리듬의 탄력을 흉내 내 보세요.'},
+  {id:'malaguena', c:'inst', lv:3, t:'말라게냐', by:'스페인 민요 (플라멩코)', bpm:100, key:'E 프리지안', pr:['E','F','G','F','E','F','G,F','E'], pat:'arp8', bp:'root4',
+    tip:'E – F – G – F를 오르내리는 스페인풍 진행입니다. 굵은 줄 선율까지 치려면 스케일 탭에서 E 프리지안을 같이 익혀 두세요.'},
 ];
+// 원곡 영상. YouTube oEmbed 로 제목을 대조해 원곡이 맞는 것만 넣었다(2026-11-19). 없는 곡은 검색 링크로 연결한다.
+const YT = {
+  dynamite:'gdZLi9oWNZg', letitbe:'QDYfEBY9NM4', perfect:'2Vv-BfVoq4g', thinking:'lp-EO5I60KA', someone:'hLQl3WQQoQ0', vivalavida:'dvgZkm1xWPE',
+  creep:'XFkzRNyygfk', zombie:'6Ejga4kJUts', riptide:'uJ_1HMAGb4k', imyours:'EkHTsc9PU2A', staywithme:'pB-5XG-DbAA', shallow:'bo_efYhYU2A',
+  teenspirit:'hTWKbfoikeg', sweetchild:'1w7OgIMMRc4', boulevard:'Soa3gO7tL-c', dontlookback:'r8OipmKFDeM', nothingelse:'tAGnKpE4NCI', heyjude:'A_MjCqQoLLA',
+  standbyme:'hwZNL7QVJjE', countryroads:'1vrEljMfXYo', riverflows:'7maJOI3QMu0', cherry:'tXV7dfvSefo', hotelcal:'09839DpTctU', wonderwall:'bx1Bh8ZvH84',
+  wakemeup:'IcrbM1l_BoI', shapeofyou:'JGwWNGJdvx8', someoneloved:'zABLecsR5UE', imagine:'YkgkThdzX-8', wishyou:'IXdNnw99-Ic', hallelujah:'YrLk4vdY28Q',
+  risingsun:'N4bFqW_eu2I', timeofyourlife:'CnQ8N1KacJc', dustwind:'tH2w6Oxx0kQ', sweethome:'ye5BuYf8q4o', browneyed:'UfmkgQRmmeE', flyme:'ZEcqHA7dbwM',
+  wonderful:'vUSzL2leaFM', knockin:'rm9coqlk8fY', blowin:'MMFj8uDubsE', lastchristmas:'E8gmARGvPlI', basketcase:'NUTGr5t3MoY', freefallin:'1lWJXDG2i0A',
+  countonme:'6k8cpUkKK4c', badmoon:'5BmEGm-mraE', bamletter:'BzYnNdJhZQw',
+};
+SONGS.forEach(s => s.yt = YT[s.id]);
+const ytUrl = s => s.yt ? 'https://www.youtube.com/watch?v=' + s.yt
+  : 'https://www.youtube.com/results?search_query=' + encodeURIComponent((s.t + ' ' + s.by).replace(/\(.*?\)/g, '').replace(/\s+/g, ' ').trim());
 
 const gc = (l, ...list) => ({l, tab:'chords', set:{cat:'레슨', list, chord:list[0]}});
 const gcat = (l, cat) => ({l, tab:'chords', set:{cat}});
@@ -780,7 +811,7 @@ const L_GUITAR = [
   {lv:1, t:'첫 코드: Em와 Am', d:['손가락 두세 개로 잡는 가장 쉬운 코드입니다. Em는 여섯 줄 전부, Am는 5번줄부터 칩니다.','잡은 다음에는 한 줄씩 튕겨서 먹먹한 줄이 없는지 꼭 확인하세요.'], tips:['Em에서 Am로 바꾸는 걸 1분 동안 몇 번 하는지 세어 보세요. 30번이 1차 목표입니다.','손끝이 아픈 건 정상입니다. 2주쯤 지나면 굳은살이 생깁니다.'], go:[gc('Em · Am 잡아 보기','Em','Am')]},
   {lv:1, t:'첫 스트로크: 4비트 다운', d:['피크는 엄지와 검지 옆면으로 가볍게 쥐고 끝만 2~3mm 내놓습니다. 팔꿈치가 아니라 손목으로 줄을 쓸어내리세요.','메트로놈 소리에 맞춰 한 박에 한 번씩. 코드가 바뀌어도 오른손은 멈추지 않는 게 원칙입니다.'], tips:['박자를 놓치면 템포를 낮추세요. 느리게 정확한 것이 빠르게 틀리는 것보다 낫습니다.'], go:[gr('반주에 맞춰 치기','down4','em-am',70)]},
 
-  {lv:2, t:'오픈 코드 C · G · D', d:['이 세 코드에 Em만 더하면 대중가요 절반은 반주할 수 있습니다. C는 5번줄부터, D는 4번줄부터 치는 것만 조심하세요.'], tips:['G는 손을 넓게 벌려야 합니다. 손바닥을 넥에서 조금 떼면 편해집니다.','C에서 1번줄이 죽으면 검지를 더 세우세요.'], go:[gc('C · G · D 익히기','C','G','D','Em')]},
+  {lv:2, t:'오픈 코드 C · G · D', d:['이 세 코드에 Em만 더하면 대중가요 절반은 반주할 수 있습니다. C는 5번줄부터, D는 4번줄부터 치는 것만 조심하세요.'], tips:['G는 중지(2)·약지(3)·소지(4)로 잡습니다. 검지가 비어 있어 C로 바꿀 때 손 모양이 거의 그대로 내려갑니다.','G에서 소지가 1번줄 3프렛에 닿기 어려우면 손바닥을 넥에서 조금 떼고 손목을 앞으로 내미세요.','C에서 1번줄이 죽으면 검지를 더 세우세요.'], go:[gc('C · G · D 익히기','C','G','D','Em')]},
   {lv:2, t:'E · A · Dm와 코드 체인지 요령', d:['코드를 빨리 바꾸는 비결은 손가락을 한꺼번에 움직이는 것입니다. 하나씩 차례로 놓는 습관을 초반에 버리세요.','두 코드 사이에 그대로 남는 손가락이 있으면 떼지 말고 축으로 쓰면 됩니다.'], tips:['E와 Am는 모양이 같고 한 줄씩만 내려갑니다.','마지막 박에서 미리 손을 떼고 이동해도 됩니다. 개방현이 살짝 울려도 자연스럽습니다.'], go:[gc('E · A · Dm 익히기','E','A','Dm','Am')]},
   {lv:2, t:'8비트 다운업 스트로크', d:['손은 시계추처럼 계속 위아래로 움직이고, 칠 때만 줄에 닿습니다. 다운은 여섯 줄, 업은 가는 줄 서너 개면 충분합니다.'], tips:['업 스트로크에서 피크가 걸리면 피크를 살짝 눕혀 주세요.'], go:[gr('G – Em – C – D로 연습','du8','g-em-c-d',80)]},
   {lv:2, t:'국민 스트로크 익히기', d:['다운, 다운업, (쉬고) 업다운업. 통기타 반주에서 가장 많이 쓰이는 패턴입니다.','3박 앞의 쉬는 자리에서도 손은 내려갑니다. 줄만 건드리지 않는 헛스윙입니다.'], tips:['입으로 "따 – 따다 – 다따다" 하고 먼저 불러 보면 빨리 붙습니다.'], go:[gr('G – D – Em – C로 연습','folk','g-d-em-c',84)]},
@@ -1371,7 +1402,7 @@ function songList() {
   const q = norm(state.sq || '');
   const list = SONGS.filter(s => (state.scat === 'all' || s.c === state.scat) && (!state.slv || s.lv === state.slv) && (!q || norm(s.t + s.by).includes(q)));
   const groups = LEVELS.map(([n], i) => { const g = list.filter(s => s.lv === i+1).sort((x, y) => (y.hot || 0) - (x.hot || 0)); return g.length ? `<section class="lv"><div class="lv-head"><b>Lv.${i+1}</b><strong>${n}</strong><span>${g.length}곡</span></div>
-    ${g.map(s => `<button class="lesson ${state.songDone.includes(s.id) ? 'done' : ''}" data-act="song" data-v="${s.id}"><i>${state.songDone.includes(s.id) ? '✓' : '♪'}</i><span>${s.t}${s.hot ? '<em class="hot">인기</em>' : ''}<small>${s.by} · ${CATS[s.c][0]} · ${s.m ? '멜로디 탭' : '코드 반주'}</small></span></button>`).join('')}</section>` : ''; }).join('');
+    ${g.map(s => `<button class="lesson ${state.songDone.includes(s.id) ? 'done' : ''}" data-act="song" data-v="${s.id}"><i>${state.songDone.includes(s.id) ? '✓' : '♪'}</i><span>${s.t}${s.hot ? '<em class="hot">인기</em>' : ''}<small>${s.by} · ${CATS[s.c][0]} · ${s.m ? '멜로디 탭' : '코드 반주'}${s.yt ? ' · ▶ 원곡 영상' : ''}</small></span></button>`).join('')}</section>` : ''; }).join('');
   return groups || `<p class="dim" style="margin-top:24px">${q ? `'${esc(state.sq)}'에 맞는 곡이 없습니다. 게시판 곡 요청에 남겨 주시면 추가를 검토합니다.` : '이 조건에 맞는 곡이 없습니다. 단계나 장르를 바꿔 보세요.'}</p>`;
 }
 function viewSongs() {
@@ -1393,7 +1424,7 @@ function viewSong() {
       : `조옮김은 노래 키를 반음씩 올리거나 내립니다.${bass() ? '' : ' 카포를 올리면 같은 키를 다른 코드 모양으로 잡을 수 있습니다.'}`}</p></details>`;
   return `<button class="backbar" data-act="songs">‹ 곡 목록으로</button>
   <section class="card"><div class="song-hero">${art(a)}<div><p class="dim">${cn} · Lv.${s.lv} ${LEVELS[s.lv-1][0]}</p><h2>${s.t}</h2><p class="dim">${s.by}</p></div></div>
-    <div class="chips" style="margin-top:14px"><span class="tag">${s.m ? '멜로디 탭' : '코드 반주'}</span>${s.key ? `<span class="tag">${s.key}</span>` : ''}<span class="tag">연습 템포 ${s.bpm}</span>${s.pr ? `<a class="chip" href="https://www.youtube.com/results?search_query=${encodeURIComponent(s.t + ' ' + s.by.replace(/\(.*?\)/g, ''))}" target="_blank" rel="noopener">▶ 원곡 듣기</a>` : ''}</div>
+    <div class="chips" style="margin-top:14px"><span class="tag">${s.m ? '멜로디 탭' : '코드 반주'}</span>${s.key ? `<span class="tag">${s.key}</span>` : ''}<span class="tag">연습 템포 ${s.bpm}</span><a class="chip" href="${ytUrl(s)}" target="_blank" rel="noopener">${s.yt ? '▶ 원곡 영상 보기' : '▶ 유튜브에서 찾기'}</a></div>
     <p style="margin-top:12px">${s.tip}</p>
     ${!bass() && names.length ? `<h3>이 곡에 나오는 코드 (누르면 운지를 봅니다)</h3><div class="chips">${names.map(n => chip('needch', n, n, false)).join('')}</div>` : ''}
     ${s.pr ? `<p class="legend">가사와 멜로디는 저작권 보호 대상이라 싣지 않았습니다. 위 '원곡 듣기'로 원곡을 틀어 놓고 반주를 맞춰 보세요. 대표 구간만 쉬운 키로 옮긴 연습용 진행이라 원곡 악보와 세부가 다를 수 있습니다.</p>` : ''}
