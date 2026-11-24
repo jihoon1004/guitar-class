@@ -1121,8 +1121,8 @@ function startPlay(from) {
     while (next < c.currentTime + .2) {
       if (R && state.loop.up && slot === 0 && bar > 0 && bar % len === 0) setBpm(state.bpm + 5);
       const when = next, sl = slot, br = bar, bi = base + bar % len, names = prog.ch[bi].split(','), tok = pat.s[sl], beat = sl % spb === 0;
-      const name = names[Math.floor(sl*names.length/n)], chordStart = sl % (n/names.length) === 0;
-      let midi;
+      const ci = Math.floor(sl*names.length/n), name = names[ci], chordStart = sl === 0 || ci !== Math.floor((sl-1)*names.length/n);
+      let midi, ps = null;
       if (state.click && beat) tick(when, sl === 0);
       if (tok !== '-') {
         if (bass()) {
@@ -1138,7 +1138,7 @@ function startPlay(from) {
           else if (tok === 'x') strum(fr.map(f => Math.max(f,0)), 'D', when, .7, true);
           else {
             const r = fr.findIndex(f => f >= 0), s = tok==='R' ? r : tok==='A' ? (r===0 ? 2 : r+1) : 6-tok;
-            if (fr[s] >= 0) pluck(s, fr[s], when, 1.1);
+            if (fr[s] >= 0) { pluck(s, fr[s], when, 1.1); midi = T()[s] + fr[s] - cap; ps = s; }
           }
         }
       }
@@ -1154,6 +1154,7 @@ function startPlay(from) {
         const pend = $('#pend');
         if (beat && pend) { pend.style.transitionDuration = 60/state.bpm*pat.beats/n*spb + 's'; pend.classList.toggle('r'); }
         if (midi) lit(midi);
+        if (ps != null) vib(ps);
       }, (when - c.currentTime)*1000));
       next += 60/state.bpm*pat.beats/n;
       if (++slot === n) { slot = 0; bar++; }
@@ -1569,10 +1570,11 @@ function viewRhythm(inSong) {
     <p class="dim">${pat.tip}</p>
     <div class="slots" style="grid-template-columns:repeat(${pat.s.length},1fr)">${slots}</div>
     <p class="legend">${legend}</p>
+    <div class="row" style="margin-top:12px"><span class="dim">지금 코드</span><h2 id="rh-name">${prog.ch[first].split(',')[0]}</h2></div>
+    <div class="board-wrap narrow" id="rh-board">${rhBoard(prog.ch[first].split(',')[0])}</div>
     ${ctrlRow()}${tools(inSong && curSong())}</section>
-  <section class="card"><div class="row"><h2 id="rh-name">${prog.ch[first].split(',')[0]}</h2><span class="dim">${prog.n}</span></div>
-    <div class="chips" style="margin-top:10px">${prog.ch.map((c,i) => `<button class="pc ${i === first ? 'on' : ''} ${inLoop(i) ? 'sel' : ''}" id="pc-${i}" data-act="lbar" data-v="${i}">${c.replace(',', ' ')}</button>`).join('')}</div>
-    <div class="board-wrap narrow" id="rh-board">${rhBoard(prog.ch[first].split(',')[0])}</div></section>
+  <section class="card"><div class="row"><h2>코드 진행</h2><span class="dim">${prog.n}</span></div>
+    <div class="chips" style="margin-top:10px">${prog.ch.map((c,i) => `<button class="pc ${i === first ? 'on' : ''} ${inLoop(i) ? 'sel' : ''}" id="pc-${i}" data-act="lbar" data-v="${i}">${c.replace(',', ' ')}</button>`).join('')}</div></section>
   <h3>${bass() ? '리듬 패턴' : '스트로크 · 핑거링 패턴'}</h3>
   <div class="chips">${pats.map(p => chip('pat', p[0], `${p[1]} <small>Lv.${p[2]}</small>`, p[0] === pat.id)).join('')}</div>
   ${inSong ? '' : `<h3>코드 진행</h3>
